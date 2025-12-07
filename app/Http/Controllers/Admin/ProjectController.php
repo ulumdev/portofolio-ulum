@@ -1,0 +1,152 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Project;
+use App\Models\Skill;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
+class ProjectController extends Controller
+{
+    /**
+     * Display a listing of projects
+     */
+    public function index(Request $request)
+    {
+        $query = Project::with('user', 'skills');
+
+        // Search
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by status
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+
+        $projects = $query->latest()->paginate(10);
+
+        return view('admin.projects.index', compact('projects'));
+    }
+
+    /**
+     * Show the form for creating a new project
+     */
+    public function create()
+    {
+        $skills = Skill::ordered()->get();
+        return view('admin.projects.create', compact('skills'));
+    }
+
+    /**
+     * Store a newly created project
+     */
+    public function store(StoreProjectRequest $request)
+    {
+        $data = $request->validated();
+        // $data['user_id'] = auth()->id();
+        $data['user_id'] = Auth::id();
+
+        // Handle image upload
+        if ($request->hasFile('featured_image')) {
+            $data['featured_image'] = $request->file('featured_image')
+                ->store('projects', 'public');
+        }
+
+        // Set published_at if status is published
+        if ($data['status'] === 'published' && empty($data['published_at'])) {
+            $data['published_at'] = now();
+        }
+
+        $project = Project::create($data);
+
+        // Sync skills
+        if ($request->has('skills')) {
+            $project->skills()->sync($request->skills);
+        }
+
+        return redirect()->route('admin.projects.index')
+            ->with('success', 'Project created successfully! ');
+    }
+
+    /**
+     * Display the specified project
+     */
+    public function show(Project $project)
+    {
+        $project->load('user', 'skills');
+        return view('admin.projects.show', compact('project'));
+    }
+
+    /**
+     * Show the form for editing the specified project
+     */
+    public function edit(Project $project)
+    {
+        $skills = Skill::ordered()->get();
+        $project->load('skills');
+        return view('admin.projects.edit', compact('project', 'skills'));
+    }
+
+    /**
+     * Update the specified project
+     */
+    public function update(UpdateProjectRequest $request, Project $project)
+    {
+        $data = $request->validated();
+
+        // Handle image upload
+        if ($request->hasFile('featured_image')) {
+            // Delete old image
+            if ($project->featured_image) {
+                Storage::disk('public')->delete($project->featured_image);
+            }
+
+            $data['featured_image'] = $request->file('featured_image')
+                ->store('projects', 'public');
+        }
+
+        // Set published_at if status is published
+        if ($data['status'] === 'published' && empty($project->published_at)) {
+            $data['published_at'] = now();
+        }
+
+        $project->update($data);
+
+        // Sync skills
+        if ($request->has('skills')) {
+            $project->skills()->sync($request->skills);
+        } else {
+            $project->skills()->detach();
+        }
+
+        return redirect()->route('admin.projects.index')
+            ->with('success', 'Project updated successfully!');
+    }
+
+    /**
+     * Remove the specified project
+     */
+    public function destroy(Project $project)
+    {
+        // Delete image
+        if ($project->featured_image) {
+            Storage::disk('public')->delete($project->featured_image);
+        }
+
+        $project->delete();
+
+        return redirect()->route('admin.projects.index')
+            ->with('success', 'Project deleted successfully!');
+    }
+}
