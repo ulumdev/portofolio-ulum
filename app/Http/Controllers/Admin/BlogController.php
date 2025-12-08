@@ -9,7 +9,9 @@ use App\Models\BlogPost;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class BlogController extends Controller
 {
@@ -39,10 +41,16 @@ class BlogController extends Controller
             $query->where('category_id', $request->category);
         }
 
-        $posts = $query->latest()->paginate(10);
+        $posts = $query->latest()->paginate(5);
         $categories = Category::all();
 
-        return view('admin.blog.index', compact('posts', 'categories'));
+        // return view('admin.blog.index', compact('posts', 'categories'));
+
+        return Inertia::render('Admin/Blog/Index', [
+            'posts' => $posts,
+            'categories' => $categories,
+            'filters' => $request->only(['search', 'status', 'category']),
+        ]);
     }
 
     /**
@@ -50,9 +58,14 @@ class BlogController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $tags = Tag::all();
-        return view('admin.blog.create', compact('categories', 'tags'));
+        $categories = Category::orderBy('name')->get();
+        $tags = Tag::orderBy('name')->get();
+        // return view('admin.blog.create', compact('categories', 'tags'));
+
+        return Inertia::render('Admin/Blog/Create', [
+            'categories' => $categories,
+            'tags' => $tags,
+        ]);
     }
 
     /**
@@ -61,7 +74,7 @@ class BlogController extends Controller
     public function store(StoreBlogPostRequest $request)
     {
         $data = $request->validated();
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = Auth::id();
 
         // Handle image upload
         if ($request->hasFile('featured_image')) {
@@ -99,10 +112,15 @@ class BlogController extends Controller
      */
     public function edit(BlogPost $blog)
     {
-        $categories = Category::all();
-        $tags = Tag::all();
+        $categories = Category::orderBy('name')->get();
+        $tags = Tag::orderBy('name')->get();
         $blog->load('tags');
-        return view('admin.blog.edit', compact('blog', 'categories', 'tags'));
+        // return view('admin.blog.edit', compact('blog', 'categories', 'tags'));
+        return Inertia::render('Admin/Blog/Edit', [
+            'post' => $blog,
+            'categories' => $categories,
+            'tags' => $tags,
+        ]);
     }
 
     /**

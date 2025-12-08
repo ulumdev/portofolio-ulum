@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class SettingController extends Controller
 {
@@ -24,7 +25,10 @@ class SettingController extends Controller
             'email' => Setting::get('email', ''),
         ];
 
-        return view('admin.settings.index', compact('settings'));
+        // return view('admin.settings.index', compact('settings'));
+        return Inertia::render('Admin/Settings/Index', [
+            'settings' => $settings,
+        ]);
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class TagController extends Controller
 {
@@ -15,8 +16,13 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::withCount('blogPosts')->latest()->paginate(15);
-        return view('admin.tags.index', compact('tags'));
+        // $tags = Tag::withCount('blogPosts')->latest()->paginate(10);
+        // return view('admin.tags.index', compact('tags'));
+        $tags = Tag::withCount('blogPosts')->orderBy('name')->get();
+
+        return Inertia::render('Admin/Tags/Index', [
+            'tags' => $tags,
+        ]);
     }
 
     /**
@@ -24,7 +30,8 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('admin.tags.create');
+        // return view('admin.tags.create');
+        return Inertia::render('Admin/Tags/Create');
     }
 
     /**
@@ -52,7 +59,10 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        return view('admin.tags.edit', compact('tag'));
+        // return view('admin.tags.edit', compact('tag'));
+        return Inertia::render('Admin/Tags/Edit', [
+            'tag' => $tag,
+        ]);
     }
 
     /**

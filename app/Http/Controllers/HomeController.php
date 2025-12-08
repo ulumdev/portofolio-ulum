@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BlogPost;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,11 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        return view('home', compact('projects', 'posts'));
+        // return view('home', compact('projects', 'posts'));
+
+        return Inertia::render('Public/Home', [
+            'featuredProjects' => $projects,
+            'latestPosts' => $posts,
+        ]);
     }
 }

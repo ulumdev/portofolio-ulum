@@ -68,14 +68,23 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     // Blog Management
     Route::resource('blog', AdminBlogController::class);
 
-    // Categories Management
-    Route::resource('categories', CategoryController::class);
+    // // Categories Management
+    // Route::resource('categories', CategoryController::class);
+
+    // // Tags Management
+    // Route::resource('tags', TagController::class);
+
+    // // Skills Management
+    // Route::resource('skills', SkillController::class);
+
+     // Categories Management
+    Route::resource('categories', CategoryController::class)->except(['create', 'edit', 'show']);
 
     // Tags Management
-    Route::resource('tags', TagController::class);
+    Route::resource('tags', TagController::class)->except(['create', 'edit', 'show']);
 
     // Skills Management
-    Route::resource('skills', SkillController::class);
+    Route::resource('skills', SkillController::class)->except(['create', 'edit', 'show']);
 
     // Contact Messages
     Route::prefix('messages')->name('messages.')->group(function () {

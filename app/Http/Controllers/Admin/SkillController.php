@@ -7,6 +7,7 @@ use App\Http\Requests\StoreSkillRequest;
 use App\Http\Requests\UpdateSkillRequest;
 use App\Models\Skill;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SkillController extends Controller
 {
@@ -15,8 +16,13 @@ class SkillController extends Controller
      */
     public function index()
     {
-        $skills = Skill::ordered()->paginate(15);
-        return view('admin.skills.index', compact('skills'));
+        // $skills = Skill::ordered()->paginate(15);
+        // return view('admin.skills.index', compact('skills'));
+        $skills = Skill::orderBy('category')->orderBy('name')->get();
+
+        return Inertia::render('Admin/Skills/Index', [
+            'skills' => $skills,
+        ]);
     }
 
     /**
@@ -24,7 +30,8 @@ class SkillController extends Controller
      */
     public function create()
     {
-        return view('admin.skills.create');
+        // return view('admin.skills.create');
+        return Inertia::render('Admin/Skills/Create');
     }
 
     /**
@@ -52,7 +59,10 @@ class SkillController extends Controller
      */
     public function edit(Skill $skill)
     {
-        return view('admin.skills.edit', compact('skill'));
+        // return view('admin.skills.edit', compact('skill'));
+        return Inertia::render('Admin/Skills/Edit', [
+            'skill' => $skill,
+        ]);
     }
 
     /**

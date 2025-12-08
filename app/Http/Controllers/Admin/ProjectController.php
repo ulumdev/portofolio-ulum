@@ -10,6 +10,7 @@ use App\Models\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
@@ -34,9 +35,13 @@ class ProjectController extends Controller
             $query->where('status', $request->status);
         }
 
-        $projects = $query->latest()->paginate(10);
+        $projects = $query->latest()->paginate(5);
 
-        return view('admin.projects.index', compact('projects'));
+        // return view('admin.projects.index', compact('projects'));
+        return Inertia::render('Admin/Projects/Index', [
+            'projects' => $projects,
+            'filters' => $request->only(['search', 'status']),
+        ]);
     }
 
     /**
@@ -44,8 +49,14 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        // $skills = Skill::ordered()->get();
+        // return view('admin.projects.create', compact('skills'));
+
         $skills = Skill::ordered()->get();
-        return view('admin.projects.create', compact('skills'));
+
+        return Inertia::render('Admin/Projects/Create', [
+            'skills' => $skills,
+        ]);
     }
 
     /**
@@ -95,7 +106,14 @@ class ProjectController extends Controller
     {
         $skills = Skill::ordered()->get();
         $project->load('skills');
-        return view('admin.projects.edit', compact('project', 'skills'));
+        // return view('admin.projects.edit', compact('project', 'skills'));
+        $skills = Skill::orderBy('category')->orderBy('name')->get();
+        // $project->load('skills');
+
+        return Inertia::render('Admin/Projects/Edit', [
+            'project' => $project,
+            'skills' => $skills,
+        ]);
     }
 
     /**

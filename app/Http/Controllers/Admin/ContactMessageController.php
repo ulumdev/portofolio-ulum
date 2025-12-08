@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ContactMessage;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ContactMessageController extends Controller
 {
@@ -26,7 +27,11 @@ class ContactMessageController extends Controller
 
         $messages = $query->latest()->paginate(15);
 
-        return view('admin.messages.index', compact('messages'));
+        // return view('admin.messages.index', compact('messages'));
+        return Inertia::render('Admin/Messages/Index', [
+            'messages' => $messages,
+            'filters' => $request->only(['status']),
+        ]);
     }
 
     /**
@@ -39,7 +44,10 @@ class ContactMessageController extends Controller
             $message->markAsRead();
         }
 
-        return view('admin.messages.show', compact('message'));
+        // return view('admin.messages.show', compact('message'));
+        return Inertia::render('Admin/Messages/Show', [
+            'message' => $message,
+        ]);
     }
 
     /**

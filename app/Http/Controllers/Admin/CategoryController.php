@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -15,8 +16,15 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::withCount('blogPosts')->latest()->paginate(15);
-        return view('admin.categories.index', compact('categories'));
+        // $categories = Category::withCount('blogPosts')->latest()->paginate(15);
+        // return view('admin.categories.index', compact('categories'));
+        // $categories = Category::withCount('blogPosts')->orderBy('name')->get();
+        // $categories = Category::withCount('blogPosts')->latest()->paginate(15);
+        $categories = Category::withCount('blogPosts')->orderBy('name')->get();
+
+        return Inertia::render('Admin/Categories/Index', [
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -24,7 +32,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        // return view('admin.categories.create');
+        return Inertia::render('Admin/Categories/Create');
     }
 
     /**
@@ -44,7 +53,10 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $category->loadCount('blogPosts');
-        return view('admin.categories.show', compact('category'));
+        // return view('admin.categories.show', compact('category'));
+        return Inertia::render('Admin/Categories/Show', [
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -52,7 +64,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('admin.categories.edit', compact('category'));
+        // return view('admin.categories.edit', compact('category'));
+        return Inertia::render('Admin/Categories/Edit', [
+            'category' => $category,
+        ]);
     }
 
     /**
