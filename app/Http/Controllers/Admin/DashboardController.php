@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
 use App\Models\ContactMessage;
+use App\Models\Experience;
 use App\Models\Project;
 use Inertia\Inertia;
 
@@ -47,6 +48,8 @@ class DashboardController extends Controller
             'total_views' => BlogPost::sum('views'),
             'total_messages' => ContactMessage::count(),
             'unread_messages' => ContactMessage::where('is_read', false)->count(),
+            'total_experiences' => Experience::count(), // Add this
+            'current_experience' => Experience::where('is_current', true)->count(), // Add this
         ];
 
         $recentPosts = BlogPost::with('category')

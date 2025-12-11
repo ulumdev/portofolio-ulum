@@ -7,6 +7,28 @@ export interface User {
   updated_at: string;
 }
 
+export interface PaginationLink {
+  url: string | null;
+  label: string;
+  active: boolean;
+}
+
+export interface PaginatedData<T> {
+  data: T[];
+  current_page: number;
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: PaginationLink[];
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+}
+
 export interface Project {
   id: number;
   title: string;
@@ -91,4 +113,26 @@ export interface PaginatedData<T> {
   total: number;
   from: number;
   to: number;
+}
+
+export interface Experience {
+  id: number;
+  position: string;
+  company: string;
+  company_url?: string;
+  location?:  string;
+  employment_type:  'full-time' | 'part-time' | 'contract' | 'freelance' | 'internship';
+  start_date: string;
+  end_date?: string;
+  is_current: boolean;
+  description: string;
+  responsibilities?:  string[];
+  technologies?: string[];
+  company_logo?: string;
+  order: number;
+  is_featured: boolean;
+  date_range?: string;
+  duration?: string;
+  created_at: string;
+  updated_at: string;
 }

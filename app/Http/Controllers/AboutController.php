@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Experience;
 use App\Models\Setting;
 use App\Models\Skill;
 use Illuminate\Http\Request;
@@ -26,14 +27,20 @@ class AboutController extends Controller
             ->orderBy('proficiency', 'desc')
             ->get();
 
-        $settings = [
-            'profile_photo' => setting('profile_photo'),
-            'site_description' => setting('site_description'),
-        ];
+        // $settings = [
+        //     'profile_photo' => setting('profile_photo'),
+        //     'site_description' => setting('site_description'),
+        // ];
 
+        $experiences = Experience::ordered()->get();
+
+        // ⭐ Ambil semua settings
+        $settings = Setting::pluck('value', 'key')->toArray();
+        
         return Inertia::render('Public/About', [
             'skills' => $skills,
             'settings' => $settings,
+            'experiences' => $experiences,
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Setting;
 use Closure;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -11,7 +12,7 @@ class HandleInertiaRequests extends Middleware
 {
     protected $rootView = 'app';
 
-    public function version(Request $request): ? string
+    public function version(Request $request): ?string
     {
         return parent::version($request);
     }
@@ -28,13 +29,24 @@ class HandleInertiaRequests extends Middleware
                 ] : null,
             ],
             'flash' => [
-                'success' => fn () => $request->session()->get('success'),
-                'error' => fn () => $request->session()->get('error'),
+                'success' => fn() => $request->session()->get('success'),
+                'error' => fn() => $request->session()->get('error'),
+                'warning' => fn() => $request->session()->get('warning'),
+                'info' => fn() => $request->session()->get('info'),
             ],
             'settings' => [
-                'site_name' => setting('site_name', 'Portfolio Ulum'),
-                'site_tagline' => setting('site_tagline', ''),
+                'site_name' => Setting::get('site_name', config('app.name')),
+                'site_tagline' => Setting::get('site_tagline', ''),
+                'bio' => Setting::get('bio', ''),
+                'github_url' => Setting::get('github_url', ''),
+                'linkedin_url' => Setting::get('linkedin_url', ''),
+                'twitter_url' => Setting::get('twitter_url', ''),
+                'email' => Setting::get('email', ''),
             ],
+            // 'settings' => [
+            //     'site_name' => setting('site_name', 'Portfolio Ulum'),
+            //     'site_tagline' => setting('site_tagline', ''),
+            // ],
         ]);
     }
 }

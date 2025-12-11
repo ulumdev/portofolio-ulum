@@ -8,7 +8,7 @@ import {
   EnvelopeIcon,
   PlusIcon,
 } from '@heroicons/react/24/outline';
-import { Post, ContactMessage } from '@/types';
+import { BlogPost, ContactMessage } from '@/types';
 
 interface DashboardStats {
   total_projects: number;
@@ -22,7 +22,7 @@ interface DashboardStats {
 
 interface DashboardProps {
   stats: DashboardStats;
-  recentPosts: Post[];
+  recentPosts: BlogPost[];
   recentMessages: ContactMessage[];
 }
 

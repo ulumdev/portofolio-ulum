@@ -51,7 +51,7 @@ class BlogController extends Controller
             });
         }
 
-        $posts = $query->latest('published_at')->paginate(12);
+        $posts = $query->latest('published_at')->paginate(10);
         $categories = Category::withCount('blogPosts')->get();
 
         return Inertia::render('Public/Blog/Index', [

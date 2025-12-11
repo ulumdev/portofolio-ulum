@@ -10,7 +10,7 @@ interface SettingsIndexProps {
     site_name: string;
     site_tagline: string;
     site_description: string;
-    contact_email: string;
+    email: string;
     github_url: string;
     linkedin_url: string;
     twitter_url: string;
@@ -23,7 +23,7 @@ export default function SettingsIndex({ settings }: SettingsIndexProps) {
     site_name: settings.site_name || '',
     site_tagline: settings.site_tagline || '',
     site_description: settings. site_description || '',
-    contact_email: settings.contact_email || '',
+    email: settings.email || '',
     github_url: settings.github_url || '',
     linkedin_url: settings.linkedin_url || '',
     twitter_url: settings.twitter_url || '',
@@ -100,9 +100,9 @@ export default function SettingsIndex({ settings }: SettingsIndexProps) {
 //               <Input
 //                 label="Contact Email"
 //                 type="email"
-//                 value={data.contact_email}
-//                 onChange={(e) => setData('contact_email', e.target.value)}
-//                 error={errors.contact_email}
+//                 value={data.email}
+//                 onChange={(e) => setData('email', e.target.value)}
+//                 error={errors.email}
 //                 placeholder="hello@example.com"
 //               />
 //             </div>
@@ -236,9 +236,9 @@ export default function SettingsIndex({ settings }: SettingsIndexProps) {
               <Input
                 label="Contact Email"
                 type="email"
-                value={data.contact_email}
-                onChange={(e) => setData('contact_email', e.target.value)}
-                error={errors.contact_email}
+                value={data.email}
+                onChange={(e) => setData('email', e.target.value)}
+                error={errors.email}
                 placeholder="hello@example.com"
               />
             </div>

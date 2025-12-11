@@ -1,65 +1,207 @@
+// import { Link, usePage } from '@inertiajs/react';
+// import { PageProps } from '@/types';
+
+// export default function Footer() {
+//   const { settings } = usePage<PageProps>(). props;
+//   const currentYear = new Date().getFullYear();
+
+//   return (
+//     <footer className="bg-gray-900 text-white">
+//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+//         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+//           {/* About */}
+//           <div className="col-span-1 md:col-span-2">
+//             <h3 className="text-2xl font-bold mb-4">{settings.site_name}</h3>
+//             <p className="text-gray-400 mb-4">
+//               {settings.site_tagline || 'Full Stack Developer & Designer'}
+//             </p>
+//           </div>
+
+//           {/* Quick Links */}
+//           <div>
+//             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+//             <ul className="space-y-2">
+//               <li>
+//                 <Link href="/" className="text-gray-400 hover:text-white">
+//                   Home
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href="/portofolio" className="text-gray-400 hover:text-white">
+//                   Portfolio
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href="/blog" className="text-gray-400 hover:text-white">
+//                   Blog
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href="/about" className="text-gray-400 hover:text-white">
+//                   About
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href="/contact" className="text-gray-400 hover:text-white">
+//                   Contact
+//                 </Link>
+//               </li>
+//             </ul>
+//           </div>
+
+//           {/* Social */}
+//           <div>
+//             <h4 className="text-lg font-semibold mb-4">Follow Me</h4>
+//             <div className="flex space-x-4">
+//               {/* Add social media icons here */}
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+//           <p>© {currentYear} {settings.site_name}. All rights reserved.</p>
+//         </div>
+//       </div>
+//     </footer>
+//   );
+// }
+
+
 import { Link, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
+import {
+  EnvelopeIcon,
+  MapPinIcon,
+  HeartIcon
+} from '@heroicons/react/24/outline';
+import {
+  FaGithub,
+  FaLinkedin,
+  FaTwitter,
+} from 'react-icons/fa';
 
 export default function Footer() {
-  const { settings } = usePage<PageProps>(). props;
+  const { settings } = usePage<PageProps>().props;
   const currentYear = new Date().getFullYear();
 
+  const socialLinks = [
+    { name: 'GitHub', icon: FaGithub, url: settings.github_url || '#' },
+    { name: 'LinkedIn', icon: FaLinkedin, url: settings.linkedin_url || '#' },
+    { name: 'Twitter', icon: FaTwitter, url: settings.twitter_url || '#' },
+  ];
+
+  const quickLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'Portofolio', href: '/portofolio' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
+  ];
+
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 border-t border-gray-200 dark:border-gray-800 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* About */}
-          <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-bold mb-4">{settings.site_name}</h3>
-            <p className="text-gray-400 mb-4">
-              {settings.site_tagline || 'Full Stack Developer & Designer'}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          {/* About Section */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center mb-4">
+              {/* <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xl">U</span>
+              </div> */}
+              <h3 className="ml-0 text-xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 dark:from-primary-400 dark:to-primary-600 bg-clip-text text-transparent">
+                {settings.site_name}
+              </h3>
+            </div>
+            <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+              {settings.site_tagline || 'Full Stack Developer & Designer crafting beautiful digital experiences'}
             </p>
+            {/* Social Links */}
+            <div className="flex space-x-4">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-primary-600 hover:text-white dark:hover:bg-primary-600 dark:hover:text-white transition-all duration-300 transform hover:scale-110"
+                    aria-label={social.name}
+                  >
+                    <Icon className="w-5 h-5" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Quick Links
+            </h4>
             <ul className="space-y-2">
-              <li>
-                <Link href="/" className="text-gray-400 hover:text-white">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/portofolio" className="text-gray-400 hover:text-white">
-                  Portfolio
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-gray-400 hover:text-white">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-gray-400 hover:text-white">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-400 hover:text-white">
-                  Contact
-                </Link>
-              </li>
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 flex items-center group"
+                  >
+                    <span className="w-0 group-hover:w-2 h-0.5 bg-primary-600 dark:bg-primary-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Social */}
+          {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Follow Me</h4>
-            <div className="flex space-x-4">
-              {/* Add social media icons here */}
-            </div>
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Get in Touch
+            </h4>
+            <ul className="space-y-3">
+              <li className="flex items-start text-gray-600 dark:text-gray-400">
+                <EnvelopeIcon className="w-5 h-5 mr-3 mt-0.5 text-primary-600 dark:text-primary-400" />
+                <a
+                  href={`mailto:${settings.email || 'hello@example.com'}`}
+                  className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                >
+                  {settings.email || 'hello@example.com'}
+                </a>
+              </li>
+              <li className="flex items-start text-gray-600 dark:text-gray-400">
+                <MapPinIcon className="w-5 h-5 mr-3 mt-0. 5 text-primary-600 dark:text-primary-400" />
+                <span>Your City, Country</span>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>© {currentYear} {settings.site_name}. All rights reserved.</p>
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-200 dark:border-gray-800 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-gray-600 dark:text-gray-400 text-sm flex items-center">
+              ©{currentYear} {settings.site_name}. Made with
+              <HeartIcon className="w-4 h-4 mx-1 text-red-500 animate-pulse" />
+              Laravel & React.
+              {/* All rights reserved. */}
+            </p>
+            <div className="flex space-x-6 text-sm">
+              <Link
+                href="#"
+                className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="#"
+                className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              >
+                Terms of Service
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

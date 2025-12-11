@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             SkillSeeder::class,
             SettingSeeder::class,
+            ExperienceSeeder::class,
             ProjectSeeder::class,
             BlogPostSeeder::class,
             ContactMessageSeeder::class,
