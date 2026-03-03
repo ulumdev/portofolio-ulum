@@ -1,6 +1,6 @@
 # 🎨 Portfolio Ulum - Laravel Portfolio Website
 
-A complete full-stack portfolio website with blog and admin dashboard built with Laravel 12, Blade Templates, and Tailwind CSS. 
+A complete full-stack portfolio website with blog and admin dashboard built with Laravel 12, React, Inertia.js, and Tailwind CSS. 
 
 ![Laravel](https://img.shields.io/badge/Laravel-12-red)
 ![PHP](https://img.shields.io/badge/PHP-8.3-blue)
@@ -31,7 +31,7 @@ A complete full-stack portfolio website with blog and admin dashboard built with
 ## 🛠️ Tech Stack
 
 - **Backend**: Laravel 12
-- **Frontend**: Blade Templates, Tailwind CSS, Alpine.js
+- **Frontend**: React 18, Inertia.js, TypeScript, Tailwind CSS
 - **Authentication**: Laravel Breeze
 - **Database**: MySQL
 - **Asset Bundler**: Vite
