@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSkillRequest;
 use App\Http\Requests\UpdateSkillRequest;
 use App\Models\Skill;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class SkillController extends Controller
@@ -26,15 +25,6 @@ class SkillController extends Controller
     }
 
     /**
-     * Show the form for creating a new skill
-     */
-    public function create()
-    {
-        // return view('admin.skills.create');
-        return Inertia::render('Admin/Skills/Create');
-    }
-
-    /**
      * Store a newly created skill
      */
     public function store(StoreSkillRequest $request)
@@ -43,26 +33,6 @@ class SkillController extends Controller
 
         return redirect()->route('admin.skills.index')
             ->with('success', 'Skill created successfully!');
-    }
-
-    /**
-     * Display the specified skill
-     */
-    public function show(Skill $skill)
-    {
-        $skill->loadCount('projects');
-        return view('admin.skills.show', compact('skill'));
-    }
-
-    /**
-     * Show the form for editing the specified skill
-     */
-    public function edit(Skill $skill)
-    {
-        // return view('admin.skills.edit', compact('skill'));
-        return Inertia::render('Admin/Skills/Edit', [
-            'skill' => $skill,
-        ]);
     }
 
     /**

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
@@ -28,15 +27,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new category
-     */
-    public function create()
-    {
-        // return view('admin.categories.create');
-        return Inertia::render('Admin/Categories/Create');
-    }
-
-    /**
      * Store a newly created category
      */
     public function store(StoreCategoryRequest $request)
@@ -45,29 +35,6 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.categories.index')
             ->with('success', 'Category created successfully!');
-    }
-
-    /**
-     * Display the specified category
-     */
-    public function show(Category $category)
-    {
-        $category->loadCount('blogPosts');
-        // return view('admin.categories.show', compact('category'));
-        return Inertia::render('Admin/Categories/Show', [
-            'category' => $category,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified category
-     */
-    public function edit(Category $category)
-    {
-        // return view('admin.categories.edit', compact('category'));
-        return Inertia::render('Admin/Categories/Edit', [
-            'category' => $category,
-        ]);
     }
 
     /**

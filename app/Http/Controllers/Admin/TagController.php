@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
 use App\Models\Tag;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class TagController extends Controller
@@ -26,15 +25,6 @@ class TagController extends Controller
     }
 
     /**
-     * Show the form for creating a new tag
-     */
-    public function create()
-    {
-        // return view('admin.tags.create');
-        return Inertia::render('Admin/Tags/Create');
-    }
-
-    /**
      * Store a newly created tag
      */
     public function store(StoreTagRequest $request)
@@ -43,26 +33,6 @@ class TagController extends Controller
 
         return redirect()->route('admin.tags.index')
             ->with('success', 'Tag created successfully!');
-    }
-
-    /**
-     * Display the specified tag
-     */
-    public function show(Tag $tag)
-    {
-        $tag->loadCount('blogPosts');
-        return view('admin.tags.show', compact('tag'));
-    }
-
-    /**
-     * Show the form for editing the specified tag
-     */
-    public function edit(Tag $tag)
-    {
-        // return view('admin.tags.edit', compact('tag'));
-        return Inertia::render('Admin/Tags/Edit', [
-            'tag' => $tag,
-        ]);
     }
 
     /**

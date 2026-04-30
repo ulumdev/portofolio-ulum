@@ -3,7 +3,6 @@
 // PUBLIC CONTROLLERS
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\PortofolioController;
 // use App\Http\Controllers\BlogController as ControllersBlogController;
@@ -64,10 +63,10 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Projects Management
-    Route::resource('projects', AdminProjectController::class);
+    Route::resource('projects', AdminProjectController::class)->except(['show']);
 
     // Blog Management
-    Route::resource('blog', AdminBlogController::class);
+    Route::resource('blog', AdminBlogController::class)->except(['show']);
 
     // // Categories Management
     // Route::resource('categories', CategoryController::class);
@@ -88,7 +87,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::resource('skills', SkillController::class)->except(['create', 'edit', 'show']);
 
     // Experiences Management
-    Route::resource('experiences', ExperienceController::class);
+    Route::resource('experiences', ExperienceController::class)->except(['show']);
 
     // Contact Messages
     Route::prefix('messages')->name('messages.')->group(function () {
@@ -123,12 +122,5 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
 | Authentication Routes (Laravel Breeze)
 |--------------------------------------------------------------------------
 */
-
-Route::middleware('auth')->group(function () {
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
 
 require __DIR__ . '/auth.php';

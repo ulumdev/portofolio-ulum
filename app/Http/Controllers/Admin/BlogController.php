@@ -99,15 +99,6 @@ class BlogController extends Controller
     }
 
     /**
-     * Display the specified blog post
-     */
-    public function show(BlogPost $blog)
-    {
-        $blog->load('user', 'category', 'tags');
-        return view('admin.blog.show', compact('blog'));
-    }
-
-    /**
      * Show the form for editing the specified blog post
      */
     public function edit(BlogPost $blog)

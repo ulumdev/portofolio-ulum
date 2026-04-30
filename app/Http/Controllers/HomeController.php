@@ -18,7 +18,7 @@ class HomeController extends Controller
         $projects = Project::published()
             ->with('skills')
             ->ordered()
-            ->take(6)
+            ->take(3)
             ->get();
 
         // Get latest blog posts (latest 3 published)

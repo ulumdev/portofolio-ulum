@@ -91,24 +91,12 @@ class ProjectController extends Controller
     }
 
     /**
-     * Display the specified project
-     */
-    public function show(Project $project)
-    {
-        $project->load('user', 'skills');
-        return view('admin.projects.show', compact('project'));
-    }
-
-    /**
      * Show the form for editing the specified project
      */
     public function edit(Project $project)
     {
-        $skills = Skill::ordered()->get();
-        $project->load('skills');
-        // return view('admin.projects.edit', compact('project', 'skills'));
         $skills = Skill::orderBy('category')->orderBy('name')->get();
-        // $project->load('skills');
+        $project->load('skills');
 
         return Inertia::render('Admin/Projects/Edit', [
             'project' => $project,

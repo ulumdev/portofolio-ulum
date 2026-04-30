@@ -1,3 +1,8 @@
+# Dokumen Arsip: React TypeScript Edition Readme
+
+Status dokumen: `arsip`  
+Catatan: dokumen ini disimpan sebagai referensi historis dan tidak menjadi acuan utama. Gunakan [Ikhtisar Project](../overview/project-overview.md) atau [Panduan Setup React + Inertia](../guides/setup-react-inertia.md) untuk referensi aktif.
+
 # 🎨 Portfolio Ulum - React TypeScript Edition
 
 Modern portfolio website with admin dashboard built with Laravel 12, React 18, TypeScript, and Inertia.js. 
@@ -117,7 +122,7 @@ Responsive design with hero section and featured content.
 
 ## 🌐 Deployment
 
-See [SETUP-REACT.md](SETUP-REACT.md) for detailed deployment instructions.
+See [React + Inertia Setup Guide](../guides/setup-react-inertia.md) for detailed deployment instructions.
 
 ## 📄 License
 

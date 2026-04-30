@@ -17,6 +17,8 @@ class SettingController extends Controller
     {
         $settings = [
             'site_name' => Setting::get('site_name', 'Portfolio Ulum'),
+            'site_tagline' => Setting::get('site_tagline', ''),
+            'site_description' => Setting::get('site_description', ''),
             'bio' => Setting::get('bio', ''),
             'profile_photo' => Setting::get('profile_photo', ''),
             'github_url' => Setting::get('github_url', ''),
@@ -38,6 +40,8 @@ class SettingController extends Controller
     {
         $request->validate([
             'site_name' => 'required|string|max:255',
+            'site_tagline' => 'nullable|string|max:255',
+            'site_description' => 'nullable|string',
             'bio' => 'nullable|string',
             'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'github_url' => 'nullable|url',
@@ -48,6 +52,8 @@ class SettingController extends Controller
 
         // Update site name
         Setting::set('site_name', $request->site_name);
+        Setting::set('site_tagline', $request->site_tagline);
+        Setting::set('site_description', $request->site_description);
 
         // Update bio
         Setting::set('bio', $request->bio);

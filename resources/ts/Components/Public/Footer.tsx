@@ -1,70 +1,11 @@
-// import { Link, usePage } from '@inertiajs/react';
-// import { PageProps } from '@/types';
 
 // export default function Footer() {
 //   const { settings } = usePage<PageProps>(). props;
 //   const currentYear = new Date().getFullYear();
 
-//   return (
-//     <footer className="bg-gray-900 text-white">
-//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-//         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-//           {/* About */}
-//           <div className="col-span-1 md:col-span-2">
-//             <h3 className="text-2xl font-bold mb-4">{settings.site_name}</h3>
-//             <p className="text-gray-400 mb-4">
-//               {settings.site_tagline || 'Full Stack Developer & Designer'}
-//             </p>
-//           </div>
 
-//           {/* Quick Links */}
-//           <div>
-//             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-//             <ul className="space-y-2">
-//               <li>
-//                 <Link href="/" className="text-gray-400 hover:text-white">
-//                   Home
-//                 </Link>
-//               </li>
-//               <li>
-//                 <Link href="/portofolio" className="text-gray-400 hover:text-white">
-//                   Portfolio
-//                 </Link>
-//               </li>
-//               <li>
-//                 <Link href="/blog" className="text-gray-400 hover:text-white">
-//                   Blog
-//                 </Link>
-//               </li>
-//               <li>
-//                 <Link href="/about" className="text-gray-400 hover:text-white">
-//                   About
-//                 </Link>
-//               </li>
-//               <li>
-//                 <Link href="/contact" className="text-gray-400 hover:text-white">
-//                   Contact
-//                 </Link>
-//               </li>
-//             </ul>
-//           </div>
 
-//           {/* Social */}
-//           <div>
-//             <h4 className="text-lg font-semibold mb-4">Follow Me</h4>
-//             <div className="flex space-x-4">
-//               {/* Add social media icons here */}
-//             </div>
-//           </div>
-//         </div>
 
-//         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-//           <p>© {currentYear} {settings.site_name}. All rights reserved.</p>
-//         </div>
-//       </div>
-//     </footer>
-//   );
-// }
 
 
 import { Link, usePage } from '@inertiajs/react';
@@ -78,6 +19,7 @@ import {
   FaGithub,
   FaLinkedin,
   FaTwitter,
+  FaInstagram,
 } from 'react-icons/fa';
 
 export default function Footer() {
@@ -88,13 +30,14 @@ export default function Footer() {
     { name: 'GitHub', icon: FaGithub, url: settings.github_url || '#' },
     { name: 'LinkedIn', icon: FaLinkedin, url: settings.linkedin_url || '#' },
     { name: 'Twitter', icon: FaTwitter, url: settings.twitter_url || '#' },
+    { name: 'Instagram', icon: FaInstagram, url: settings.instagram_url || '#' },
   ];
 
   const quickLinks = [
     { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
     { name: 'Portofolio', href: '/portofolio' },
     { name: 'Blog', href: '/blog' },
-    { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ];
 
@@ -172,7 +115,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start text-gray-600 dark:text-gray-400">
                 <MapPinIcon className="w-5 h-5 mr-3 mt-0. 5 text-primary-600 dark:text-primary-400" />
-                <span>Your City, Country</span>
+                <span>{settings.address || 'Your City, Country'}</span>
               </li>
             </ul>
           </div>
@@ -189,13 +132,13 @@ export default function Footer() {
             </p>
             <div className="flex space-x-6 text-sm">
               <Link
-                href="#"
+                href={settings.privacy_policy_url || '#'}
                 className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               >
                 Privacy Policy
               </Link>
               <Link
-                href="#"
+                href={settings.terms_of_service_url || '#'}
                 className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               >
                 Terms of Service
