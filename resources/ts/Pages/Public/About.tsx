@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PublicLayout from "@/Layouts/PublicLayout";
 import { Experience, Settings, Skill } from "@/types";
+import DOMPurify from "dompurify";
 import {
     SparklesIcon,
     MapPinIcon,
@@ -150,7 +151,9 @@ export default function About({ settings, skills, experiences }: AboutProps) {
 
                                                 {/* Description mapped from bullet points or string */}
                                                 <div className="prose prose-sm dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 mb-6 marker:text-blue-500">
-                                                    <div dangerouslySetInnerHTML={{ __html: exp.description }} />
+                                                    <div
+                                                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(exp.description) }}
+                                                    />
                                                 </div>
 
                                                 {/* Tags */}

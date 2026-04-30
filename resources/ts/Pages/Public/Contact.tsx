@@ -9,16 +9,10 @@ import SectionHero from "@/Components/Public/UI/SectionHero";
 import StyledCard from "@/Components/Public/UI/StyledCard";
 import { FormInput, FormTextarea } from "@/Components/Public/UI/FormControls";
 import GradientButton from "@/Components/Public/UI/GradientButton";
+import { Settings } from "@/types";
 
 interface ContactProps {
-    settings: {
-        email?: string;
-        phone?: string;
-        address?: string;
-        github_url?: string;
-        linkedin_url?: string;
-        twitter_url?: string;
-    };
+    settings: Settings;
 }
 
 export default function Contact({ settings }: ContactProps) {

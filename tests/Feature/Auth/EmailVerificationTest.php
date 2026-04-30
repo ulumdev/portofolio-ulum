@@ -38,7 +38,28 @@ class EmailVerificationTest extends TestCase
 
         Event::assertDispatched(Verified::class);
         $this->assertTrue($user->fresh()->hasVerifiedEmail());
-        $response->assertRedirect(route('dashboard', absolute: false).'?verified=1');
+        $response->assertRedirect(route('home', absolute: false).'?verified=1');
+    }
+
+    public function test_admin_email_can_be_verified_and_redirects_to_admin_dashboard(): void
+    {
+        $admin = User::factory()->unverified()->create([
+            'role' => 'admin',
+        ]);
+
+        Event::fake();
+
+        $verificationUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => $admin->id, 'hash' => sha1($admin->email)]
+        );
+
+        $response = $this->actingAs($admin)->get($verificationUrl);
+
+        Event::assertDispatched(Verified::class);
+        $this->assertTrue($admin->fresh()->hasVerifiedEmail());
+        $response->assertRedirect(route('admin.dashboard', absolute: false).'?verified=1');
     }
 
     public function test_email_is_not_verified_with_invalid_hash(): void

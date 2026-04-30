@@ -37,7 +37,7 @@ export default function Header({ title }: HeaderProps) {
           <Menu as="div" className="relative">
             <Menu.Button className="flex items-center space-x-3 focus:outline-none">
               <div className="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center text-white font-semibold text-sm">
-                {auth. user?.name.charAt(0). toUpperCase()}
+                {auth.user?.name.charAt(0).toUpperCase()}
               </div>
             </Menu.Button>
             <Transition
@@ -50,18 +50,6 @@ export default function Header({ title }: HeaderProps) {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                {/* <Menu.Item>
-                  {({ active }) => (
-                    <Link
-                      href="/profile"
-                      className={`${
-                        active ? 'bg-gray-100' : ''
-                      } block px-4 py-2 text-sm text-gray-700`}
-                    >
-                      Your Profile
-                    </Link>
-                  )}
-                </Menu. Item> */}
                 <Menu.Item>
                   {({ active }) => (
                     <Link
@@ -87,7 +75,7 @@ export default function Header({ title }: HeaderProps) {
                       Sign out
                     </Link>
                   )}
-                </Menu. Item>
+                </Menu.Item>
               </Menu.Items>
             </Transition>
           </Menu>

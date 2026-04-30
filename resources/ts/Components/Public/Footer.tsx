@@ -1,13 +1,3 @@
-
-// export default function Footer() {
-//   const { settings } = usePage<PageProps>(). props;
-//   const currentYear = new Date().getFullYear();
-
-
-
-
-
-
 import { Link, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import {
@@ -48,9 +38,6 @@ export default function Footer() {
           {/* About Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center mb-4">
-              {/* <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">U</span>
-              </div> */}
               <h3 className="ml-0 text-xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 dark:from-primary-400 dark:to-primary-600 bg-clip-text text-transparent">
                 {settings.site_name}
               </h3>
@@ -114,7 +101,7 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex items-start text-gray-600 dark:text-gray-400">
-                <MapPinIcon className="w-5 h-5 mr-3 mt-0. 5 text-primary-600 dark:text-primary-400" />
+                <MapPinIcon className="w-5 h-5 mr-3 mt-0.5 text-primary-600 dark:text-primary-400" />
                 <span>{settings.address || 'Your City, Country'}</span>
               </li>
             </ul>
@@ -128,7 +115,6 @@ export default function Footer() {
               ©{currentYear} {settings.site_name}. Made with
               <HeartIcon className="w-4 h-4 mx-1 text-red-500 animate-pulse" />
               Laravel & React.
-              {/* All rights reserved. */}
             </p>
             <div className="flex space-x-6 text-sm">
               <Link
