@@ -21,6 +21,7 @@ export interface Settings {
     happy_clients?: string;
     privacy_policy_url?: string;
     terms_of_service_url?: string;
+    cv_file?: string;
 }
 
 export interface PageProps {

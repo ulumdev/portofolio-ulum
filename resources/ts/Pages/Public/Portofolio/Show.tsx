@@ -105,26 +105,6 @@ export default function PortofolioShow({ project }: PortofolioShowProps) {
                 </div>
               </div>
 
-              {/* ===== Ini nanti ditambahkan - CATATAN */}
-              {/* Features Section (if you want to add) */}
-              {/* <div className="animate-fade-in-up bg-gradient-to-br from-primary-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 border border-primary-200 dark:border-gray-700">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                Key Features
-              </h3>
-              <ul className="space-y-3">
-                {[
-                  'Responsive Design',
-                  'Modern UI/UX',
-                  'Performance Optimized',
-                  'SEO Friendly',
-                ].map((feature, index) => (
-                  <li key={index} className="flex items-center text-gray-700 dark:text-gray-300">
-                    <span className="w-2 h-2 bg-primary-600 dark:bg-primary-400 rounded-full mr-3"></span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div> */}
             </div>
 
             {/* Sidebar */}
@@ -137,14 +117,27 @@ export default function PortofolioShow({ project }: PortofolioShowProps) {
                     Technologies
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {project.skills.map((skill) => (
-                      <span
-                        key={skill.id}
-                        className="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-700 text-blue-600 dark:text-blue-400 rounded-lg border border-slate-200 dark:border-slate-600 hover:scale-105 transition-transform"
-                      >
-                        {skill.name}
-                      </span>
-                    ))}
+                    {project.skills && project.skills.length > 0 ? (
+                        project.skills.map((skill) => (
+                          <span
+                            key={skill.id}
+                            className="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg border border-slate-200 dark:border-slate-600/50 hover:scale-105 transition-transform"
+                          >
+                            {skill.name}
+                          </span>
+                        ))
+                    ) : project.tags ? (
+                        project.tags.split(",").map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg border border-slate-200 dark:border-slate-600/50 hover:scale-105 transition-transform"
+                          >
+                            {tag.trim()}
+                          </span>
+                        ))
+                    ) : (
+                        <span className="text-sm text-slate-500">No specific technologies listed.</span>
+                    )}
                   </div>
                 </div>
 
@@ -214,20 +207,6 @@ export default function PortofolioShow({ project }: PortofolioShowProps) {
                       </dd>
                     </div>
                   </dl>
-                </div>
-
-                {/* CTA */}
-                <div className="animate-fade-in-up bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-6 text-slate-900 dark:text-white shadow-sm dark:shadow-lg text-center mt-6">
-                  <h4 className="text-lg font-bold mb-2">Interested in working together?</h4>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
-                    Let's discuss your next project
-                  </p>
-                  <Link
-                    href="/contact"
-                    className="block w-full px-5 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-500 transition-colors shadow-lg shadow-blue-500/30 text-center"
-                  >
-                    Get In Touch
-                  </Link>
                 </div>
               </div>
             </div>

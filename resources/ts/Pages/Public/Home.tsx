@@ -3,6 +3,10 @@ import { Link, usePage } from "@inertiajs/react";
 import {
     CodeBracketIcon,
     ArrowRightIcon,
+    UserIcon,
+    BriefcaseIcon,
+    DocumentArrowDownIcon,
+    EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import { Project, BlogPost, PageProps } from "@/types";
 
@@ -31,21 +35,68 @@ export default function Home({ featuredProjects, latestPosts }: HomeProps) {
                 />
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-24 md:pb-32 relative z-10">
-                    {/* CTA Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center animate-fade-in-up px-4" style={{ animationDelay: "0.3s", animationFillMode: "both" }}>
+                    {/* Floating Dock Menu */}
+                    <div className="inline-flex items-center p-2 bg-white/80 dark:bg-white/5 backdrop-blur-xl rounded-full shadow-lg dark:shadow-[0_0_30px_rgba(255,255,255,0.05)] border border-slate-200 dark:border-white/10 gap-1 sm:gap-2 animate-fade-in-up" style={{ animationDelay: "0.3s", animationFillMode: "both" }}>
+                        
+                        {/* 1. About */}
+                        <Link
+                            href="/about"
+                            className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 transition-all duration-300"
+                            title="About Me"
+                        >
+                            <UserIcon className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-white transition-colors" />
+                            
+                            {/* Tooltip */}
+                            <span className="absolute -bottom-10 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 text-[10px] sm:text-xs font-semibold text-white bg-slate-800 dark:bg-black px-3 py-1.5 rounded-md pointer-events-none transition-all duration-300 whitespace-nowrap">
+                                About Me
+                            </span>
+                        </Link>
+                        
+                        {/* 2. Projects */}
                         <Link
                             href="/portofolio"
-                            className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-3.5 text-sm sm:text-base font-semibold text-slate-700 dark:text-white bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-full overflow-hidden hover:bg-slate-200 dark:hover:bg-white/10 transition-all duration-300"
+                            className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 transition-all duration-300"
+                            title="Portofolio"
                         >
-                            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-500/10 to-indigo-500/10 dark:from-blue-500/20 dark:to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                            <CodeBracketIcon className="w-5 h-5 mr-2" />
-                            View My Work
+                            <BriefcaseIcon className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-white transition-colors" />
+                            <span className="absolute -bottom-10 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 text-[10px] sm:text-xs font-semibold text-white bg-slate-800 dark:bg-black px-3 py-1.5 rounded-md pointer-events-none transition-all duration-300 whitespace-nowrap">
+                                Projects
+                            </span>
                         </Link>
+
+                        {/* Divider */}
+                        <div className="w-px h-8 bg-slate-200 dark:bg-white/10 mx-1"></div>
+
+                        {/* 3. Download CV */}
+                        <a
+                            href={(settings as any).cv_file ? `/storage/${(settings as any).cv_file}` : "#"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 transition-all duration-300"
+                            title="Download CV"
+                            onClick={(e) => {
+                                if (!(settings as any).cv_file) {
+                                    e.preventDefault();
+                                    alert("CV belum tersedia. Nanti bisa diupload via dashboard Admin.");
+                                }
+                            }}
+                        >
+                            <DocumentArrowDownIcon className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-white transition-colors" />
+                            <span className="absolute -bottom-10 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 text-[10px] sm:text-xs font-semibold text-white bg-slate-800 dark:bg-black px-3 py-1.5 rounded-md pointer-events-none transition-all duration-300 whitespace-nowrap">
+                                Download CV
+                            </span>
+                        </a>
+
+                        {/* 4. Contact */}
                         <Link
                             href="/contact"
-                            className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 text-sm sm:text-base font-semibold text-white dark:text-black bg-blue-600 dark:bg-white rounded-full hover:bg-blue-700 dark:hover:bg-gray-100 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg dark:shadow-[0_0_40px_rgba(255,255,255,0.2)]"
+                            className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 transition-all duration-300"
+                            title="Contact Me"
                         >
-                            Get In Touch
+                            <EnvelopeIcon className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-white transition-colors" />
+                            <span className="absolute -bottom-10 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 text-[10px] sm:text-xs font-semibold text-white bg-slate-800 dark:bg-black px-3 py-1.5 rounded-md pointer-events-none transition-all duration-300 whitespace-nowrap">
+                                Contact
+                            </span>
                         </Link>
                     </div>
                 </div>

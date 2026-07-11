@@ -8,6 +8,10 @@ import {
     CheckCircleIcon,
     CodeBracketIcon,
     ArrowTopRightOnSquareIcon,
+    DocumentArrowDownIcon,
+    ServerStackIcon,
+    WrenchScrewdriverIcon,
+    CommandLineIcon,
 } from "@heroicons/react/24/outline";
 
 interface AboutProps {
@@ -50,6 +54,45 @@ export default function About({ settings, skills, experiences }: AboutProps) {
         internship: "bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-400 border border-pink-200 dark:border-pink-800",
     };
 
+    // Category styling helpers
+    const getCategoryStyle = (category: string) => {
+        const lowerCat = category.toLowerCase();
+        if (lowerCat.includes('front')) {
+            return {
+                bg: 'bg-blue-100 dark:bg-blue-900/30',
+                text: 'text-blue-600 dark:text-blue-400',
+                border: 'border-blue-200 dark:border-blue-800',
+                dot: 'bg-blue-500',
+                icon: <CodeBracketIcon className="w-5 h-5" />
+            };
+        }
+        if (lowerCat.includes('back') || lowerCat.includes('database')) {
+            return {
+                bg: 'bg-emerald-100 dark:bg-emerald-900/30',
+                text: 'text-emerald-600 dark:text-emerald-400',
+                border: 'border-emerald-200 dark:border-emerald-800',
+                dot: 'bg-emerald-500',
+                icon: <ServerStackIcon className="w-5 h-5" />
+            };
+        }
+        if (lowerCat.includes('tool') || lowerCat.includes('devops')) {
+            return {
+                bg: 'bg-orange-100 dark:bg-orange-900/30',
+                text: 'text-orange-600 dark:text-orange-400',
+                border: 'border-orange-200 dark:border-orange-800',
+                dot: 'bg-orange-500',
+                icon: <WrenchScrewdriverIcon className="w-5 h-5" />
+            };
+        }
+        return {
+            bg: 'bg-indigo-100 dark:bg-indigo-900/30',
+            text: 'text-indigo-600 dark:text-indigo-400',
+            border: 'border-indigo-200 dark:border-indigo-800',
+            dot: 'bg-indigo-500',
+            icon: <CommandLineIcon className="w-5 h-5" />
+        };
+    };
+
     return (
         <PublicLayout title="About">
             <div className="w-full">
@@ -58,18 +101,23 @@ export default function About({ settings, skills, experiences }: AboutProps) {
                     {/* SECTION 1: Hero & Profile */}
                     <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                         <div className="lg:col-span-4 lg:col-start-1 animate-fade-in-up">
-                            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-none border-4 border-white dark:border-slate-800">
-                                {settings.profile_photo ? (
-                                    <img
-                                        src={`/storage/${settings.profile_photo}`}
-                                        alt={settings.site_name || "Profile"}
-                                        className="w-full h-auto aspect-[3/4] object-cover"
-                                    />
-                                ) : (
-                                    <div className="w-full aspect-[3/4] bg-gradient-to-br from-slate-200 to-slate-400 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center">
-                                        <span className="text-slate-400 dark:text-slate-500 text-8xl font-bold">U</span>
-                                    </div>
-                                )}
+                            <div className="relative group">
+                                {/* Animated background glow */}
+                                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                                
+                                <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-none border-4 border-white/50 dark:border-slate-800/50 backdrop-blur-sm">
+                                    {settings.profile_photo ? (
+                                        <img
+                                            src={`/storage/${settings.profile_photo}`}
+                                            alt={settings.site_name || "Profile"}
+                                            className="w-full h-auto aspect-[3/4] object-cover hover:scale-105 transition-transform duration-700"
+                                        />
+                                    ) : (
+                                        <div className="w-full aspect-[3/4] bg-gradient-to-br from-slate-200 to-slate-400 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center">
+                                            <span className="text-slate-400 dark:text-slate-500 text-8xl font-bold">U</span>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
 
@@ -82,15 +130,35 @@ export default function About({ settings, skills, experiences }: AboutProps) {
                                 {settings.site_description || "I'm a Fullstack Developer and UX Enthusiast. With years of experience, I specialize in building robust web applications that bridge the gap between technical complexity and intuitive design."}
                             </p>
 
-                            <div className="flex flex-wrap gap-4">
-                                <div className="inline-flex items-center px-5 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full shadow-sm">
+                            <div className="flex flex-wrap items-center gap-4">
+                                <div className="inline-flex items-center px-5 py-2.5 bg-white dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-full shadow-sm">
                                     <MapPinIcon className="w-5 h-5 text-blue-500 mr-2.5" />
-                                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Mojokerto, Indonesia</span>
+                                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{settings.address || "Mojokerto, Indonesia"}</span>
                                 </div>
-                                <div className="inline-flex items-center px-5 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full shadow-sm">
-                                    <CheckCircleIcon className="w-5 h-5 text-blue-500 mr-2.5" />
+                                <div className="inline-flex items-center px-5 py-2.5 bg-white dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-full shadow-sm">
+                                    <span className="relative flex h-3 w-3 mr-2.5">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                                    </span>
                                     <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Available for hire</span>
                                 </div>
+                                
+                                {/* Download CV Button */}
+                                <a
+                                    href={(settings as any).cv_file ? `/storage/${(settings as any).cv_file}` : "#"}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => {
+                                        if (!(settings as any).cv_file) {
+                                            e.preventDefault();
+                                            alert("CV belum tersedia. Nanti bisa diupload via dashboard Admin.");
+                                        }
+                                    }}
+                                    className="inline-flex items-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white border border-transparent rounded-full shadow-sm hover:shadow-md transition-all duration-300 group"
+                                >
+                                    <DocumentArrowDownIcon className="w-5 h-5 mr-2.5 group-hover:-translate-y-0.5 transition-transform" />
+                                    <span className="text-sm font-semibold">Download CV</span>
+                                </a>
                             </div>
                         </div>
                     </section>
@@ -105,13 +173,19 @@ export default function About({ settings, skills, experiences }: AboutProps) {
                                 <div className="absolute left-0 right-0 top-1/2 h-px bg-slate-200 dark:bg-slate-800 -z-0"></div>
                             </div>
 
-                            <div className="max-w-4xl mx-auto">
-                                <div className="relative border-l-2 border-slate-200 dark:border-slate-700 ml-4 md:ml-0 space-y-12">
+                            <div className="max-w-4xl mx-auto relative pb-8">
+                                {/* Gradient fade-out at the bottom of the timeline line */}
+                                <div className="absolute left-4 md:left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-slate-200 via-slate-200 to-transparent dark:from-slate-700 dark:via-slate-700 dark:to-transparent z-0"></div>
+                                
+                                <div className="relative ml-4 md:ml-0 space-y-12">
                                     {experiences.map((exp) => (
-                                        <div key={exp.id} className="relative pl-8 md:pl-12 group">
+                                        <div key={exp.id} className="relative pl-8 md:pl-12 group z-10">
                                             {/* Timeline Node */}
-                                            <div className={`absolute -left-[17px] top-1.5 w-8 h-8 rounded-full flex items-center justify-center border-4 border-slate-50 dark:border-slate-900 transition-colors duration-300 ${exp.is_current ? 'bg-blue-500' : 'bg-slate-300 dark:bg-slate-600 group-hover:bg-blue-400'}`}>
-                                                <div className={`w-2 h-2 rounded-full ${exp.is_current ? 'bg-white' : 'bg-slate-50 dark:bg-slate-900'}`}></div>
+                                            <div className={`absolute -left-[17px] top-1.5 w-8 h-8 rounded-full flex items-center justify-center border-4 border-slate-50 dark:border-[#0f1115] transition-colors duration-300 ${exp.is_current ? 'bg-blue-500' : 'bg-slate-300 dark:bg-slate-600 group-hover:bg-blue-400'}`}>
+                                                {exp.is_current && (
+                                                    <span className="absolute inset-0 rounded-full border-2 border-blue-400 animate-ping opacity-75"></span>
+                                                )}
+                                                <div className={`w-2 h-2 rounded-full relative z-10 ${exp.is_current ? 'bg-white' : 'bg-slate-50 dark:bg-slate-900'}`}></div>
                                             </div>
 
                                             {/* Card Content */}
@@ -180,19 +254,21 @@ export default function About({ settings, skills, experiences }: AboutProps) {
                                 const maxVisible = 5;
                                 const showExpandButton = catSkills.length > maxVisible;
                                 const visibleSkills = isExpanded ? catSkills : catSkills.slice(0, maxVisible);
+                                const style = getCategoryStyle(category);
 
                                 return (
                                     <div key={category} className="bg-transparent">
                                         <div className="flex items-center gap-3 mb-6">
-                                            <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-slate-800 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                                                <CodeBracketIcon className="w-5 h-5" />
+                                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${style.bg} ${style.text}`}>
+                                                {style.icon}
                                             </div>
                                             <h3 className="text-xl font-bold text-slate-900 dark:text-white">{category}</h3>
                                         </div>
 
                                         <div className="flex flex-wrap gap-3">
                                             {visibleSkills.map((skill: Skill) => (
-                                                <div key={skill.id} className="inline-flex items-center px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm hover:shadow-md hover:border-blue-300 dark:hover:border-slate-600 transition-all">
+                                                <div key={skill.id} className="inline-flex items-center px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm hover:shadow-md transition-all group">
+                                                    <span className={`w-2 h-2 rounded-full mr-2 ${style.dot}`}></span>
                                                     <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{skill.name}</span>
                                                 </div>
                                             ))}
