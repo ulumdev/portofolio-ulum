@@ -1,5 +1,6 @@
 import PublicLayout from "@/Layouts/PublicLayout";
 import { router } from "@inertiajs/react";
+import {
     ChevronLeftIcon,
     ChevronRightIcon,
     SparklesIcon,
