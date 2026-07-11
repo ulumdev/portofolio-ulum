@@ -91,14 +91,12 @@ export default function BlogIndex({
 
     return (
         <PublicLayout title="Blog">
-            <div className="dark bg-slate-900 min-h-screen text-slate-300 font-sans">
-                {/* Hero Header */}
+            <div className="w-full">
+                {/* Header / Hero Section */}
                 <SectionHero
                     title="Thoughts &"
                     gradientWord="Insights"
                     subtitle="Articles, tutorials, and thoughts on web development, design, and technology"
-                    badgeText="Blog"
-                    badgeIcon={<SparklesIcon className="w-4 h-4" />}
                 />
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

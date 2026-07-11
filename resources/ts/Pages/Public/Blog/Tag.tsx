@@ -24,8 +24,8 @@ interface BlogTagProps {
 
 export default function BlogTag({ tag, posts }: BlogTagProps) {
     return (
-        <PublicLayout title={`#${tag.name} - Blog`}>
-            <div className="dark bg-slate-900 min-h-screen text-slate-300 font-sans">
+        <PublicLayout title={`Tag: ${tag.name}`}>
+            <div className="w-full">
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 z-20">
                     <Link
                         href="/blog"

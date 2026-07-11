@@ -10,12 +10,12 @@ interface Project {
     tags?: string;
     skills?: { id: number; name: string }[];
     status?: string;
-    [key: string]: any; // Allow other properties
+    [key: string]: any;
 }
 
 interface ProjectCardProps {
     project: Project;
-    index?: number; // Optional index for staggered animation delays
+    index?: number;
 }
 
 export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
@@ -30,82 +30,63 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
 
     return (
         <article
-            className="group rounded-2xl overflow-hidden bg-slate-800 shadow-xl border border-slate-700/50 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-900/20 transition-all duration-300 transform hover:-translate-y-2"
+            className="group relative flex flex-col justify-between h-full rounded-[2rem] bg-white dark:bg-[#18181b]/50 backdrop-blur-xl border border-slate-200 dark:border-white/5 overflow-hidden hover:border-slate-300 dark:hover:border-white/20 transition-all duration-500 hover:-translate-y-2 shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
             style={{ animationDelay: `${index * 0.1}s` }}
         >
-            <div className="relative h-48 md:h-56 overflow-hidden">
-                {project.featured_image ? (
-                    <img
-                        src={`/storage/${project.featured_image}`}
-                        alt={project.title}
-                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
-                        onError={(e) => {
-                            (e.target as HTMLImageElement).src = defaultImage;
-                        }}
-                    />
-                ) : (
-                    <div className="w-full h-full bg-slate-900 flex items-center justify-center text-slate-600">
-                        <PhotoIcon className="w-16 h-16" />
-                    </div>
-                )}
-                {/* Status Badge */}
-                {/* {project.status && (
-                    <div className="absolute top-4 right-4 z-20">
-                        <span className="px-3 py-1 bg-slate-900/80 backdrop-blur-sm rounded-full text-xs font-semibold text-white shadow-lg border border-slate-700">
-                            {project.status === "published"
-                                ? "✨ Published"
-                                : "🚧 Draft"}
-                        </span>
-                    </div>
-                )} */}
-                {/* Overlay Gradient on hover */}
-                <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <Link
-                        href={`/portofolio/${project.slug}`}
-                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-full shadow-lg transform -translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-                    >
-                        View Project
-                    </Link>
+            {/* Image Section */}
+            <div className="relative h-48 sm:h-56 md:h-64 w-full overflow-hidden p-2">
+                <div className="relative w-full h-full rounded-3xl overflow-hidden border border-slate-100 dark:border-white/5">
+                    {project.featured_image ? (
+                        <img
+                            src={`/storage/${project.featured_image}`}
+                            alt={project.title}
+                            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                            onError={(e) => {
+                                (e.target as HTMLImageElement).src = defaultImage;
+                            }}
+                        />
+                    ) : (
+                        <div className="w-full h-full bg-slate-100 dark:bg-[#09090b] flex items-center justify-center text-slate-400 dark:text-gray-700">
+                            <PhotoIcon className="w-12 h-12 sm:w-16 sm:h-16" />
+                        </div>
+                    )}
+                    {/* Dark Overlay Gradient on Hover */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
             </div>
 
-            <div className="p-6">
-                {/* Skills */}
+            {/* Content Section */}
+            <div className="flex flex-col flex-grow p-6 sm:p-8 pt-4">
                 {skillsList.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-4 sm:mb-5">
                         {skillsList.map((skill: any) => (
                             <span
                                 key={skill.id}
-                                className="px-3 py-1 text-xs font-semibold bg-blue-900/30 text-blue-400 border border-blue-500/20 rounded-full"
+                                className="px-3 py-1 text-[10px] sm:text-xs font-semibold bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-gray-300 border border-slate-200 dark:border-white/10 rounded-full backdrop-blur-sm"
                             >
                                 {skill.name}
                             </span>
                         ))}
-                        {project.skills && project.skills.length > 3 && (
-                            <span className="px-3 py-1 text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700/50 rounded-full">
-                                +{project.skills.length - 3}
-                            </span>
-                        )}
                     </div>
                 )}
 
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
                     <Link href={`/portofolio/${project.slug}`}>
                         {project.title}
                     </Link>
                 </h3>
 
-                <p className="text-slate-400 mb-6 line-clamp-3 text-sm leading-relaxed">
+                <p className="text-slate-600 dark:text-gray-400 mb-6 sm:mb-8 line-clamp-3 text-sm leading-relaxed font-light">
                     {project.description}
                 </p>
 
-                <div className="pt-4 border-t border-slate-700 flex justify-between items-center">
+                <div className="mt-auto pt-5 sm:pt-6 border-t border-slate-100 dark:border-white/5">
                     <Link
                         href={`/portofolio/${project.slug}`}
-                        className="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
+                        className="inline-flex items-center text-sm font-semibold text-blue-600 dark:text-white/70 group-hover:text-blue-800 dark:group-hover:text-blue-400 transition-colors"
                     >
-                        Read Case Study
-                        <ArrowTopRightOnSquareIcon className="w-4 h-4 ml-1. 5" />
+                        View Project
+                        <ArrowTopRightOnSquareIcon className="w-4 h-4 ml-2 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </Link>
                 </div>
             </div>

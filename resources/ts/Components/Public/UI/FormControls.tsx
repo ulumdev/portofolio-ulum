@@ -9,12 +9,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 export function FormInput({ label, error, required, className = "", ...props }: InputProps) {
     return (
         <div className={`mb-6 ${className}`}>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 {label} {required && <span className="text-red-500">*</span>}
             </label>
             <input
-                className={`w-full bg-slate-900 border ${error ? "border-red-500" : "border-slate-700"
-                    } rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all`}
+                className={`w-full bg-white dark:bg-slate-900 border ${error ? "border-red-500" : "border-slate-300 dark:border-slate-700"
+                    } rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all`}
                 required={required}
                 {...props}
             />
@@ -32,12 +32,12 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 export function FormTextarea({ label, error, required, className = "", ...props }: TextareaProps) {
     return (
         <div className={`mb-6 ${className}`}>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 {label} {required && <span className="text-red-500">*</span>}
             </label>
             <textarea
-                className={`w-full bg-slate-900 border ${error ? "border-red-500" : "border-slate-700"
-                    } rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all min-h-[150px]`}
+                className={`w-full bg-white dark:bg-slate-900 border ${error ? "border-red-500" : "border-slate-300 dark:border-slate-700"
+                    } rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all min-h-[150px]`}
                 required={required}
                 {...props}
             />

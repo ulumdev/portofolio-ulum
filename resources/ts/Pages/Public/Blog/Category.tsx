@@ -24,9 +24,9 @@ interface BlogCategoryProps {
 
 export default function BlogCategory({ category, posts }: BlogCategoryProps) {
     return (
-        <PublicLayout title={`${category.name} - Blog`}>
-            <div className="dark bg-slate-900 min-h-screen text-slate-300 font-sans">
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 z-20">
+        <PublicLayout title={`Category: ${category.name}`}>
+            <div className="w-full">
+                {/* Navigation */}
                     <Link
                         href="/blog"
                         className="inline-flex items-center text-slate-400 hover:text-white mb-2 group transition-colors animate-fade-in-up"
@@ -93,7 +93,7 @@ export default function BlogCategory({ category, posts }: BlogCategoryProps) {
                                                 )
                                             }
                                             className={`px-4 py-2 rounded-lg font-medium transition-all ${page === posts.current_page
-                                                ? "bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 text-white shadow-lg scale-110"
+                                                ? "bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white shadow-lg scale-110"
                                                 : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
                                                 }`}
                                         >

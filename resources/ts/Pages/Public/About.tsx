@@ -52,8 +52,8 @@ export default function About({ settings, skills, experiences }: AboutProps) {
 
     return (
         <PublicLayout title="About">
-            <div className="dark bg-slate-50 dark:bg-slate-900 min-h-screen text-slate-800 dark:text-slate-300 font-sans transition-colors duration-300">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 pt-24 space-y-32">
+            <div className="w-full">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 pt-20 space-y-16">
 
                     {/* SECTION 1: Hero & Profile */}
                     <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -74,13 +74,8 @@ export default function About({ settings, skills, experiences }: AboutProps) {
                         </div>
 
                         <div className="lg:col-span-8 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-                            <div className="inline-flex items-center px-4 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full mb-6 font-bold text-xs tracking-wider border border-blue-200 dark:border-blue-800/50">
-                                <SparklesIcon className="w-4 h-4 mr-2" />
-                                ABOUT ME
-                            </div>
-
                             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight leading-[1.1]">
-                                I build <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">digital experiences</span> that matter.
+                                I build <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-500">digital experiences</span> that matter.
                             </h1>
 
                             <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10 max-w-3xl">
@@ -171,7 +166,7 @@ export default function About({ settings, skills, experiences }: AboutProps) {
                     )}
 
                     {/* SECTION 3: Technical Skills */}
-                    <section className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+                    <section className="animate-fade-in-up pb-16" style={{ animationDelay: "0.3s" }}>
                         <div className="flex items-center mb-12 relative">
                             <h2 className="text-3xl font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-900 pr-6 z-10">
                                 Technical Skills
@@ -216,43 +211,6 @@ export default function About({ settings, skills, experiences }: AboutProps) {
                             })}
                         </div>
                     </section>
-
-                    {/* SECTION 4: Call To Action */}
-                    <section className="animate-fade-in-up pb-12" style={{ animationDelay: "0.4s" }}>
-                        <div className="bg-gradient-to-br from-blue-600 to-blue-500 dark:from-blue-600 dark:to-indigo-700 rounded-[2.5rem] p-12 md:p-20 text-center shadow-2xl relative overflow-hidden">
-                            {/* Decorative Elements */}
-                            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                                <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[150%] bg-white/10 rotate-12 blur-3xl rounded-full"></div>
-                                <div className="absolute bottom-[10%] -left-[10%] w-[30%] h-[50%] bg-indigo-900/20 rotate-45 blur-2xl rounded-full"></div>
-                            </div>
-
-                            <div className="relative z-10 max-w-3xl mx-auto">
-                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
-                                    Let's build something amazing together
-                                </h2>
-                                <p className="text-lg md:text-xl text-blue-100 mb-10 max-w-2xl mx-auto font-medium">
-                                    Currently looking for new opportunities and collaborations. Whether you have a question or just want to say hi, my inbox is always open.
-                                </p>
-                                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                                    <a
-                                        href="/contact"
-                                        className="w-full sm:w-auto px-8 py-4 bg-white text-blue-600 font-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
-                                    >
-                                        Get in Touch
-                                    </a>
-                                    <a
-                                        href={settings.linkedin_url || "/contact"}
-                                        target={settings.linkedin_url ? "_blank" : "_self"}
-                                        rel="noopener noreferrer"
-                                        className="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-white/30 text-white font-bold rounded-xl hover:bg-white/10 transition-all duration-300"
-                                    >
-                                        Download CV
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
                 </div>
             </div>
         </PublicLayout>

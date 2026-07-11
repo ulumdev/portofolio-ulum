@@ -16,7 +16,7 @@
 
 
 import PublicLayout from '@/Layouts/PublicLayout';
-import { Link, useForm } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import {
   ArrowLeftIcon,
   ClockIcon,
@@ -34,23 +34,11 @@ interface BlogShowProps {
 }
 
 export default function BlogShow({ post, relatedPosts }: BlogShowProps) {
-  const { data, setData, post: submit, processing, errors, reset } = useForm({
-    email: '',
-  });
-
-  const handleSubscribe: React.FormEventHandler = (e) => {
-    e.preventDefault();
-    submit('/subscribe', {
-      preserveScroll: true,
-      onSuccess: () => reset('email'),
-    });
-  };
-
   return (
     <PublicLayout title={post.title}>
-      <div className="dark bg-slate-900 min-h-screen text-slate-300 font-sans">
+      <div className="w-full">
         {/* Hero Header */}
-        <section className="relative bg-slate-900 text-white pt-24 pb-16 overflow-hidden border-b border-slate-800">
+        <section className="relative bg-white dark:bg-slate-900 text-slate-900 dark:text-white pt-24 pb-16 overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors">
           <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
 
           <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
@@ -72,12 +60,12 @@ export default function BlogShow({ post, relatedPosts }: BlogShowProps) {
               </Link>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight animate-fade-in-up text-slate-900 dark:text-white" style={{ animationDelay: '0.2s' }}>
               {post.title}
             </h1>
 
             {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-6 text-white/80 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            <div className="flex flex-wrap items-center gap-6 text-slate-600 dark:text-white/80 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
               <div className="flex items-center">
                 <UserIcon className="w-5 h-5 mr-2" />
                 <span>Admin</span>
@@ -110,7 +98,7 @@ export default function BlogShow({ post, relatedPosts }: BlogShowProps) {
           {/* Featured Image */}
           {post.featured_image && (
             <div className="mb-12 animate-fade-in-up">
-              <div className="rounded-2xl overflow-hidden shadow-2xl border border-slate-800">
+              <div className="rounded-2xl overflow-hidden shadow-xl dark:shadow-2xl border border-slate-200 dark:border-slate-800">
                 <img
                   src={`/storage/${post.featured_image}`}
                   alt={post.title}
@@ -138,9 +126,9 @@ export default function BlogShow({ post, relatedPosts }: BlogShowProps) {
         </div> */}
 
           {/* Content */}
-          <article className="prose prose-lg prose-invert max-w-none mb-12 animate-fade-in-up">
+          <article className="prose prose-lg dark:prose-invert max-w-none mb-12 animate-fade-in-up">
             <div
-              className="text-slate-300 leading-relaxed text-lg marker:text-slate-500"
+              className="text-slate-800 dark:text-slate-300 leading-relaxed text-lg marker:text-slate-500"
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
             />
           </article>
@@ -151,11 +139,11 @@ export default function BlogShow({ post, relatedPosts }: BlogShowProps) {
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tags</h3>
               <div className="flex flex-wrap gap-3">
                 {post.tags.map((tag) => (
-                  <Link
-                    key={tag.id}
-                    href={`/blog/tag/${tag.slug}`}
-                    className="px-4 py-2 bg-gradient-to-r from-primary-100 to-purple-100 dark:from-primary-900/30 dark:to-purple-900/30 text-primary-800 dark:text-primary-400 rounded-lg hover:from-primary-200 hover:to-purple-200 dark:hover:from-primary-900/50 dark:hover:to-purple-900/50 transition-all font-medium border border-primary-200 dark:border-primary-800 transform hover:scale-105"
-                  >
+                    <Link
+                      key={tag.id}
+                      href={`/blog/tag/${tag.slug}`}
+                      className="px-4 py-2 bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-all font-medium border border-blue-200 dark:border-blue-800 transform hover:scale-105"
+                    >
                     #{tag.name}
                   </Link>
                 ))}
@@ -166,8 +154,8 @@ export default function BlogShow({ post, relatedPosts }: BlogShowProps) {
           {/* Related Posts */}
           {relatedPosts && relatedPosts.length > 0 && (
             <div className="animate-fade-in-up">
-              <h3 className="text-3xl font-bold text-white mb-8 flex items-center">
-                <span className="w-2 h-8 bg-blue-500 rounded-full mr-4"></span>
+              <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-8 flex items-center">
+                <span className="w-2 h-8 bg-blue-600 dark:bg-blue-500 rounded-full mr-4"></span>
                 Related Articles
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -179,41 +167,6 @@ export default function BlogShow({ post, relatedPosts }: BlogShowProps) {
           )}
         </div>
 
-        {/* Newsletter CTA */}
-        <section className="bg-slate-900 border-t border-slate-800 py-24 relative overflow-hidden">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <h3 className="text-3xl font-bold text-white mb-4">
-              Want more content like this?
-            </h3>
-            <p className="text-xl text-slate-400 mb-8">
-              Subscribe to get notified about new posts
-            </p>
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-              <div className="flex-1 text-left relative">
-                <input
-                  type="email"
-                  value={data.email}
-                  onChange={(e) => setData('email', e.target.value)}
-                  placeholder="Enter your email"
-                  className="w-full px-6 py-3 rounded-lg text-white bg-slate-800 border-2 border-slate-700 focus:outline-none focus:border-blue-500 transition-colors"
-                  required
-                />
-                {errors.email && (
-                  <div className="absolute top-full text-center w-full mt-1 text-sm text-red-400">
-                    {errors.email}
-                  </div>
-                )}
-              </div>
-              <button
-                type="submit"
-                disabled={processing}
-                className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 transition-colors disabled:opacity-75 shadow-lg shadow-blue-500/30"
-              >
-                {processing ? 'Subscribing...' : 'Subscribe'}
-              </button>
-            </form>
-          </div>
-        </section>
       </div>
     </PublicLayout>
   );

@@ -46,7 +46,7 @@ export default function ExperienceCard({
                                 className="w-14 h-14 rounded-xl object-cover border-2 border-gray-200 dark:border-gray-700"
                             />
                         ) : (
-                            <div className="w-14 h-14 bg-gradient-to-br from-primary-500 to-purple-600 dark:from-primary-600 dark:to-purple-700 rounded-xl flex items-center justify-center shadow-md">
+                            <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 dark:from-blue-600 dark:to-indigo-700 rounded-xl flex items-center justify-center shadow-md">
                                 <BriefcaseIcon className="w-7 h-7 text-white" />
                             </div>
                         )}
@@ -182,7 +182,7 @@ export default function ExperienceCard({
                                         (tech, idx) => (
                                             <span
                                                 key={idx}
-                                                className="px-3 py-1.5 bg-gradient-to-r from-primary-100 to-purple-100 dark:from-primary-900/30 dark:to-purple-900/30 text-primary-800 dark:text-primary-400 rounded-lg text-sm font-medium border border-primary-200 dark: border-primary-800"
+                                                className="px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 rounded-lg text-sm font-medium border border-blue-200 dark:border-blue-800"
                                             >
                                                 {tech}
                                             </span>

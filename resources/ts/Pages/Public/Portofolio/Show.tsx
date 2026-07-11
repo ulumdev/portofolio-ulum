@@ -29,9 +29,9 @@ interface PortofolioShowProps {
 export default function PortofolioShow({ project }: PortofolioShowProps) {
   return (
     <PublicLayout title={project.title}>
-      <div className="dark bg-slate-900 min-h-screen text-slate-300 font-sans">
+      <div className="w-full">
         {/* Hero Header */}
-        <section className="relative bg-slate-900 text-white pt-24 pb-16 overflow-hidden border-b border-slate-800">
+        <section className="relative bg-white dark:bg-slate-900 text-slate-900 dark:text-white pt-24 pb-16 overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors">
           <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
@@ -50,10 +50,10 @@ export default function PortofolioShow({ project }: PortofolioShowProps) {
                     {project.status === 'published' ? '✨ Live Project' : '🚧 In Development'}
                   </span>
                 </div>
-                <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                <h1 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
                   {project.title}
                 </h1>
-                <p className="text-xl text-white/80 leading-relaxed">
+                <p className="text-xl text-slate-600 dark:text-white/80 leading-relaxed">
                   {project.description}
                 </p>
               </div>
@@ -81,7 +81,7 @@ export default function PortofolioShow({ project }: PortofolioShowProps) {
               {/* Full Image */}
               {project.featured_image && (
                 <div className="animate-fade-in-up">
-                  <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-800">
+                  <div className="rounded-2xl overflow-hidden shadow-sm dark:shadow-xl border border-slate-200 dark:border-slate-800">
                     <img
                       src={`/storage/${project.featured_image}`}
                       alt={project.title}
@@ -92,12 +92,12 @@ export default function PortofolioShow({ project }: PortofolioShowProps) {
               )}
 
               {/* Project Description */}
-              <div className="animate-fade-in-up bg-slate-800 rounded-2xl p-8 shadow-lg border border-slate-700/50">
-                <h2 className="text-3xl font-bold text-white mb-6 flex items-center">
-                  <span className="w-2 h-8 bg-blue-500 rounded-full mr-4"></span>
+              <div className="animate-fade-in-up bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-sm dark:shadow-lg border border-slate-200 dark:border-slate-700/50">
+                <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
+                  <span className="w-2 h-8 bg-blue-600 dark:bg-blue-500 rounded-full mr-4"></span>
                   About This Project
                 </h2>
-                <div className="prose prose-lg prose-invert max-w-none marker:text-slate-500">
+                <div className="prose prose-lg dark:prose-invert max-w-none marker:text-slate-500">
                   <div
                     className="text-slate-300 leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project.content) }}
@@ -131,16 +131,16 @@ export default function PortofolioShow({ project }: PortofolioShowProps) {
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
                 {/* Technologies */}
-                <div className="animate-fade-in-up bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-700/50">
-                  <h3 className="text-xl font-bold text-white mb-4 flex items-center">
-                    <TagIcon className="w-5 h-5 mr-2 text-blue-400" />
+                <div className="animate-fade-in-up bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm dark:shadow-lg border border-slate-200 dark:border-slate-700/50">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center">
+                    <TagIcon className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
                     Technologies
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {project.skills.map((skill) => (
                       <span
                         key={skill.id}
-                        className="px-4 py-2 text-sm font-medium bg-slate-700 text-blue-400 rounded-lg border border-slate-600 hover:scale-105 transition-transform"
+                        className="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-700 text-blue-600 dark:text-blue-400 rounded-lg border border-slate-200 dark:border-slate-600 hover:scale-105 transition-transform"
                       >
                         {skill.name}
                       </span>
@@ -150,8 +150,8 @@ export default function PortofolioShow({ project }: PortofolioShowProps) {
 
                 {/* Project Links */}
                 {(project.demo_url || project.github_url) && (
-                  <div className="animate-fade-in-up bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-700/50">
-                    <h3 className="text-xl font-bold text-white mb-4">
+                  <div className="animate-fade-in-up bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm dark:shadow-lg border border-slate-200 dark:border-slate-700/50">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
                       Project Links
                     </h3>
                     <div className="space-y-3">
@@ -171,7 +171,7 @@ export default function PortofolioShow({ project }: PortofolioShowProps) {
                           href={project.github_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center w-full px-5 py-3 bg-slate-900 border border-slate-700 text-white rounded-xl hover:bg-slate-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                          className="flex items-center w-full px-5 py-3 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 transform hover:scale-105 shadow-sm dark:shadow-lg"
                         >
                           <CodeBracketIcon className="w-5 h-5 mr-2" />
                           <span className="font-medium">View Source Code</span>
@@ -182,17 +182,17 @@ export default function PortofolioShow({ project }: PortofolioShowProps) {
                 )}
 
                 {/* Project Info */}
-                <div className="animate-fade-in-up bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-700/50">
-                  <h3 className="text-xl font-bold text-white mb-4">
+                <div className="animate-fade-in-up bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm dark:shadow-lg border border-slate-200 dark:border-slate-700/50">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
                     Project Info
                   </h3>
                   <dl className="space-y-4">
                     <div>
-                      <dt className="text-sm text-slate-400 mb-1 flex items-center">
+                      <dt className="text-sm text-slate-500 dark:text-slate-400 mb-1 flex items-center">
                         <CalendarIcon className="w-4 h-4 mr-2" />
                         Created
                       </dt>
-                      <dd className="font-medium text-white">
+                      <dd className="font-medium text-slate-900 dark:text-white">
                         {new Date(project.created_at).toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'long',
@@ -217,9 +217,9 @@ export default function PortofolioShow({ project }: PortofolioShowProps) {
                 </div>
 
                 {/* CTA */}
-                <div className="animate-fade-in-up bg-slate-800 border-2 border-slate-700 rounded-2xl p-6 text-white shadow-lg text-center mt-6">
+                <div className="animate-fade-in-up bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-6 text-slate-900 dark:text-white shadow-sm dark:shadow-lg text-center mt-6">
                   <h4 className="text-lg font-bold mb-2">Interested in working together?</h4>
-                  <p className="text-slate-400 text-sm mb-4">
+                  <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
                     Let's discuss your next project
                   </p>
                   <Link

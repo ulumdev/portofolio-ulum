@@ -8,7 +8,7 @@ interface StyledCardProps {
 export default function StyledCard({ children, className = "" }: StyledCardProps) {
     return (
         <div
-            className={`bg-slate-800 rounded-xl border border-slate-700 shadow-xl overflow-hidden ${className}`}
+            className={`bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-xl overflow-hidden transition-colors duration-300 ${className}`}
         >
             {children}
         </div>

@@ -15,9 +15,9 @@ export default function PublicLayout({ title, children }: PublicLayoutProps) {
   return (
     <ThemeProvider>
       <Head title={title} />
-      <div className="min-h-screen flex flex-col bg-white dark:bg-gray-950 transition-colors duration-200">
+      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#09090b] text-slate-900 dark:text-gray-300 transition-colors duration-300 selection:bg-cyan-500/30 selection:text-cyan-900 dark:selection:text-cyan-200">
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 mt-20">{children}</main>
         <Footer />
       </div>
       <ScrollToTop />
