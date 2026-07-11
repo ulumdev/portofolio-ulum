@@ -12,6 +12,8 @@ import { Link, router } from "@inertiajs/react";
 import {
     ArrowLeftIcon,
     FolderIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 import { BlogPost, Category, PaginatedData } from "@/types";
 import BlogCard from "@/Components/Public/UI/BlogCard";
@@ -27,9 +29,10 @@ export default function BlogCategory({ category, posts }: BlogCategoryProps) {
         <PublicLayout title={`Category: ${category.name}`}>
             <div className="w-full">
                 {/* Navigation */}
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 z-10 relative">
                     <Link
                         href="/blog"
-                        className="inline-flex items-center text-slate-400 hover:text-white mb-2 group transition-colors animate-fade-in-up"
+                        className="inline-flex items-center text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white group transition-colors animate-fade-in-up"
                     >
                         <ArrowLeftIcon className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
                         Back to All Posts
@@ -52,12 +55,12 @@ export default function BlogCategory({ category, posts }: BlogCategoryProps) {
 
 
                                     //       {/* Title */}
-                                    //       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2 flex-1">
+                                    //       <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 flex-1">
                                     //         {post.title}
                                     //       </h3>
 
                                     //       {/* Excerpt */}
-                                    //       <p className="text-gray-600 dark:text-gray-400 line-clamp-2 mb-4">
+                                    //       <p className="text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">
                                     //         {post.excerpt}
                                     //       </p>
 
@@ -76,9 +79,9 @@ export default function BlogCategory({ category, posts }: BlogCategoryProps) {
                                             )
                                         }
                                         disabled={posts.current_page === 1}
-                                        className="px-4 py-2 rounded-lg font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                        className="p-2 rounded-lg font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                     >
-                                        Previous
+                                        <ChevronLeftIcon className="w-5 h-5" />
                                     </button>
 
                                     {Array.from(
@@ -94,7 +97,7 @@ export default function BlogCategory({ category, posts }: BlogCategoryProps) {
                                             }
                                             className={`px-4 py-2 rounded-lg font-medium transition-all ${page === posts.current_page
                                                 ? "bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white shadow-lg scale-110"
-                                                : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
+                                                : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700"
                                                 }`}
                                         >
                                             {page}
@@ -111,27 +114,27 @@ export default function BlogCategory({ category, posts }: BlogCategoryProps) {
                                         disabled={
                                             posts.current_page === posts.last_page
                                         }
-                                        className="px-4 py-2 rounded-lg font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                        className="p-2 rounded-lg font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                     >
-                                        Next
+                                        <ChevronRightIcon className="w-5 h-5" />
                                     </button>
                                 </div>
                             )}
                         </>
                     ) : (
-                        <div className="text-center py-20 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 animate-fade-in-up">
-                            <div className="inline-block p-8 bg-gray-100 dark:bg-gray-900 rounded-full mb-6">
-                                <FolderIcon className="w-16 h-16 text-gray-400 dark:text-gray-600" />
+                        <div className="text-center py-20 bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 animate-fade-in-up">
+                            <div className="inline-block p-8 bg-slate-100 dark:bg-slate-900 rounded-full mb-6">
+                                <FolderIcon className="w-16 h-16 text-slate-400 dark:text-slate-600" />
                             </div>
-                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
                                 No posts in this category yet
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-400 mb-6">
+                            <p className="text-slate-600 dark:text-slate-400 mb-6">
                                 Check back later for new content
                             </p>
                             <Link
                                 href="/blog"
-                                className="inline-flex items-center px-6 py-3 bg-primary-600 dark:bg-primary-500 text-white rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors font-medium"
+                                className="inline-flex items-center px-6 py-3 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors font-medium"
                             >
                                 Browse All Posts
                             </Link>

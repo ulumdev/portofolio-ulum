@@ -47,7 +47,7 @@ export default function BlogCard({ post, index = 0 }: BlogCardProps) {
             <div className="absolute inset-0 bg-gradient-to-br from-slate-50 dark:from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
             <div className="relative z-10">
-                <div className="flex items-center text-[10px] sm:text-xs font-semibold text-slate-500 dark:text-gray-500 mb-5 sm:mb-6 gap-3 sm:gap-4 uppercase tracking-widest">
+                <div className="flex items-center text-[10px] sm:text-xs font-semibold text-slate-500 dark:text-slate-500 mb-5 sm:mb-6 gap-3 sm:gap-4 uppercase tracking-widest">
                     <time dateTime={displayDate || ""} className="flex items-center">
                         <ClockIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5" />
                         {formatDate(displayDate)}
@@ -72,27 +72,27 @@ export default function BlogCard({ post, index = 0 }: BlogCardProps) {
                     </Link>
                 </h3>
 
-                <p className="text-slate-600 dark:text-gray-400 mb-6 sm:mb-8 line-clamp-3 text-sm leading-relaxed font-light">
+                <p className="text-slate-600 dark:text-slate-400 mb-6 sm:mb-8 line-clamp-3 text-sm leading-relaxed font-light">
                     {post.excerpt || getExcerpt(post.content)}
                 </p>
             </div>
 
             <div className="relative z-10 pt-5 sm:pt-6 border-t border-slate-100 dark:border-white/5 mt-auto flex items-center justify-between">
                 <div className="flex items-center">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 dark:from-gray-700 dark:to-gray-900 flex items-center justify-center text-slate-700 dark:text-white text-xs sm:text-sm font-bold mr-3 border border-slate-100 dark:border-white/10 shadow-inner">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-900 flex items-center justify-center text-slate-700 dark:text-white text-xs sm:text-sm font-bold mr-3 border border-slate-100 dark:border-white/10 shadow-inner">
                         {post.author?.name ? post.author.name.charAt(0).toUpperCase() : "U"}
                     </div>
                     <div>
-                        <span className="block text-sm font-semibold text-slate-800 dark:text-gray-200">
+                        <span className="block text-sm font-semibold text-slate-800 dark:text-slate-200">
                             {post.author?.name || "Moh. Bahrul 'Ulum"}
                         </span>
-                        <span className="block text-[10px] sm:text-xs text-slate-500 dark:text-gray-500 font-medium tracking-wide">
+                        <span className="block text-[10px] sm:text-xs text-slate-500 dark:text-slate-500 font-medium tracking-wide">
                             Author
                         </span>
                     </div>
                 </div>
 
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-gray-400 group-hover:bg-blue-600 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black group-hover:border-transparent transition-all duration-300">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-slate-400 group-hover:bg-blue-600 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black group-hover:border-transparent transition-all duration-300">
                     <ArrowRightIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 transform group-hover:translate-x-0.5 transition-transform" />
                 </div>
             </div>

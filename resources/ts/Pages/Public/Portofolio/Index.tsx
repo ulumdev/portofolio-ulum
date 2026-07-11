@@ -11,16 +11,15 @@
 import PublicLayout from "@/Layouts/PublicLayout";
 import { router } from "@inertiajs/react";
 import {
-    MagnifyingGlassIcon,
-    FunnelIcon,
-    ChevronDownIcon,
-    XMarkIcon,
+import {
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    SparklesIcon,
 } from "@heroicons/react/24/outline";
 import { Project, Skill, PaginatedData } from "@/types";
 import { useState } from "react";
 import ProjectCard from "@/Components/Public/UI/ProjectCard";
 import SectionHero from "@/Components/Public/UI/SectionHero";
-import { SparklesIcon } from "@heroicons/react/24/outline";
 
 interface PortofolioIndexProps {
     projects: PaginatedData<Project>;
@@ -117,9 +116,9 @@ export default function PortofolioIndex({
                                             )
                                         }
                                         disabled={projects.current_page === 1}
-                                        className="px-4 py-2 rounded-lg font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                        className="p-2 rounded-lg font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                     >
-                                        Previous
+                                        <ChevronLeftIcon className="w-5 h-5" />
                                     </button>
 
                                     {/* Page Numbers */}
@@ -151,7 +150,7 @@ export default function PortofolioIndex({
                                                     onClick={() =>
                                                         handlePageChange(1)
                                                     }
-                                                    className="px-4 py-2 rounded-lg font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                                                    className="px-4 py-2 rounded-lg font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                                                 >
                                                     1
                                                 </button>
@@ -160,7 +159,7 @@ export default function PortofolioIndex({
                                                 pages.push(
                                                     <span
                                                         key="dots-start"
-                                                        className="text-gray-500 dark:text-gray-400"
+                                                        className="text-slate-500 dark:text-slate-400"
                                                     >
                                                         ...
                                                     </span>
@@ -182,8 +181,8 @@ export default function PortofolioIndex({
                                                     }
                                                     className={`px-4 py-2 rounded-lg font-medium transition-all ${page ===
                                                         projects.current_page
-                                                        ? "bg-gradient-to-r from-primary-600 to-primary-700 dark:from-primary-500 dark:to-primary-600 text-white shadow-lg scale-110"
-                                                        : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
+                                                        ? "bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white shadow-lg scale-110"
+                                                        : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700"
                                                         }`}
                                                 >
                                                     {page}
@@ -197,7 +196,7 @@ export default function PortofolioIndex({
                                                 pages.push(
                                                     <span
                                                         key="dots-end"
-                                                        className="text-gray-500 dark:text-gray-400"
+                                                        className="text-slate-500 dark:text-slate-400"
                                                     >
                                                         ...
                                                     </span>
@@ -211,7 +210,7 @@ export default function PortofolioIndex({
                                                             projects.last_page
                                                         )
                                                     }
-                                                    className="px-4 py-2 rounded-lg font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                                                    className="px-4 py-2 rounded-lg font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                                                 >
                                                     {projects.last_page}
                                                 </button>
@@ -232,9 +231,9 @@ export default function PortofolioIndex({
                                             projects.current_page ===
                                             projects.last_page
                                         }
-                                        className="px-4 py-2 rounded-lg font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                        className="p-2 rounded-lg font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                     >
-                                        Next
+                                        <ChevronRightIcon className="w-5 h-5" />
                                     </button>
                                 </div>
                             )}

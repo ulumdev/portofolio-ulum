@@ -53,10 +53,15 @@ class BlogController extends Controller
 
         $posts = $query->latest('published_at')->paginate(10);
         $categories = Category::withCount('blogPosts')->get();
+        $popularTags = Tag::withCount('blogPosts')
+            ->orderBy('blog_posts_count', 'desc')
+            ->take(10)
+            ->get();
 
         return Inertia::render('Public/Blog/Index', [
             'posts' => $posts,
             'categories' => $categories,
+            'popularTags' => $popularTags,
             'filters' => $request->only('search'),
         ]);
     }

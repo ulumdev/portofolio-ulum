@@ -53,7 +53,7 @@ export default function BlogShow({ post, relatedPosts }: BlogShowProps) {
 
               <Link
                 href={`/blog/category/${post.category.slug}`}
-                className="inline-block px-4 py-2 bg-primary-600 dark:bg-primary-500 text-white text-sm font-medium rounded-full hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors"
+                className="inline-block px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white text-sm font-medium rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
                 style={{ animationDelay: '0.1s' }}
               >
                 {post.category.name}
@@ -109,18 +109,18 @@ export default function BlogShow({ post, relatedPosts }: BlogShowProps) {
           )}
 
           {/* Share & Actions */}
-          {/* <div className="flex items-center justify-between mb-8 pb-8 border-b border-gray-200 dark:border-gray-800 animate-fade-in-up">
+          {/* <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-200 dark:border-slate-800 animate-fade-in-up">
           <div className="flex items-center space-x-4">
-            <button className="flex items-center space-x-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <button className="flex items-center space-x-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
               <HeartIcon className="w-5 h-5 text-red-500" />
-              <span className="text-gray-700 dark:text-gray-300 font-medium">Like</span>
+              <span className="text-slate-700 dark:text-slate-300 font-medium">Like</span>
             </button>
             <button 
               onClick={handleShare}
-              className="flex items-center space-x-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              className="flex items-center space-x-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
             >
-              <ShareIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-              <span className="text-gray-700 dark:text-gray-300 font-medium">Share</span>
+              <ShareIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              <span className="text-slate-700 dark:text-slate-300 font-medium">Share</span>
             </button>
           </div>
         </div> */}
@@ -135,8 +135,8 @@ export default function BlogShow({ post, relatedPosts }: BlogShowProps) {
 
           {/* Tags */}
           {post.tags && post.tags.length > 0 && (
-            <div className="mb-12 pb-12 border-b border-gray-200 dark:border-gray-800 animate-fade-in-up">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tags</h3>
+            <div className="mb-12 pb-12 border-b border-slate-200 dark:border-slate-800 animate-fade-in-up">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Tags</h3>
               <div className="flex flex-wrap gap-3">
                 {post.tags.map((tag) => (
                     <Link
