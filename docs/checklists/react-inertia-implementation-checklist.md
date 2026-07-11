@@ -83,18 +83,18 @@ Dokumen terkait:
 - [x] Update `web.php` dengan route model binding
 - [x] Test semua route
 
-## Fase 11: Testing 🔄
-- [ ] Test admin dashboard
-- [ ] Test projects CRUD
-- [ ] Test blog CRUD
-- [ ] Test categories/tags/skills
-- [ ] Test messages
-- [ ] Test settings
-- [ ] Test public pages
-- [ ] Test forms & validation
-- [ ] Test image uploads
-- [ ] Test responsive design
-- [ ] Test authentication
+## Fase 11: Testing ✅
+- [x] Test admin dashboard
+- [x] Test projects CRUD
+- [x] Test blog CRUD
+- [x] Test categories/tags/skills
+- [x] Test messages
+- [x] Test settings
+- [x] Test public pages
+- [x] Test forms & validation
+- [x] Test image uploads
+- [x] Test responsive design
+- [x] Test authentication
 
 ## Fase 12: Dokumentasi ✅
 - [x] Create `docs/guides/setup-react-inertia.md`
