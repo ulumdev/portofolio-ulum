@@ -1,17 +1,5 @@
-
-
-// export default function PortofolioIndex({ projects, skills, selectedSkill }: PortofolioIndexProps) {
-//   const [filter, setFilter] = useState(selectedSkill || 'all');
-
-
-
-
-
-
 import PublicLayout from "@/Layouts/PublicLayout";
 import { router } from "@inertiajs/react";
-import {
-import {
     ChevronLeftIcon,
     ChevronRightIcon,
     SparklesIcon,
