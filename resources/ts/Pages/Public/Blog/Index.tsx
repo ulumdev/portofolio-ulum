@@ -54,7 +54,8 @@
 import PublicLayout from "@/Layouts/PublicLayout";
 import { router } from "@inertiajs/react";
 import { SparklesIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { BlogPost, PaginatedData } from "@/types";
+import { BlogPost, PaginatedData, PageProps } from "@/types";
+import { usePage } from "@inertiajs/react";
 import SectionHero from "@/Components/Public/UI/SectionHero";
 import BlogCard from "@/Components/Public/UI/BlogCard";
 
@@ -69,9 +70,9 @@ export default function BlogIndex({ posts }: BlogIndexProps) {
             <div className="w-full">
                 {/* Header / Hero Section */}
                 <SectionHero
-                    title="Thoughts &"
-                    gradientWord="Insights"
-                    subtitle="Articles, tutorials, and thoughts on web development, design, and technology"
+                    title={(usePage<PageProps>().props.settings as any).blog_hero_title || "Thoughts &"}
+                    gradientWord={(usePage<PageProps>().props.settings as any).blog_hero_gradient || "Insights"}
+                    subtitle={(usePage<PageProps>().props.settings as any).blog_hero_subtitle || "Articles, tutorials, and thoughts on web development, design, and technology"}
                 />
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

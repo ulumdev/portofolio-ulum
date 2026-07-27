@@ -123,7 +123,7 @@ export default function About({ settings, skills, experiences }: AboutProps) {
 
                         <div className="lg:col-span-8 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
                             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight leading-[1.1]">
-                                I build <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-500">digital experiences</span> that matter.
+                                {(settings as any).about_hero_title || "I build digital experiences that matter."}
                             </h1>
 
                             <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10 max-w-3xl">
@@ -133,14 +133,14 @@ export default function About({ settings, skills, experiences }: AboutProps) {
                             <div className="flex flex-wrap items-center gap-4">
                                 <div className="inline-flex items-center px-5 py-2.5 bg-white dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-full shadow-sm">
                                     <MapPinIcon className="w-5 h-5 text-blue-500 mr-2.5" />
-                                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{settings.address || "Mojokerto, Indonesia"}</span>
+                                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{(settings as any).address || "Mojokerto, Indonesia"}</span>
                                 </div>
                                 <div className="inline-flex items-center px-5 py-2.5 bg-white dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-full shadow-sm">
                                     <span className="relative flex h-3 w-3 mr-2.5">
                                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                         <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                                     </span>
-                                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Available for hire</span>
+                                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{(settings as any).about_hire_status || "Available for hire"}</span>
                                 </div>
                                 
                                 {/* Download CV Button */}

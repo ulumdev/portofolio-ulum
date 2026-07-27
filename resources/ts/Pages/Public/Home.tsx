@@ -29,9 +29,9 @@ export default function Home({ featuredProjects, latestPosts }: HomeProps) {
                 
                 {/* Hero Section */}
                 <SectionHero
-                    title="Hi, I'm Moh. Bahrul 'Ulum"
-                    gradientWord="Full Stack Developer"
-                    subtitle="Crafting beautiful digital experiences with robust backend architectures. Focused on creating user-centric solutions that perform at scale."
+                    title={(settings as any).home_hero_title || "Hi, I'm Moh. Bahrul 'Ulum"}
+                    gradientWord={(settings as any).home_hero_gradient || "Full Stack Developer"}
+                    subtitle={(settings as any).home_hero_subtitle || "Crafting beautiful digital experiences with robust backend architectures. Focused on creating user-centric solutions that perform at scale."}
                 />
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-24 md:pb-32 relative z-10">

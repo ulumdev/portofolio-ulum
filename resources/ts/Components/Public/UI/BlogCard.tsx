@@ -16,7 +16,7 @@ interface BlogPost {
         name: string;
         slug: string;
     };
-    author?: {
+    user?: {
         name: string;
     };
     [key: string]: any;
@@ -80,11 +80,11 @@ export default function BlogCard({ post, index = 0 }: BlogCardProps) {
             <div className="relative z-10 pt-5 sm:pt-6 border-t border-slate-100 dark:border-white/5 mt-auto flex items-center justify-between">
                 <div className="flex items-center">
                     <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-900 flex items-center justify-center text-slate-700 dark:text-white text-xs sm:text-sm font-bold mr-3 border border-slate-100 dark:border-white/10 shadow-inner">
-                        {post.author?.name ? post.author.name.charAt(0).toUpperCase() : "U"}
+                        {post.user?.name ? post.user.name.charAt(0).toUpperCase() : "U"}
                     </div>
                     <div>
                         <span className="block text-sm font-semibold text-slate-800 dark:text-slate-200">
-                            {post.author?.name || "Moh. Bahrul 'Ulum"}
+                            {post.user?.name || "Moh. Bahrul 'Ulum"}
                         </span>
                         <span className="block text-[10px] sm:text-xs text-slate-500 dark:text-slate-500 font-medium tracking-wide">
                             Author

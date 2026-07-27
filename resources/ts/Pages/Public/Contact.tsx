@@ -41,9 +41,9 @@ export default function Contact({ settings }: ContactProps) {
             <div className="w-full">
                 {/* Header */}
                 <SectionHero
-                    title="Get In"
-                    gradientWord="Touch"
-                    subtitle="Have a project in mind? Let's discuss how I can help bring your ideas to life with clean code and modern design."
+                    title={(settings as any).contact_hero_title || "Get In"}
+                    gradientWord={(settings as any).contact_hero_gradient || "Touch"}
+                    subtitle={(settings as any).contact_hero_subtitle || "Have a project in mind? Let's discuss how I can help bring your ideas to life with clean code and modern design."}
                 />
 
                 {/* Konten Utama */}
@@ -58,7 +58,7 @@ export default function Contact({ settings }: ContactProps) {
                                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                                         <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
                                     </span>
-                                    AVAILABLE FOR FREELANCE
+                                    {(settings as any).contact_freelance_status || "AVAILABLE FOR FREELANCE"}
                                 </div>
                                 <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                                     I'm currently available for freelance work and new opportunities.

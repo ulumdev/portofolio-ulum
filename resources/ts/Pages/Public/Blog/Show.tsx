@@ -68,7 +68,7 @@ export default function BlogShow({ post, relatedPosts }: BlogShowProps) {
             <div className="flex flex-wrap items-center gap-6 text-slate-600 dark:text-white/80 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
               <div className="flex items-center">
                 <UserIcon className="w-5 h-5 mr-2" />
-                <span>Admin</span>
+                <span>{(post as any).user?.name || "Moh. Bahrul 'Ulum"}</span>
               </div>
               <div className="flex items-center">
                 <CalendarIcon className="w-5 h-5 mr-2" />

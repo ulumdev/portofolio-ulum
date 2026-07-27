@@ -5,7 +5,8 @@ import {
     ChevronRightIcon,
     SparklesIcon,
 } from "@heroicons/react/24/outline";
-import { Project, Skill, PaginatedData } from "@/types";
+import { Project, Skill, PaginatedData, PageProps } from "@/types";
+import { usePage } from "@inertiajs/react";
 import { useState } from "react";
 import ProjectCard from "@/Components/Public/UI/ProjectCard";
 import SectionHero from "@/Components/Public/UI/SectionHero";
@@ -79,9 +80,9 @@ export default function PortofolioIndex({
             <div className="w-full">
                 {/* Header / Hero Section */}
                 <SectionHero
-                    title="Explore My"
-                    gradientWord="Portofolio"
-                    subtitle="Showcasing expertise across various technologies and domains"
+                    title={(usePage<PageProps>().props.settings as any).portfolio_hero_title || "Explore My"}
+                    gradientWord={(usePage<PageProps>().props.settings as any).portfolio_hero_gradient || "Portofolio"}
+                    subtitle={(usePage<PageProps>().props.settings as any).portfolio_hero_subtitle || "Showcasing expertise across various technologies and domains"}
                 />
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

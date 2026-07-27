@@ -98,13 +98,13 @@ class BlogController extends Controller
         // Increment views count
         $post->increment('views');
 
-        $post->load(['category', 'tags']);
+        $post->load(['category', 'user', 'tags']);
 
         // Get related posts (same category)
         $relatedPosts = BlogPost::where('status', 'published')
             ->where('category_id', $post->category_id)
             ->where('id', '!=', $post->id)
-            ->with('category')
+            ->with(['category', 'user'])
             ->latest()
             ->take(3)
             ->get();
@@ -135,7 +135,7 @@ class BlogController extends Controller
         // return view('blog.index', compact('posts', 'category', 'categories', 'popularTags'));
         $posts = BlogPost::where('status', 'published')
             ->where('category_id', $category->id)
-            ->with(['category', 'tags'])
+            ->with(['category', 'user', 'tags'])
             ->latest()
             ->paginate(12);
 
@@ -168,7 +168,7 @@ class BlogController extends Controller
             ->whereHas('tags', function ($q) use ($tag) {
                 $q->where('tags.id', $tag->id);
             })
-            ->with(['category', 'tags'])
+            ->with(['category', 'user', 'tags'])
             ->latest()
             ->paginate(12);
 
