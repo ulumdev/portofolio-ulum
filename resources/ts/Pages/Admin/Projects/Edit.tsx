@@ -4,6 +4,8 @@ import Input from '@/Components/Common/Input';
 import Textarea from '@/Components/Common/Textarea';
 import { useForm, router } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { Project, Skill } from '@/types';
 
 interface EditProjectProps {
@@ -90,14 +92,22 @@ export default function EditProject({ project, skills }: EditProjectProps) {
             rows={3}
           />
 
-          <Textarea
-            label="Full Content"
-            value={data.content}
-            onChange={(e) => setData('content', e.target.value)}
-            error={errors.content}
-            required
-            rows={8}
-          />
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Full Content <span className="text-red-500">*</span>
+            </label>
+            <div className={`bg-white ${errors.content ? 'border-red-500' : ''}`}>
+              <ReactQuill
+                theme="snow"
+                value={data.content}
+                onChange={(value) => setData('content', value)}
+                className="h-64 mb-12"
+              />
+            </div>
+            {errors.content && (
+              <p className="mt-1 text-sm text-red-600">{errors.content}</p>
+            )}
+          </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
