@@ -34,7 +34,7 @@ export default function SectionHero({
             )}
             
             <h1
-                className="animate-fade-in-up text-4xl sm:text-5xl md:text-7xl font-black mb-6 md:mb-8 tracking-tight text-slate-900 dark:text-white drop-shadow-sm"
+                className="animate-fade-in-up text-3xl sm:text-4xl md:text-5xl font-black mb-4 md:mb-6 tracking-tight text-slate-900 dark:text-white drop-shadow-sm"
                 style={{ animationDelay: "0.1s", animationFillMode: "both" }}
             >
                 {title}{" "}
@@ -46,7 +46,7 @@ export default function SectionHero({
             
             {subtitle && (
                 <p
-                    className="animate-fade-in-up text-lg sm:text-xl md:text-2xl text-slate-600 dark:text-gray-400 max-w-3xl mx-auto font-light leading-relaxed px-2"
+                    className="animate-fade-in-up text-base sm:text-lg md:text-xl text-slate-600 dark:text-gray-400 max-w-3xl mx-auto font-light leading-relaxed px-2"
                     style={{ animationDelay: "0.2s", animationFillMode: "both" }}
                 >
                     {subtitle}
