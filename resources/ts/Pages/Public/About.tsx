@@ -122,11 +122,11 @@ export default function About({ settings, skills, experiences }: AboutProps) {
                         </div>
 
                         <div className="lg:col-span-8 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-                            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight leading-[1.1]">
+                            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1]">
                                 {(settings as any).about_hero_title || "I build digital experiences that matter."}
                             </h1>
 
-                            <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10 max-w-3xl">
+                            <p className="text-lg sm:text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10 max-w-3xl">
                                 {settings.site_description || "I'm a Fullstack Developer and UX Enthusiast. With years of experience, I specialize in building robust web applications that bridge the gap between technical complexity and intuitive design."}
                             </p>
 
