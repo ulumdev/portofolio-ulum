@@ -1,7 +1,6 @@
 import PublicLayout from "@/Layouts/PublicLayout";
 import { Link, usePage } from "@inertiajs/react";
 import {
-    CodeBracketIcon,
     ArrowRightIcon,
     UserIcon,
     BriefcaseIcon,

@@ -3,7 +3,6 @@ import { router } from "@inertiajs/react";
 import {
     ChevronLeftIcon,
     ChevronRightIcon,
-    SparklesIcon,
 } from "@heroicons/react/24/outline";
 import { Project, Skill, PaginatedData, PageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
@@ -26,20 +25,6 @@ export default function PortofolioIndex({
     selectedSkill,
 }: PortofolioIndexProps) {
     const [filter, setFilter] = useState(selectedSkill || "all");
-    const [showMobileFilters, setShowMobileFilters] = useState(false);
-    const [expandedCategories, setExpandedCategories] = useState<
-        Record<string, boolean>
-    >({});
-
-    const handleFilterChange = (skillName: string) => {
-        setFilter(skillName);
-        setShowMobileFilters(false);
-        if (skillName === "all") {
-            router.get("/portofolio");
-        } else {
-            router.get(`/portofolio?skill=${skillName}`);
-        }
-    };
 
     const handlePageChange = (page: number) => {
         const params = new URLSearchParams();
@@ -49,31 +34,6 @@ export default function PortofolioIndex({
         params.append("page", page.toString());
         router.get(`/portofolio?${params.toString()}`);
     };
-
-    const toggleCategory = (category: string) => {
-        setExpandedCategories((prev) => ({
-            ...prev,
-            [category]: !prev[category],
-        }));
-    };
-
-    // Group skills by category
-    const skillsByCategory = skills.reduce((acc, skill) => {
-        if (!acc[skill.category]) {
-            acc[skill.category] = [];
-        }
-        acc[skill.category].push(skill);
-        return acc;
-    }, {} as Record<string, Skill[]>);
-
-    // Sort categories: "Other" always at the end
-    const sortedCategories = Object.entries(skillsByCategory).sort(
-        ([categoryA], [categoryB]) => {
-            if (categoryA.toLowerCase() === "other") return 1;
-            if (categoryB.toLowerCase() === "other") return -1;
-            return categoryA.localeCompare(categoryB);
-        }
-    );
 
     return (
         <PublicLayout title="Portofolio">

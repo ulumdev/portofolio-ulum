@@ -2,10 +2,7 @@ import { useState } from "react";
 import PublicLayout from "@/Layouts/PublicLayout";
 import { Experience, Settings, Skill } from "@/types";
 import DOMPurify from "dompurify";
-import {
-    SparklesIcon,
     MapPinIcon,
-    CheckCircleIcon,
     CodeBracketIcon,
     ArrowTopRightOnSquareIcon,
     DocumentArrowDownIcon,
