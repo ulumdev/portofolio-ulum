@@ -11,6 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Trust all proxies (Nginx Reverse Proxy)
+        $middleware->trustProxies(at: '*');
+        
         // Register middleware alias
         $middleware->alias([
             'isAdmin' => \App\Http\Middleware\IsAdmin::class,
