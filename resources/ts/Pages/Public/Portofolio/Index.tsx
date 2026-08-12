@@ -6,7 +6,6 @@ import {
 } from "@heroicons/react/24/outline";
 import { Project, Skill, PaginatedData, PageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
-import { useState } from "react";
 import ProjectCard from "@/Components/Public/UI/ProjectCard";
 import SectionHero from "@/Components/Public/UI/SectionHero";
 
@@ -21,10 +20,9 @@ interface PortofolioIndexProps {
 
 export default function PortofolioIndex({
     projects,
-    skills,
     selectedSkill,
 }: PortofolioIndexProps) {
-    const [filter, setFilter] = useState(selectedSkill || "all");
+    const filter = selectedSkill || "all";
 
     const handlePageChange = (page: number) => {
         const params = new URLSearchParams();
