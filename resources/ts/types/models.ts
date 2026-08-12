@@ -136,3 +136,22 @@ export interface Experience {
   created_at: string;
   updated_at: string;
 }
+
+export interface Education {
+  id: number;
+  institution: string;
+  degree: string;
+  field_of_study?: string;
+  location?: string;
+  start_date: string;
+  end_date?: string;
+  is_current: boolean;
+  grade?: string;
+  activities?: string;
+  description?: string;
+  institution_logo?: string;
+  order: number;
+  date_range?: string;
+  created_at: string;
+  updated_at: string;
+}

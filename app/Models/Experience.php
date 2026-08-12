@@ -27,6 +27,11 @@ class Experience extends Model
         'is_featured',
     ];
 
+    protected $appends = [
+        'date_range',
+        'duration',
+    ];
+
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',

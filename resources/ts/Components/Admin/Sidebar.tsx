@@ -9,6 +9,7 @@ import {
   Cog6ToothIcon,
   ArrowRightOnRectangleIcon,
   BriefcaseIcon,
+  AcademicCapIcon,
 } from '@heroicons/react/24/outline';
 import { PageProps } from '@/types';
 
@@ -27,7 +28,8 @@ export default function Sidebar() {
     { name: 'Dashboard', href: '/admin/dashboard', icon: HomeIcon },
     { name: 'Projects', href: '/admin/projects', icon: FolderIcon },
     { name: 'Blog Posts', href: '/admin/blog', icon: DocumentTextIcon },
-    { name: 'Experiences', href: '/admin/experiences', icon: BriefcaseIcon }, // Add this line
+    { name: 'Experiences', href: '/admin/experiences', icon: BriefcaseIcon },
+    { name: 'Educations', href: '/admin/educations', icon: AcademicCapIcon },
     { name: 'Categories', href: '/admin/categories', icon: TagIcon },
     { name: 'Tags', href: '/admin/tags', icon: TagIcon },
     { name: 'Skills', href: '/admin/skills', icon: WrenchScrewdriverIcon },

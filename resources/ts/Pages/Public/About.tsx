@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PublicLayout from "@/Layouts/PublicLayout";
-import { Experience, Settings, Skill } from "@/types";
+import { Experience, Settings, Skill, Education } from "@/types";
 import DOMPurify from "dompurify";
 import {
     MapPinIcon,
@@ -10,15 +10,17 @@ import {
     ServerStackIcon,
     WrenchScrewdriverIcon,
     CommandLineIcon,
+    AcademicCapIcon,
 } from "@heroicons/react/24/outline";
 
 interface AboutProps {
     settings: Settings;
     skills: Skill[];
     experiences: Experience[];
+    educations: Education[];
 }
 
-export default function About({ settings, skills, experiences }: AboutProps) {
+export default function About({ settings, skills, experiences, educations }: AboutProps) {
     const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
 
     const toggleCategory = (category: string) => {
@@ -186,48 +188,179 @@ export default function About({ settings, skills, experiences }: AboutProps) {
                                                 <div className={`w-2 h-2 rounded-full relative z-10 ${exp.is_current ? 'bg-white' : 'bg-slate-50 dark:bg-slate-900'}`}></div>
                                             </div>
 
-                                            {/* Card Content */}
                                             <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 dark:border-slate-700 transition-shadow hover:shadow-md">
                                                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
-                                                    <div>
-                                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
-                                                            {exp.position}
-                                                        </h3>
-                                                        {exp.company_url ? (
-                                                            <a href={exp.company_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium hover:underline">
-                                                                {exp.company}
-                                                                <ArrowTopRightOnSquareIcon className="w-3.5 h-3.5 ml-1" />
-                                                            </a>
-                                                        ) : (
-                                                            <p className="text-blue-600 dark:text-blue-400 font-medium">{exp.company}</p>
+                                                    <div className="flex items-start gap-4">
+                                                        {exp.company_logo && (
+                                                            <div className="shrink-0">
+                                                                <img 
+                                                                    src={`/storage/${exp.company_logo}`} 
+                                                                    alt={exp.company} 
+                                                                    className="w-12 h-12 rounded-lg object-contain bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 p-1"
+                                                                />
+                                                            </div>
                                                         )}
+                                                        <div>
+                                                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+                                                                {exp.position}
+                                                            </h3>
+                                                            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+                                                                {exp.company_url ? (
+                                                                    <a href={exp.company_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-blue-600 dark:text-blue-400 font-bold hover:underline">
+                                                                        {exp.company}
+                                                                        <ArrowTopRightOnSquareIcon className="w-3.5 h-3.5 ml-1" />
+                                                                    </a>
+                                                                ) : (
+                                                                    <span className="text-blue-600 dark:text-blue-400 font-bold">{exp.company}</span>
+                                                                )}
+                                                                {exp.location && (
+                                                                    <>
+                                                                        <span className="text-slate-300 dark:text-slate-600">•</span>
+                                                                        <span className="text-slate-600 dark:text-slate-400 inline-flex items-center">
+                                                                            <MapPinIcon className="w-3.5 h-3.5 mr-1" />
+                                                                            {exp.location}
+                                                                        </span>
+                                                                    </>
+                                                                )}
+                                                            </div>
+                                                        </div>
                                                     </div>
 
-                                                    <div className="shrink-0">
-                                                        {exp.is_current ? (
-                                                            <span className="inline-flex items-center px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-bold uppercase tracking-wider">
-                                                                PRESENT
-                                                            </span>
-                                                        ) : (
-                                                            <span className="text-slate-500 dark:text-slate-400 text-sm font-medium">
-                                                                {new Date(exp.start_date).getFullYear()} — {exp.end_date ? new Date(exp.end_date).getFullYear() : 'Present'}
-                                                            </span>
-                                                        )}
+                                                    <div className="shrink-0 flex flex-col md:items-end gap-1">
+                                                        <span className="text-slate-600 dark:text-slate-300 font-medium whitespace-nowrap bg-slate-100 dark:bg-slate-700/50 px-3 py-1 rounded-full text-sm">
+                                                            {exp.date_range}
+                                                        </span>
+                                                        <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold px-1">
+                                                            {exp.duration}
+                                                        </span>
                                                     </div>
                                                 </div>
 
-                                                {/* Description mapped from bullet points or string */}
                                                 <div className="prose prose-sm dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 mb-6 marker:text-blue-500">
-                                                    <div
-                                                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(exp.description) }}
-                                                    />
+                                                    {exp.description && (
+                                                        <div
+                                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(exp.description) }}
+                                                        />
+                                                    )}
+                                                    {exp.responsibilities && exp.responsibilities.length > 0 && (
+                                                        <ul className="mt-4 space-y-1">
+                                                            {exp.responsibilities.map((resp, idx) => (
+                                                                <li key={idx}>{resp}</li>
+                                                            ))}
+                                                        </ul>
+                                                    )}
                                                 </div>
 
-                                                {/* Tags */}
-                                                <div className="flex flex-wrap gap-2">
+                                                {/* Tags & Tech */}
+                                                <div className="flex flex-wrap items-center gap-2">
                                                     <span className={`px-2.5 py-1 text-xs font-medium rounded-md ${employmentTypeColors[exp.employment_type] || 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'}`}>
                                                         {exp.employment_type.replace('-', ' ').toUpperCase()}
                                                     </span>
+                                                    
+                                                    {exp.technologies && exp.technologies.length > 0 && (
+                                                        <>
+                                                            <div className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1"></div>
+                                                            {exp.technologies.map((tech, idx) => (
+                                                                <span key={idx} className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium rounded-md border border-slate-200 dark:border-slate-700">
+                                                                    {tech}
+                                                                </span>
+                                                            ))}
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+                    )}
+
+                    {/* SECTION 2.5: Education Timeline */}
+                    {educations && educations.length > 0 && (
+                        <section className="animate-fade-in-up" style={{ animationDelay: "0.25s" }}>
+                            <div className="flex items-center mb-16 relative">
+                                <h2 className="text-3xl font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-900 px-6 z-10 mx-auto">
+                                    Education
+                                </h2>
+                                <div className="absolute left-0 right-0 top-1/2 h-px bg-slate-200 dark:bg-slate-800 -z-0"></div>
+                            </div>
+
+                            <div className="max-w-4xl mx-auto relative pb-8">
+                                {/* Gradient fade-out at the bottom of the timeline line */}
+                                <div className="absolute left-4 md:left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-slate-200 via-slate-200 to-transparent dark:from-slate-700 dark:via-slate-700 dark:to-transparent z-0"></div>
+                                
+                                <div className="relative ml-4 md:ml-0 space-y-12">
+                                    {educations.map((edu) => (
+                                        <div key={edu.id} className="relative pl-8 md:pl-12 group z-10">
+                                            {/* Timeline Node */}
+                                            <div className={`absolute -left-[17px] top-1.5 w-8 h-8 rounded-full flex items-center justify-center border-4 border-slate-50 dark:border-[#0f1115] transition-colors duration-300 ${edu.is_current ? 'bg-indigo-500' : 'bg-slate-300 dark:bg-slate-600 group-hover:bg-indigo-400'}`}>
+                                                {edu.is_current && (
+                                                    <span className="absolute inset-0 rounded-full border-2 border-indigo-400 animate-ping opacity-75"></span>
+                                                )}
+                                                <div className={`w-2 h-2 rounded-full relative z-10 ${edu.is_current ? 'bg-white' : 'bg-slate-50 dark:bg-slate-900'}`}></div>
+                                            </div>
+
+                                            <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 dark:border-slate-700 transition-shadow hover:shadow-md">
+                                                <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+                                                    <div className="flex items-start gap-4">
+                                                        {edu.institution_logo ? (
+                                                            <div className="shrink-0">
+                                                                <img 
+                                                                    src={`/storage/${edu.institution_logo}`} 
+                                                                    alt={edu.institution} 
+                                                                    className="w-12 h-12 rounded-lg object-contain bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 p-1"
+                                                                />
+                                                            </div>
+                                                        ) : (
+                                                            <div className="shrink-0 w-12 h-12 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 flex items-center justify-center text-indigo-500">
+                                                                <AcademicCapIcon className="w-6 h-6" />
+                                                            </div>
+                                                        )}
+                                                        <div>
+                                                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+                                                                {edu.degree} {edu.field_of_study && <span className="text-slate-500 dark:text-slate-400 font-normal">in {edu.field_of_study}</span>}
+                                                            </h3>
+                                                            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+                                                                <span className="text-indigo-600 dark:text-indigo-400 font-bold">{edu.institution}</span>
+                                                                
+                                                                {edu.location && (
+                                                                    <>
+                                                                        <span className="text-slate-300 dark:text-slate-600">•</span>
+                                                                        <span className="text-slate-600 dark:text-slate-400 inline-flex items-center">
+                                                                            <MapPinIcon className="w-3.5 h-3.5 mr-1" />
+                                                                            {edu.location}
+                                                                        </span>
+                                                                    </>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="shrink-0 flex flex-col md:items-end gap-1">
+                                                        <span className="text-slate-600 dark:text-slate-300 font-medium whitespace-nowrap bg-slate-100 dark:bg-slate-700/50 px-3 py-1 rounded-full text-sm">
+                                                            {edu.date_range}
+                                                        </span>
+                                                        {edu.grade && (
+                                                            <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold px-1">
+                                                                Grade: {edu.grade}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                <div className="prose prose-sm dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 mb-6 marker:text-indigo-500">
+                                                    {edu.description && (
+                                                        <div
+                                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(edu.description) }}
+                                                        />
+                                                    )}
+                                                    {edu.activities && (
+                                                        <div className="mt-4">
+                                                            <strong>Activities & Societies:</strong>
+                                                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(edu.activities) }} />
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>

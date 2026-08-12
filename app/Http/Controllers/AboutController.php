@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Experience;
+use App\Models\Education;
 use App\Models\Setting;
 use App\Models\Skill;
 use Illuminate\Http\Request;
@@ -15,24 +16,13 @@ class AboutController extends Controller
      */
     public function index()
     {
-        // $bio = Setting::get('bio', '');
-        // $profilePhoto = Setting::get('profile_photo', '');
-
-        // // Get skills grouped by category
-        // $skills = Skill::ordered()->get()->groupBy('category');
-
-        // return view('about', compact('bio', 'profilePhoto', 'skills'));
-
         $skills = Skill::orderBy('category')
             ->orderBy('proficiency', 'desc')
             ->get();
 
-        // $settings = [
-        //     'profile_photo' => setting('profile_photo'),
-        //     'site_description' => setting('site_description'),
-        // ];
-
         $experiences = Experience::ordered()->get();
+        
+        $educations = Education::ordered()->get();
 
         // ⭐ Ambil semua settings
         $settings = Setting::pluck('value', 'key')->toArray();
@@ -41,6 +31,7 @@ class AboutController extends Controller
             'skills' => $skills,
             'settings' => $settings,
             'experiences' => $experiences,
+            'educations' => $educations,
         ]);
     }
 }

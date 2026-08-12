@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
+use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\Admin\ExperienceController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SkillController;
@@ -88,6 +89,9 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
 
     // Experiences Management
     Route::resource('experiences', ExperienceController::class)->except(['show']);
+
+    // Educations Management
+    Route::resource('educations', EducationController::class)->except(['show']);
 
     // Contact Messages
     Route::prefix('messages')->name('messages.')->group(function () {
