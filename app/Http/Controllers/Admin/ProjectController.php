@@ -79,6 +79,10 @@ class ProjectController extends Controller
             $data['published_at'] = now();
         }
 
+        if (empty($data['created_at'])) {
+            unset($data['created_at']);
+        }
+
         $project = Project::create($data);
 
         // Sync skills
@@ -125,6 +129,10 @@ class ProjectController extends Controller
         // Set published_at if status is published
         if ($data['status'] === 'published' && empty($project->published_at)) {
             $data['published_at'] = now();
+        }
+
+        if (empty($data['created_at'])) {
+            unset($data['created_at']);
         }
 
         $project->update($data);

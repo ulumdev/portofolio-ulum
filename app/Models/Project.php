@@ -22,6 +22,7 @@ class Project extends Model
         'github_url',
         'status',
         'published_at',
+        'created_at',
         'order',
     ];
 

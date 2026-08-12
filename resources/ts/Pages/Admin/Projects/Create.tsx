@@ -21,6 +21,7 @@ export default function CreateProject({ skills }: CreateProjectProps) {
     demo_url: '',
     github_url: '',
     status: 'draft' as 'draft' | 'published',
+    created_at: '',
     skills: [] as number[],
   });
 
@@ -38,17 +39,20 @@ export default function CreateProject({ skills }: CreateProjectProps) {
     }
   };
 
-  const handleSkillToggle = (skillId: number) => {
-    if (data.skills.includes(skillId)) {
-      setData('skills', data.skills.filter((id) => id !== skillId));
-    } else {
-      setData('skills', [...data.skills, skillId]);
-    }
-  };
 
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
     post('/admin/projects');
+  };
+
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+      ['link', 'image', 'video'],
+      ['clean']
+    ],
   };
 
   return (
@@ -73,8 +77,8 @@ export default function CreateProject({ skills }: CreateProjectProps) {
           {/* Description */}
           <Textarea
             label="Short Description"
-            value={data. description}
-            onChange={(e) => setData('description', e. target.value)}
+            value={data.description}
+            onChange={(e) => setData('description', e.target.value)}
             error={errors.description}
             required
             rows={3}
@@ -91,6 +95,7 @@ export default function CreateProject({ skills }: CreateProjectProps) {
                 theme="snow"
                 value={data.content}
                 onChange={(value) => setData('content', value)}
+                modules={modules}
                 className="h-64 mb-12"
               />
             </div>
@@ -141,8 +146,49 @@ export default function CreateProject({ skills }: CreateProjectProps) {
               value={data.github_url}
               onChange={(e) => setData('github_url', e.target.value)}
               error={errors.github_url}
-              placeholder="https://github. com/username/repo"
+              placeholder="https://github.com/username/repo"
             />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Created At */}
+            <Input
+              label="Created At"
+              type="date"
+              value={data.created_at || ''}
+              onChange={(e) => setData('created_at', e.target.value)}
+              error={errors.created_at}
+              helperText="Optional: Override creation date"
+            />
+
+            {/* Status */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Status
+              </label>
+              <div className="flex space-x-4">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    value="draft"
+                    checked={data.status === 'draft'}
+                    onChange={(e) => setData('status', e.target.value as 'draft')}
+                    className="mr-2"
+                  />
+                  <span>Draft</span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    value="published"
+                    checked={data.status === 'published'}
+                    onChange={(e) => setData('status', e.target.value as 'published')}
+                    className="mr-2"
+                  />
+                  <span>Published</span>
+                </label>
+              </div>
+            </div>
           </div>
 
           {/* Technologies/Skills */}
@@ -150,54 +196,23 @@ export default function CreateProject({ skills }: CreateProjectProps) {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Technologies Used
             </label>
-            <div className="flex flex-wrap gap-2">
-              {skills. map((skill) => (
-                <button
-                  key={skill.id}
-                  type="button"
-                  onClick={() => handleSkillToggle(skill.id)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    data.skills.includes(skill.id)
-                      ? 'bg-primary-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {skill.name}
-                </button>
+            <select
+              multiple
+              value={data.skills.map(String)}
+              onChange={(e) => {
+                const selected = Array.from(e.target.selectedOptions, option => parseInt(option.value));
+                setData('skills', selected);
+              }}
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 h-40"
+            >
+              {skills.map(skill => (
+                <option key={skill.id} value={skill.id}>{skill.name}</option>
               ))}
-            </div>
+            </select>
+            <p className="mt-1 text-xs text-gray-500">Hold Ctrl (Windows) or Command (Mac) to select multiple</p>
             {errors.skills && (
               <p className="mt-1 text-sm text-red-600">{errors.skills}</p>
             )}
-          </div>
-
-          {/* Status */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Status
-            </label>
-            <div className="flex space-x-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  value="draft"
-                  checked={data.status === 'draft'}
-                  onChange={(e) => setData('status', e.target.value as 'draft')}
-                  className="mr-2"
-                />
-                <span>Draft</span>
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  value="published"
-                  checked={data.status === 'published'}
-                  onChange={(e) => setData('status', e.target.value as 'published')}
-                  className="mr-2"
-                />
-                <span>Published</span>
-              </label>
-            </div>
           </div>
 
           {/* Actions */}

@@ -30,6 +30,7 @@ class StoreProjectRequest extends FormRequest
             'github_url' => 'nullable|url',
             'status' => 'required|in:draft,published',
             'published_at' => 'nullable|date',
+            'created_at' => 'nullable|date',
             'order' => 'nullable|integer|min:0',
             'skills' => 'nullable|array',
             'skills.*' => 'exists:skills,id',
