@@ -2,6 +2,7 @@ import { useState } from "react";
 import PublicLayout from "@/Layouts/PublicLayout";
 import { Experience, Settings, Skill } from "@/types";
 import DOMPurify from "dompurify";
+import {
     MapPinIcon,
     CodeBracketIcon,
     ArrowTopRightOnSquareIcon,
