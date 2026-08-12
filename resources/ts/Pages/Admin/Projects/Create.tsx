@@ -196,20 +196,26 @@ export default function CreateProject({ skills }: CreateProjectProps) {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Technologies Used
             </label>
-            <select
-              multiple
-              value={data.skills.map(String)}
-              onChange={(e) => {
-                const selected = Array.from(e.target.selectedOptions, option => parseInt(option.value));
-                setData('skills', selected);
-              }}
-              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 h-40"
-            >
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4 border border-gray-300 rounded-lg max-h-64 overflow-y-auto bg-gray-50">
               {skills.map(skill => (
-                <option key={skill.id} value={skill.id}>{skill.name}</option>
+                <label key={skill.id} className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    value={skill.id}
+                    checked={data.skills.includes(skill.id)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setData('skills', [...data.skills, skill.id]);
+                      } else {
+                        setData('skills', data.skills.filter(id => id !== skill.id));
+                      }
+                    }}
+                    className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                  />
+                  <span className="text-sm font-medium text-gray-700">{skill.name}</span>
+                </label>
               ))}
-            </select>
-            <p className="mt-1 text-xs text-gray-500">Hold Ctrl (Windows) or Command (Mac) to select multiple</p>
+            </div>
             {errors.skills && (
               <p className="mt-1 text-sm text-red-600">{errors.skills}</p>
             )}
