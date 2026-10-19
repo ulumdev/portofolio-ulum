@@ -28,6 +28,9 @@ class SettingController extends Controller
             'email' => Setting::get('email', ''),
             'phone' => Setting::get('phone', ''),
             'address' => Setting::get('address', ''),
+            'projects_completed' => Setting::get('projects_completed', ''),
+            'years_experience' => Setting::get('years_experience', ''),
+            'happy_clients' => Setting::get('happy_clients', ''),
             'cv_file' => Setting::get('cv_file', ''),
             'privacy_policy_url' => Setting::get('privacy_policy_url', ''),
             'terms_of_service_url' => Setting::get('terms_of_service_url', ''),
@@ -72,6 +75,9 @@ class SettingController extends Controller
             'email' => 'nullable|email',
             'phone' => 'nullable|string|max:50',
             'address' => 'nullable|string|max:255',
+            'projects_completed' => 'nullable|string|max:50',
+            'years_experience' => 'nullable|string|max:50',
+            'happy_clients' => 'nullable|string|max:50',
             'cv_file' => 'nullable|mimes:pdf|max:5120',
             'privacy_policy_url' => 'nullable|string',
             'terms_of_service_url' => 'nullable|string',
@@ -120,6 +126,9 @@ class SettingController extends Controller
         Setting::set('email', $request->email);
         Setting::set('phone', $request->phone);
         Setting::set('address', $request->address);
+        Setting::set('projects_completed', $request->projects_completed);
+        Setting::set('years_experience', $request->years_experience);
+        Setting::set('happy_clients', $request->happy_clients);
         Setting::set('privacy_policy_url', $request->privacy_policy_url);
         Setting::set('terms_of_service_url', $request->terms_of_service_url);
         Setting::set('home_hero_title', $request->home_hero_title);

@@ -18,9 +18,12 @@ interface SettingsIndexProps {
     profile_photo: string;
     phone: string;
     address: string;
+    projects_completed?: string;
+    years_experience?: string;
+    happy_clients?: string;
     privacy_policy_url: string;
     terms_of_service_url: string;
-        cv_file: string;
+    cv_file: string;
     home_hero_title: string;
     home_hero_gradient: string;
     home_hero_subtitle: string;
@@ -43,7 +46,7 @@ export default function SettingsIndex({ settings }: SettingsIndexProps) {
   const { data, setData, post, processing, errors } = useForm({
     site_name: settings.site_name || '',
     site_tagline: settings.site_tagline || '',
-    site_description: settings. site_description || '',
+    site_description: settings.site_description || '',
     email: settings.email || '',
     github_url: settings.github_url || '',
     linkedin_url: settings.linkedin_url || '',
@@ -52,9 +55,12 @@ export default function SettingsIndex({ settings }: SettingsIndexProps) {
     profile_photo: null as File | null,
     phone: settings.phone || '',
     address: settings.address || '',
+    projects_completed: settings.projects_completed || '',
+    years_experience: settings.years_experience || '',
+    happy_clients: settings.happy_clients || '',
     privacy_policy_url: settings.privacy_policy_url || '',
     terms_of_service_url: settings.terms_of_service_url || '',
-        cv_file: null as File | null,
+    cv_file: null as File | null,
     home_hero_title: settings.home_hero_title || '',
     home_hero_gradient: settings.home_hero_gradient || '',
     home_hero_subtitle: settings.home_hero_subtitle || '',
@@ -109,191 +115,7 @@ export default function SettingsIndex({ settings }: SettingsIndexProps) {
     });
   };
 
-//   return (
-//     <AdminLayout title="Settings">
-//       <div className="max-w-4xl mx-auto">
-//         <div className="mb-6">
-//           <h2 className="text-2xl font-bold text-gray-900">Site Settings</h2>
-//           <p className="text-gray-600">Configure your portfolio website</p>
-//         </div>
-
-//         <form onSubmit={submit} className="space-y-6">
-//           {/* General Settings */}
-//           <div className="bg-white rounded-lg shadow-md p-6">
-//             <h3 className="text-lg font-semibold text-gray-900 mb-4">
-//               General Information
-//             </h3>
-//             <div className="space-y-4">
-//               <Input
-//                 label="Site Name"
-//                 value={data.site_name}
-//                 onChange={(e) => setData('site_name', e.target.value)}
-//                 error={errors.site_name}
-//                 required
-//                 placeholder="Portfolio Ulum"
-//               />
-
-//               <Input
-//                 label="Site Tagline"
-//                 value={data.site_tagline}
-//                 onChange={(e) => setData('site_tagline', e.target.value)}
-//                 error={errors.site_tagline}
-//                 placeholder="Full Stack Developer & Designer"
-//               />
-
-//               <Textarea
-//                 label="Site Description"
-//                 value={data.site_description}
-//                 onChange={(e) => setData('site_description', e.target.value)}
-//                 error={errors.site_description}
-//                 rows={4}
-//                 placeholder="Brief description about you and your work..."
-//                 helperText="Used for SEO and social media previews"
-//               />
-
-//               <Input
-//                 label="Contact Email"
-//                 type="email"
-//                 value={data.email}
-//                 onChange={(e) => setData('email', e.target.value)}
-//                 error={errors.email}
-//                 placeholder="hello@example.com"
-//               />
-//             </div>
-//           </div>
-
-//           {/* Profile Photo */}
-//           <div className="bg-white rounded-lg shadow-md p-6">
-//             <h3 className="text-lg font-semibold text-gray-900 mb-4">
-//               Profile Photo
-//             </h3>
-//             <div className="flex items-center space-x-6">
-//               {previewImage ? (
-//                 <img
-//                   src={previewImage}
-//                   alt="Profile"
-//                   className="w-32 h-32 rounded-full object-cover border-4 border-gray-200"
-//                 />
-//               ) : (
-//                 <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center">
-//                   <span className="text-gray-400 text-4xl">? </span>
-//                 </div>
-//               )}
-//               <div className="flex-1">
-//                 <label className="block">
-//                   <span className="sr-only">Choose profile photo</span>
-//                   <input
-//                     type="file"
-//                     accept="image/*"
-//                     onChange={handleImageChange}
-//                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
-//                   />
-//                 </label>
-//                 <p className="mt-2 text-sm text-gray-500">
-//                   JPG, PNG or GIF.  Max size 2MB.  Square images work best.
-//                 </p>
-//                 {errors.profile_photo && (
-//                   <p className="mt-1 text-sm text-red-600">{errors.profile_photo}</p>
-//                 )}
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* Social Media Links */}
-//           <div className="bg-white rounded-lg shadow-md p-6">
-//             <h3 className="text-lg font-semibold text-gray-900 mb-4">
-//               Social Media Links
-//             </h3>
-//             <div className="space-y-4">
-//               <Input
-//                 label="GitHub URL"
-//                 type="url"
-//                 value={data.github_url}
-//                 onChange={(e) => setData('github_url', e.target.value)}
-//                 error={errors.github_url}
-//                 placeholder="https://github.com/username"
-//               />
-
-//               <Input
-//                 label="LinkedIn URL"
-//                 type="url"
-//                 value={data.linkedin_url}
-//                 onChange={(e) => setData('linkedin_url', e.target.value)}
-//                 error={errors.linkedin_url}
-//                 placeholder="https://linkedin.com/in/username"
-//               />
-
-//               <Input
-//                 label="Twitter URL"
-//                 type="url"
-//                 value={data.twitter_url}
-//                 onChange={(e) => setData('twitter_url', e.target.value)}
-//                 error={errors.twitter_url}
-//                 placeholder="https://twitter.com/username"
-//               />
-//             </div>
-//           </div>
-
-//                     {/* Hero Sections Settings */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Hero Sections & Text Copies
-            </h3>
-            <div className="space-y-6">
-              <div className="border-b pb-4">
-                <h4 className="text-md font-medium text-gray-800 mb-3">Home Page</h4>
-                <div className="space-y-4">
-                  <Input label="Hero Title" value={data.home_hero_title} onChange={e => setData('home_hero_title', e.target.value)} error={errors.home_hero_title} />
-                  <Input label="Hero Gradient Word" value={data.home_hero_gradient} onChange={e => setData('home_hero_gradient', e.target.value)} error={errors.home_hero_gradient} />
-                  <Textarea label="Hero Subtitle" value={data.home_hero_subtitle} onChange={e => setData('home_hero_subtitle', e.target.value)} error={errors.home_hero_subtitle} rows={3} />
-                </div>
-              </div>
-              <div className="border-b pb-4">
-                <h4 className="text-md font-medium text-gray-800 mb-3">About Page</h4>
-                <div className="space-y-4">
-                  <Input label="Hero Title" value={data.about_hero_title} onChange={e => setData('about_hero_title', e.target.value)} error={errors.about_hero_title} />
-                  <Input label="Hire Status Badge" value={data.about_hire_status} onChange={e => setData('about_hire_status', e.target.value)} error={errors.about_hire_status} />
-                </div>
-              </div>
-              <div className="border-b pb-4">
-                <h4 className="text-md font-medium text-gray-800 mb-3">Portofolio Page</h4>
-                <div className="space-y-4">
-                  <Input label="Hero Title" value={data.portfolio_hero_title} onChange={e => setData('portfolio_hero_title', e.target.value)} error={errors.portfolio_hero_title} />
-                  <Input label="Hero Gradient Word" value={data.portfolio_hero_gradient} onChange={e => setData('portfolio_hero_gradient', e.target.value)} error={errors.portfolio_hero_gradient} />
-                  <Textarea label="Hero Subtitle" value={data.portfolio_hero_subtitle} onChange={e => setData('portfolio_hero_subtitle', e.target.value)} error={errors.portfolio_hero_subtitle} rows={3} />
-                </div>
-              </div>
-              <div className="border-b pb-4">
-                <h4 className="text-md font-medium text-gray-800 mb-3">Blog Page</h4>
-                <div className="space-y-4">
-                  <Input label="Hero Title" value={data.blog_hero_title} onChange={e => setData('blog_hero_title', e.target.value)} error={errors.blog_hero_title} />
-                  <Input label="Hero Gradient Word" value={data.blog_hero_gradient} onChange={e => setData('blog_hero_gradient', e.target.value)} error={errors.blog_hero_gradient} />
-                  <Textarea label="Hero Subtitle" value={data.blog_hero_subtitle} onChange={e => setData('blog_hero_subtitle', e.target.value)} error={errors.blog_hero_subtitle} rows={3} />
-                </div>
-              </div>
-              <div className="pt-2">
-                <h4 className="text-md font-medium text-gray-800 mb-3">Contact Page</h4>
-                <div className="space-y-4">
-                  <Input label="Hero Title" value={data.contact_hero_title} onChange={e => setData('contact_hero_title', e.target.value)} error={errors.contact_hero_title} />
-                  <Input label="Hero Gradient Word" value={data.contact_hero_gradient} onChange={e => setData('contact_hero_gradient', e.target.value)} error={errors.contact_hero_gradient} />
-                  <Textarea label="Hero Subtitle" value={data.contact_hero_subtitle} onChange={e => setData('contact_hero_subtitle', e.target.value)} error={errors.contact_hero_subtitle} rows={3} />
-                  <Input label="Freelance Status" value={data.contact_freelance_status} onChange={e => setData('contact_freelance_status', e.target.value)} error={errors.contact_freelance_status} />
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* Save Button */}
-//           <div className="flex justify-end">
-//             <Button type="submit" loading={processing} size="lg">
-//               Save Settings
-//             </Button>
-//           </div>
-//         </form>
-//       </div>
-//     </AdminLayout>
-//   );
-
-    return (
+  return (
     <AdminLayout title="Settings">
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
@@ -361,6 +183,35 @@ export default function SettingsIndex({ settings }: SettingsIndexProps) {
                 error={errors.address}
                 placeholder="Mojokerto, Indonesia"
               />
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <Input
+                  label="Projects Completed"
+                  type="text"
+                  value={data.projects_completed}
+                  onChange={(e) => setData('projects_completed', e.target.value)}
+                  error={errors.projects_completed}
+                  placeholder="24"
+                />
+
+                <Input
+                  label="Years Experience"
+                  type="text"
+                  value={data.years_experience}
+                  onChange={(e) => setData('years_experience', e.target.value)}
+                  error={errors.years_experience}
+                  placeholder="3+"
+                />
+
+                <Input
+                  label="Happy Clients"
+                  type="text"
+                  value={data.happy_clients}
+                  onChange={(e) => setData('happy_clients', e.target.value)}
+                  error={errors.happy_clients}
+                  placeholder="18"
+                />
+              </div>
             </div>
           </div>
 

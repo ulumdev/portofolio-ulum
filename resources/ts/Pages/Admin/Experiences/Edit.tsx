@@ -163,7 +163,7 @@ export default function EditExperience({ experience }: EditExperienceProps) {
             </label>
             <select
               value={data.employment_type}
-              onChange={(e) => setData('employment_type', e.target.value as any)}
+              onChange={(e) => setData('employment_type', e.target.value as Experience['employment_type'])}
               className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
               required
             >

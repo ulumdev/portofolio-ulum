@@ -22,6 +22,7 @@ export default function PortofolioIndex({
     projects,
     selectedSkill,
 }: PortofolioIndexProps) {
+    const { settings } = usePage<PageProps>().props;
     const filter = selectedSkill || "all";
 
     const handlePageChange = (page: number) => {
@@ -38,9 +39,9 @@ export default function PortofolioIndex({
             <div className="w-full">
                 {/* Header / Hero Section */}
                 <SectionHero
-                    title={(usePage<PageProps>().props.settings as any).portfolio_hero_title || "Explore My"}
-                    gradientWord={(usePage<PageProps>().props.settings as any).portfolio_hero_gradient || "Portofolio"}
-                    subtitle={(usePage<PageProps>().props.settings as any).portfolio_hero_subtitle || "Showcasing expertise across various technologies and domains"}
+                    title={settings.portfolio_hero_title || "Explore My"}
+                    gradientWord={settings.portfolio_hero_gradient || "Portofolio"}
+                    subtitle={settings.portfolio_hero_subtitle || "Showcasing expertise across various technologies and domains"}
                 />
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

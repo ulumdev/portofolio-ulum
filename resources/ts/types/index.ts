@@ -22,6 +22,21 @@ export interface Settings {
     privacy_policy_url?: string;
     terms_of_service_url?: string;
     cv_file?: string;
+    home_hero_title?: string;
+    home_hero_gradient?: string;
+    home_hero_subtitle?: string;
+    about_hero_title?: string;
+    about_hire_status?: string;
+    portfolio_hero_title?: string;
+    portfolio_hero_gradient?: string;
+    portfolio_hero_subtitle?: string;
+    blog_hero_title?: string;
+    blog_hero_gradient?: string;
+    blog_hero_subtitle?: string;
+    contact_hero_title?: string;
+    contact_hero_gradient?: string;
+    contact_hero_subtitle?: string;
+    contact_freelance_status?: string;
 }
 
 export interface PageProps {

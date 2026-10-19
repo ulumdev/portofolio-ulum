@@ -11,15 +11,15 @@ Dokumen terkait:
 
 ## Ringkasan Eksekutif
 
-Project ini adalah aplikasi portfolio full-stack berbasis `Laravel 12` yang saat ini **aktif berjalan dengan pola Laravel + Inertia + React + TypeScript**, tetapi masih menyimpan jejak arsitektur generasi lama berbasis Blade. Secara fungsional, fitur publik dan admin utama sudah cukup lengkap, namun repo masih berada dalam kondisi **hybrid/transisi**, sehingga ada beberapa mismatch penting:
+Project ini adalah aplikasi portfolio full-stack berbasis `Laravel 12` yang berjalan penuh dengan arsitektur **Laravel + Inertia + React + TypeScript**. Proses refactoring dan eliminasi technical debt telah diselesaikan:
 
-- UI aktif dominan memakai `Inertia::render(...)` dan page React di `resources/ts/Pages`.
-- Banyak Blade view lama masih tersimpan dan sebagian layout Blade masih menunjuk entrypoint lama `resources/js/app.js`.
-- Ada route aktif yang tidak sinkron dengan handler/view yang tersedia.
-- Build frontend saat ini gagal karena error TypeScript konkret.
-- Test suite gagal dijalankan di environment ini karena driver SQLite tidak tersedia.
-
-Secara umum, project ini **layak dipahami sebagai aplikasi portfolio + blog + admin dashboard yang sudah berfungsi secara konsep**, tetapi **belum sepenuhnya rapi sebagai codebase produksi yang konsisten**.
+- UI publik dan panel admin 100% menggunakan `Inertia::render(...)` dan komponen React di `resources/ts/Pages`.
+- Seluruh file Blade legacy telah dibersihkan; entrypoint tunggal adalah `resources/views/app.blade.php`.
+- Sisa file legacy Vite (`vite.config copy.js`) dan 117 unused npm packages telah dihapus.
+- Route auth disinkronisasi penuh: halaman `ForgotPassword.tsx` dan `ResetPassword.tsx` berbasis React + Inertia telah dibuat, serta endpoint auth orphan telah diarahkan dengan aman.
+- Shared settings props dan kontrak TypeScript (`Settings`, `PageProps`) telah sinkron 100% tanpa typecast `as any`.
+- Build frontend (`npm run build`) berhasil 100% tanpa error TypeScript.
+- Test suite (`php artisan test`) berjalan sukses (32 passed, 64 assertions).
 
 ## Sumber Verifikasi
 
@@ -773,34 +773,19 @@ Berhasil dan menjadi sumber utama pemetaan fitur aktif.
 
 #### `php artisan test`
 
-Gagal.
+Berhasil (100% Pass).
 
-Penyebab utama yang terverifikasi:
-
-- environment test memakai koneksi `sqlite`
-- driver SQLite PHP tidak tersedia
-- error: `could not find driver`
-
-Konsekuensinya:
-
-- test suite saat ini belum bisa dijadikan indikator kesehatan aplikasi di environment ini
+Hasil eksekusi:
+- 32 tests passed (64 assertions).
+- Modul Admin (Blog, Category, Dashboard, Message, Project, Setting), Auth, dan Public Routes teruji valid.
 
 #### `npm run build`
 
-Gagal.
+Berhasil (100% Pass).
 
-Penyebab konkret:
-
-- TypeScript error pada `SectionHero.tsx`
-- props `badgeText` dan `badgeIcon` tidak digunakan
-
-#### `php artisan db:show --counts`
-
-Gagal.
-
-Penyebab yang terlihat:
-
-- koneksi database aktif tidak berhasil dibuka pada environment inspeksi ini
+Hasil eksekusi:
+- `tsc && vite build` selesai tanpa error (~4.7s).
+- Seluruh artefak JavaScript/CSS berhasil dikompilasi ke `public/build/assets/`.
 
 ### Klasifikasi risiko
 

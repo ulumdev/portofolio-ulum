@@ -28,9 +28,9 @@ export default function Home({ featuredProjects, latestPosts }: HomeProps) {
                 
                 {/* Hero Section */}
                 <SectionHero
-                    title={(settings as any).home_hero_title || "Hi, I'm Moh. Bahrul 'Ulum"}
-                    gradientWord={(settings as any).home_hero_gradient || "Full Stack Developer"}
-                    subtitle={(settings as any).home_hero_subtitle || "Crafting beautiful digital experiences with robust backend architectures. Focused on creating user-centric solutions that perform at scale."}
+                    title={settings.home_hero_title || "Hi, I'm Moh. Bahrul 'Ulum"}
+                    gradientWord={settings.home_hero_gradient || "Full Stack Developer"}
+                    subtitle={settings.home_hero_subtitle || "Crafting beautiful digital experiences with robust backend architectures. Focused on creating user-centric solutions that perform at scale."}
                 />
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-24 md:pb-32 relative z-10">
@@ -68,13 +68,13 @@ export default function Home({ featuredProjects, latestPosts }: HomeProps) {
 
                         {/* 3. Download CV */}
                         <a
-                            href={(settings as any).cv_file ? `/storage/${(settings as any).cv_file}` : "#"}
+                            href={settings.cv_file ? `/storage/${settings.cv_file}` : "#"}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 transition-all duration-300"
                             title="Download CV"
                             onClick={(e) => {
-                                if (!(settings as any).cv_file) {
+                                if (!settings.cv_file) {
                                     e.preventDefault();
                                     alert("CV belum tersedia. Nanti bisa diupload via dashboard Admin.");
                                 }

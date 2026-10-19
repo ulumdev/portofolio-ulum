@@ -64,15 +64,16 @@ interface BlogIndexProps {
 }
 
 export default function BlogIndex({ posts }: BlogIndexProps) {
+    const { settings } = usePage<PageProps>().props;
 
     return (
         <PublicLayout title="Blog">
             <div className="w-full">
                 {/* Header / Hero Section */}
                 <SectionHero
-                    title={(usePage<PageProps>().props.settings as any).blog_hero_title || "Thoughts &"}
-                    gradientWord={(usePage<PageProps>().props.settings as any).blog_hero_gradient || "Insights"}
-                    subtitle={(usePage<PageProps>().props.settings as any).blog_hero_subtitle || "Articles, tutorials, and thoughts on web development, design, and technology"}
+                    title={settings.blog_hero_title || "Thoughts &"}
+                    gradientWord={settings.blog_hero_gradient || "Insights"}
+                    subtitle={settings.blog_hero_subtitle || "Articles, tutorials, and thoughts on web development, design, and technology"}
                 />
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

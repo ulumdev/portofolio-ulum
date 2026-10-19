@@ -19,9 +19,9 @@ export default function PublicLayout({ title, children }: PublicLayoutProps) {
     <ThemeProvider>
       <Head>
         <title>{title}</title>
-        <meta name="description" content={(settings as any).site_description || 'Portofolio'} />
-        <meta property="og:title" content={`${title} - ${(settings as any).site_name || 'Portofolio'}`} />
-        <meta property="og:description" content={(settings as any).site_description || 'Portofolio'} />
+        <meta name="description" content={settings.site_description || 'Portofolio'} />
+        <meta property="og:title" content={`${title} - ${settings.site_name || 'Portofolio'}`} />
+        <meta property="og:description" content={settings.site_description || 'Portofolio'} />
       </Head>
       <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#09090b] text-slate-900 dark:text-gray-300 transition-colors duration-300 selection:bg-cyan-500/30 selection:text-cyan-900 dark:selection:text-cyan-200">
         <Navbar />
