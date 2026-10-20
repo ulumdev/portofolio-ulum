@@ -30,7 +30,8 @@ class AboutController extends Controller
 
         // Calculate dynamic stats directly from database CRUD
         $firstExp = Experience::orderBy('start_date', 'asc')->first();
-        $yearsExperience = $firstExp ? (max(1, now()->diffInYears($firstExp->start_date)) . '+') : '3+';
+        $calculatedYears = $firstExp ? (abs((int) $firstExp->start_date->diffInYears(now())) . '+') : '3+';
+        $yearsExperience = !empty($settings['years_experience']) ? $settings['years_experience'] : $calculatedYears;
 
         $stats = [
             'years_experience' => $yearsExperience,

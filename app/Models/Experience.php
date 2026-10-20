@@ -55,8 +55,8 @@ class Experience extends Model
         $start = $this->start_date;
         $end = $this->is_current ? now() : $this->end_date;
 
-        $months = $start->diffInMonths($end);
-        $years = floor($months / 12);
+        $months = (int) round($start->diffInMonths($end));
+        $years = (int) floor($months / 12);
         $remainingMonths = $months % 12;
 
         if ($years > 0 && $remainingMonths > 0) {

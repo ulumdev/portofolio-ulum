@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BlogPost;
 use App\Models\Experience;
 use App\Models\Project;
+use App\Models\Setting;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -34,8 +35,10 @@ class HomeController extends Controller
         $skills = Skill::ordered()->get();
 
         // Calculate dynamic stats directly from database CRUD
+        $settings = Setting::pluck('value', 'key')->toArray();
         $firstExp = Experience::orderBy('start_date', 'asc')->first();
-        $yearsExperience = $firstExp ? (max(1, now()->diffInYears($firstExp->start_date)) . '+') : '3+';
+        $calculatedYears = $firstExp ? (abs((int) $firstExp->start_date->diffInYears(now())) . '+') : '3+';
+        $yearsExperience = !empty($settings['years_experience']) ? $settings['years_experience'] : $calculatedYears;
 
         $stats = [
             'years_experience' => $yearsExperience,
