@@ -21,6 +21,7 @@ export default function CreateProject({ skills }: CreateProjectProps) {
     demo_url: '',
     github_url: '',
     status: 'draft' as 'draft' | 'published',
+    is_featured: false,
     created_at: '',
     skills: [] as number[],
   });
@@ -188,6 +189,21 @@ export default function CreateProject({ skills }: CreateProjectProps) {
                   <span>Published</span>
                 </label>
               </div>
+            </div>
+
+            {/* Featured Project */}
+            <div className="flex items-center pt-2">
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={data.is_featured}
+                  onChange={(e) => setData('is_featured', e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-300 text-amber-600 focus:ring-amber-500"
+                />
+                <span className="ml-2 text-sm font-medium text-gray-700">
+                  Featured Project (Tampilkan di Card Homepage)
+                </span>
+              </label>
             </div>
           </div>
 

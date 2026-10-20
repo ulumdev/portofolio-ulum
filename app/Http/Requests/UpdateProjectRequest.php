@@ -29,6 +29,7 @@ class UpdateProjectRequest extends FormRequest
             'demo_url' => 'nullable|url',
             'github_url' => 'nullable|url',
             'status' => 'required|in:draft,published',
+            'is_featured' => 'nullable|boolean',
             'published_at' => 'nullable|date',
             'created_at' => 'nullable|date',
             'order' => 'nullable|integer|min:0',

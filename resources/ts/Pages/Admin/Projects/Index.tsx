@@ -8,7 +8,9 @@ import {
     TrashIcon,
     PlusIcon,
     EyeIcon,
+    StarIcon as StarOutlineIcon,
 } from "@heroicons/react/24/outline";
+import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
 import { Project, PaginatedData } from "@/types";
 import { useState } from "react";
 
@@ -124,6 +126,35 @@ export default function ProjectsIndex({ projects }: ProjectsIndexProps) {
                     {project.status.charAt(0).toUpperCase() +
                         project.status.slice(1)}
                 </span>
+            ),
+        },
+        {
+            key: "is_featured",
+            label: "Featured (Home)",
+            render: (project: Project) => (
+                <Link
+                    href={`/admin/projects/${project.id}/toggle-featured`}
+                    method="post"
+                    as="button"
+                    preserveScroll
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full transition-all duration-200 cursor-pointer ${
+                        project.is_featured
+                            ? "bg-amber-100 text-amber-900 border border-amber-300 hover:bg-amber-200 shadow-sm"
+                            : "bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200 hover:text-gray-700"
+                    }`}
+                    title={
+                        project.is_featured
+                            ? "Tampil di Homepage. Klik untuk membatalkan."
+                            : "Klik untuk menampilkan di Card Featured Homepage."
+                    }
+                >
+                    {project.is_featured ? (
+                        <StarSolidIcon className="w-3.5 h-3.5 text-amber-500" />
+                    ) : (
+                        <StarOutlineIcon className="w-3.5 h-3.5 text-gray-400" />
+                    )}
+                    <span>{project.is_featured ? "Featured" : "No"}</span>
+                </Link>
             ),
         },
         {

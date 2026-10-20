@@ -17,12 +17,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Get featured projects (latest 3 published)
+        // Get featured projects (prioritizing is_featured, fallback to latest published)
         $projects = Project::published()
             ->with('skills')
+            ->where('is_featured', true)
             ->ordered()
             ->take(3)
             ->get();
+
+        if ($projects->isEmpty()) {
+            $projects = Project::published()
+                ->with('skills')
+                ->ordered()
+                ->take(3)
+                ->get();
+        }
 
         // Get latest blog posts (latest 3 published)
         $posts = BlogPost::published()

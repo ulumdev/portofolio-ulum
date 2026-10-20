@@ -64,6 +64,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Projects Management
+    Route::post('/projects/{project}/toggle-featured', [AdminProjectController::class, 'toggleFeatured'])->name('projects.toggle-featured');
     Route::resource('projects', AdminProjectController::class)->except(['show']);
 
     // Blog Management

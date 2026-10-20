@@ -22,6 +22,7 @@ export default function EditProject({ project, skills }: EditProjectProps) {
     demo_url: project.demo_url || '',
     github_url: project.github_url || '',
     status: project.status,
+    is_featured: project.is_featured || false,
     created_at: project.created_at ? new Date(project.created_at).toISOString().split('T')[0] : '',
     skills: project.skills.map(s => s.id),
     _method: 'PUT',
@@ -191,6 +192,21 @@ export default function EditProject({ project, skills }: EditProjectProps) {
                   <span>Published</span>
                 </label>
               </div>
+            </div>
+
+            {/* Featured Project */}
+            <div className="flex items-center pt-2">
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={data.is_featured}
+                  onChange={(e) => setData('is_featured', e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-300 text-amber-600 focus:ring-amber-500"
+                />
+                <span className="ml-2 text-sm font-medium text-gray-700">
+                  Featured Project (Tampilkan di Card Homepage)
+                </span>
+              </label>
             </div>
           </div>
 

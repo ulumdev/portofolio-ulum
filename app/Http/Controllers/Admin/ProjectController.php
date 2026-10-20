@@ -83,6 +83,8 @@ class ProjectController extends Controller
             unset($data['created_at']);
         }
 
+        $data['is_featured'] = $request->boolean('is_featured');
+
         $project = Project::create($data);
 
         // Sync skills
@@ -135,6 +137,8 @@ class ProjectController extends Controller
             unset($data['created_at']);
         }
 
+        $data['is_featured'] = $request->boolean('is_featured');
+
         $project->update($data);
 
         // Sync skills
@@ -162,5 +166,19 @@ class ProjectController extends Controller
 
         return redirect()->route('admin.projects.index')
             ->with('success', 'Project deleted successfully!');
+    }
+
+    /**
+     * Toggle featured status of the specified project
+     */
+    public function toggleFeatured(Project $project)
+    {
+        $project->update([
+            'is_featured' => !$project->is_featured,
+        ]);
+
+        return back()->with('success', $project->is_featured
+            ? "Project '{$project->title}' ditandai sebagai Featured (tampil di Homepage)!"
+            : "Project '{$project->title}' dihapus dari Featured.");
     }
 }

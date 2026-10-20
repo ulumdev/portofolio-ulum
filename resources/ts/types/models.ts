@@ -39,6 +39,8 @@ export interface Project {
   demo_url?: string;
   github_url?: string;
   status: 'draft' | 'published' | 'archived';
+  is_featured?: boolean;
+  order?: number;
   skills: Skill[];
   created_at: string;
   updated_at: string;

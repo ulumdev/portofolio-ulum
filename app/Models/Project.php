@@ -21,6 +21,7 @@ class Project extends Model
         'demo_url',
         'github_url',
         'status',
+        'is_featured',
         'published_at',
         'created_at',
         'order',
@@ -28,6 +29,7 @@ class Project extends Model
 
     protected $casts = [
         'published_at' => 'datetime',
+        'is_featured' => 'boolean',
     ];
 
     /**
@@ -71,6 +73,14 @@ class Project extends Model
     public function scopeOrdered($query)
     {
         return $query->orderBy('order', 'asc');
+    }
+
+    /**
+     * Scope to get only featured projects
+     */
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', true);
     }
 
     /**
