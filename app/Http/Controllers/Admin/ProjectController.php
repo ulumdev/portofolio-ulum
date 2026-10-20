@@ -126,6 +126,9 @@ class ProjectController extends Controller
 
             $data['featured_image'] = $request->file('featured_image')
                 ->store('projects', 'public');
+        } else {
+            // Retain existing image if no new file is uploaded
+            unset($data['featured_image']);
         }
 
         // Set published_at if status is published

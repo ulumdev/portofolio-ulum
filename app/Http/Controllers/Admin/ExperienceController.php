@@ -99,6 +99,9 @@ class ExperienceController extends Controller
                 Storage::disk('public')->delete($experience->company_logo);
             }
             $validated['company_logo'] = $request->file('company_logo')->store('experiences', 'public');
+        } else {
+            // Retain existing logo if no new file is uploaded
+            unset($validated['company_logo']);
         }
 
         $experience->update($validated);

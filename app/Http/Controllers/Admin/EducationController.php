@@ -95,6 +95,9 @@ class EducationController extends Controller
                 Storage::disk('public')->delete($education->institution_logo);
             }
             $validated['institution_logo'] = $request->file('institution_logo')->store('educations', 'public');
+        } else {
+            // Retain existing logo if no new file is uploaded
+            unset($validated['institution_logo']);
         }
 
         $education->update($validated);
