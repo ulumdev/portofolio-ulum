@@ -3,7 +3,8 @@ import { PageProps } from '@/types';
 import {
   EnvelopeIcon,
   MapPinIcon,
-  HeartIcon
+  PhoneIcon,
+  ArrowUpRightIcon,
 } from '@heroicons/react/24/outline';
 import {
   FaGithub,
@@ -17,68 +18,87 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { name: 'GitHub', icon: FaGithub, url: settings.github_url || '#' },
-    { name: 'LinkedIn', icon: FaLinkedin, url: settings.linkedin_url || '#' },
-    { name: 'Twitter', icon: FaTwitter, url: settings.twitter_url || '#' },
-    { name: 'Instagram', icon: FaInstagram, url: settings.instagram_url || '#' },
-  ];
+    { name: 'GitHub', icon: FaGithub, url: settings.github_url },
+    { name: 'LinkedIn', icon: FaLinkedin, url: settings.linkedin_url },
+    { name: 'Twitter', icon: FaTwitter, url: settings.twitter_url },
+    { name: 'Instagram', icon: FaInstagram, url: settings.instagram_url },
+  ].filter((s) => s.url && s.url !== '#');
 
-  const quickLinks = [
+  const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
-    { name: 'Portofolio', href: '/portofolio' },
+    { name: 'Portfolio', href: '/portofolio' },
     { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '/contact' },
   ];
 
   return (
-    <footer className="bg-white dark:bg-[#09090b] border-t border-slate-200 dark:border-white/5 relative overflow-hidden transition-colors duration-300">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-slate-200 dark:via-white/10 to-transparent"></div>
-      <div className="hidden dark:block absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[300px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none -z-10"></div>
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 mb-12 sm:mb-16">
-          {/* About Section */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-4 sm:mb-6">
-              <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white drop-shadow-sm">
-                {settings.site_name || 'Portofolio'}
+    <footer className="relative bg-white dark:bg-zinc-950 border-t border-slate-200 dark:border-white/[0.08] transition-colors duration-300 overflow-hidden">
+      {/* Background glow & dots */}
+      <div className="absolute inset-0 bg-dots-light dark:bg-dots-dark opacity-30 pointer-events-none" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] bg-blue-500/[0.06] blur-[100px] rounded-full pointer-events-none -z-10" />
+
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-slate-200 dark:border-white/[0.08]">
+          {/* Brand & bio */}
+          <div className="md:col-span-6 space-y-4">
+            <Link href="/" className="inline-flex items-center space-x-2.5 group">
+              {settings?.profile_photo ? (
+                <img
+                  src={`/storage/${settings.profile_photo}`}
+                  alt={settings?.site_name || 'Avatar'}
+                  className="w-8 h-8 rounded-full object-cover border border-slate-200 dark:border-white/10 group-hover:scale-105 transition-transform duration-200"
+                />
+              ) : (
+                <span className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform duration-200">
+                  {(settings?.site_name || 'U').charAt(0)}
+                </span>
+              )}
+              <span className="font-bold text-lg tracking-tight text-slate-900 dark:text-white">
+                {settings?.site_name || 'Moh. Bahrul Ulum'}
               </span>
             </Link>
-            <p className="text-slate-600 dark:text-gray-400 mb-6 sm:mb-8 leading-relaxed max-w-md font-light text-base sm:text-lg">
-              {settings.site_tagline || 'Crafting beautiful digital experiences with robust backend architectures.'}
+
+            <p className="text-sm text-slate-600 dark:text-zinc-400 max-w-md leading-relaxed font-normal">
+              {settings.site_tagline ||
+                settings.site_description ||
+                'Full Stack Engineer dedicated to building robust, accessible, and high-performance digital products.'}
             </p>
-            {/* Social Links */}
-            <div className="flex space-x-3 sm:space-x-4">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-gray-400 hover:bg-blue-600 hover:text-white dark:hover:bg-white dark:hover:text-black dark:hover:border-transparent transition-all duration-300 transform hover:-translate-y-1 shadow-sm hover:shadow-lg dark:hover:shadow-[0_10px_20px_-10px_rgba(255,255,255,0.2)]"
-                    aria-label={social.name}
-                  >
-                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </a>
-                );
-              })}
-            </div>
+
+            {/* Social pills */}
+            {socialLinks.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-2">
+                {socialLinks.map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-white/[0.05] text-slate-700 dark:text-zinc-300 hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-zinc-950 border border-slate-200/80 dark:border-white/[0.06] transition-all duration-200"
+                      aria-label={social.name}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      <span>{social.name}</span>
+                    </a>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-widest mb-5 sm:mb-6">
+          {/* Navigation */}
+          <div className="md:col-span-3 space-y-3">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-white font-mono">
               Navigation
             </h4>
-            <ul className="space-y-3 sm:space-y-4">
-              {quickLinks.map((link) => (
+            <ul className="space-y-2">
+              {navLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-slate-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 inline-flex items-center text-sm sm:text-base"
+                    className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -87,51 +107,79 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-widest mb-5 sm:mb-6">
-              Contact
+          {/* Quick Contact & Details from Settings */}
+          <div className="md:col-span-3 space-y-3">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-white font-mono">
+              Get in Touch
             </h4>
-            <ul className="space-y-3 sm:space-y-4">
-              <li className="flex items-start text-slate-600 dark:text-gray-400 text-sm sm:text-base">
-                <EnvelopeIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-3 mt-0.5 text-blue-600 dark:text-blue-400" />
+            <div className="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
+              {settings.email && (
                 <a
-                  href={`mailto:${settings.email || 'hello@example.com'}`}
-                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  href={`mailto:${settings.email}`}
+                  className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group"
                 >
-                  {settings.email || 'hello@example.com'}
+                  <EnvelopeIcon className="w-4 h-4 text-slate-400 group-hover:text-blue-500 shrink-0" />
+                  <span className="truncate">{settings.email}</span>
                 </a>
-              </li>
-              <li className="flex items-start text-slate-600 dark:text-gray-400 text-sm sm:text-base">
-                <MapPinIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-3 mt-0.5 text-blue-600 dark:text-blue-400" />
-                <span>{settings.address || 'Your City, Country'}</span>
-              </li>
-            </ul>
+              )}
+              {settings.phone && (
+                <a
+                  href={`tel:${settings.phone}`}
+                  className="flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group"
+                >
+                  <PhoneIcon className="w-4 h-4 text-slate-400 group-hover:text-blue-500 shrink-0" />
+                  <span>{settings.phone}</span>
+                </a>
+              )}
+              {settings.address && (
+                <div className="flex items-center gap-2">
+                  <MapPinIcon className="w-4 h-4 text-slate-400 shrink-0" />
+                  <span>{settings.address}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="pt-2">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                <span>Send a direct message</span>
+                <ArrowUpRightIcon className="w-3 h-3" />
+              </Link>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-slate-200 dark:border-white/5 pt-6 sm:pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-slate-500 dark:text-gray-500 text-xs sm:text-sm flex items-center text-center sm:text-left">
-              © {currentYear} {settings.site_name}. Built with
-              <HeartIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 mx-1.5 text-rose-500 animate-pulse" />
-              and <span className="ml-1 text-slate-700 dark:text-white font-medium">Laravel</span>.
-            </p>
-            <div className="flex space-x-4 sm:space-x-6 text-xs sm:text-sm">
-              <Link
-                href={settings.privacy_policy_url || '#'}
-                className="text-slate-500 dark:text-gray-500 hover:text-slate-900 dark:hover:text-white transition-colors"
+        {/* Bottom bar */}
+        <div className="pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500 dark:text-zinc-500">
+          <p>
+            © {currentYear} {settings.site_name || 'Moh. Bahrul Ulum'}. All rights reserved.
+          </p>
+          <div className="flex items-center gap-4">
+            {settings.privacy_policy_url && (
+              <a
+                href={settings.privacy_policy_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
               >
-                Privacy
-              </Link>
-              <Link
-                href={settings.terms_of_service_url || '#'}
-                className="text-slate-500 dark:text-gray-500 hover:text-slate-900 dark:hover:text-white transition-colors"
+                Privacy Policy
+              </a>
+            )}
+            {settings.terms_of_service_url && (
+              <a
+                href={settings.terms_of_service_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
               >
-                Terms
-              </Link>
-            </div>
+                Terms of Service
+              </a>
+            )}
+            <span className="font-mono text-[11px] text-slate-400 dark:text-zinc-600">
+              Laravel &amp; React Inertia
+            </span>
           </div>
         </div>
       </div>

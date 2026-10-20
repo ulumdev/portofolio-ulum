@@ -9,7 +9,7 @@ interface GradientButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export default function GradientButton({
     children,
-    icon = <PaperAirplaneIcon className="w-5 h-5 mr-2" />,
+    icon = <PaperAirplaneIcon className="w-4 h-4 mr-2" />,
     fullWidth = true,
     className = "",
     disabled,
@@ -19,13 +19,13 @@ export default function GradientButton({
         <button
             disabled={disabled}
             className={`
-                relative inline-flex items-center justify-center px-8 py-3 
-                bg-gradient-to-r from-blue-500 to-indigo-600 
-                hover:from-blue-600 hover:to-indigo-700 
-                text-white font-medium rounded-lg 
-                shadow-lg shadow-blue-500/30 
-                transition-all duration-300 transform 
-                disabled:opacity-70 disabled:cursor-not-allowed
+                relative inline-flex items-center justify-center px-6 py-3 
+                bg-slate-900 dark:bg-white text-white dark:text-zinc-950
+                hover:bg-slate-800 dark:hover:bg-zinc-100
+                text-xs sm:text-sm font-semibold rounded-full
+                shadow-sm hover:shadow
+                transition-all duration-200 
+                disabled:opacity-60 disabled:cursor-not-allowed
                 ${fullWidth ? "w-full" : ""}
                 ${className}
             `}

@@ -33,7 +33,7 @@ class HandleInertiaRequests extends Middleware
                 'info' => fn() => $request->session()->get('info'),
             ],
             'settings' => [
-                'site_name' => Setting::get('site_name', config('app.name')),
+                'site_name' => ($siteName = Setting::get('site_name', config('app.name'))) && $siteName !== 'Laravel' ? $siteName : "Moh. Bahrul 'Ulum",
                 'site_tagline' => Setting::get('site_tagline', ''),
                 'site_description' => Setting::get('site_description', ''),
                 'bio' => Setting::get('bio', ''),

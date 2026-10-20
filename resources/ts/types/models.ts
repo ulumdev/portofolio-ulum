@@ -51,11 +51,14 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   featured_image?: string;
+  meta_title?: string;
+  meta_description?: string;
   status: 'draft' | 'published' | 'archived';
   views: number;
   published_at?: string;
   category: Category;
   tags: Tag[];
+  user?: User;
   created_at: string;
   updated_at: string;
 }

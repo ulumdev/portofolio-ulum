@@ -1,173 +1,167 @@
-
-// interface BlogShowProps {
-//   post: BlogPost;
-//   relatedPosts: BlogPost[];
-// }
-
-
-
-//           <h1 className="text-4xl md:text-5xl font-bold mb-6">{post.title}</h1>
-
-
-
-
-
-
-
-
-import PublicLayout from '@/Layouts/PublicLayout';
-import { Link } from '@inertiajs/react';
+import PublicLayout from "@/Layouts/PublicLayout";
+import { Link, Head } from "@inertiajs/react";
 import {
-  ArrowLeftIcon,
-  ClockIcon,
-  EyeIcon,
-  CalendarIcon,
-  UserIcon,
-} from '@heroicons/react/24/outline';
-import DOMPurify from 'dompurify';
-import { BlogPost } from '@/types';
-import BlogCard from '@/Components/Public/UI/BlogCard';
+    ArrowLeftIcon,
+    ClockIcon,
+    EyeIcon,
+    CalendarIcon,
+} from "@heroicons/react/24/outline";
+import DOMPurify from "dompurify";
+import { BlogPost } from "@/types";
+import BlogCard from "@/Components/Public/UI/BlogCard";
 
 interface BlogShowProps {
-  post: BlogPost;
-  relatedPosts: BlogPost[];
+    post: BlogPost;
+    relatedPosts: BlogPost[];
 }
 
-export default function BlogShow({ post, relatedPosts }: BlogShowProps) {
-  return (
-    <PublicLayout title={post.title}>
-      <div className="w-full">
-        {/* Hero Header */}
-        <section className="relative bg-white dark:bg-slate-900 text-slate-900 dark:text-white pt-24 pb-16 overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors">
-          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+export default function BlogShow({ post, relatedPosts = [] }: BlogShowProps) {
+    const displayDate = post.published_at || post.created_at;
+    const formattedDate = new Date(displayDate).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
 
-          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-            <div className="flex items-center justify-between mb-8 animate-fade-in-up">
-              <Link
-                href="/blog"
-                className="inline-flex items-center text-white/80 hover:text-white group transition-colors"
-              >
-                <ArrowLeftIcon className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
-                Back to Blog
-              </Link>
+    const words = (post.content || "").replace(/<[^>]+>/g, "").split(/\s+/).length;
+    const readTime = Math.max(1, Math.ceil(words / 200));
 
-              <Link
-                href={`/blog/category/${post.category.slug}`}
-                className="inline-block px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white text-sm font-medium rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
-                style={{ animationDelay: '0.1s' }}
-              >
-                {post.category.name}
-              </Link>
-            </div>
+    return (
+        <PublicLayout title={post.meta_title || post.title}>
+            <Head>
+                {post.meta_description && (
+                    <meta name="description" content={post.meta_description} />
+                )}
+            </Head>
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight animate-fade-in-up text-slate-900 dark:text-white" style={{ animationDelay: '0.2s' }}>
-              {post.title}
-            </h1>
+            <div className="w-full pb-24">
+                {/* Header / Hero */}
+                <section className="relative overflow-hidden pt-6 pb-12 md:pt-10 md:pb-16 border-b border-slate-200/80 dark:border-white/[0.08] bg-white dark:bg-zinc-950">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-500/[0.08] blur-[120px] rounded-full pointer-events-none -z-10" />
 
-            {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-6 text-slate-600 dark:text-white/80 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-              <div className="flex items-center">
-                <UserIcon className="w-5 h-5 mr-2" />
-                <span>{(post as any).user?.name || "Moh. Bahrul 'Ulum"}</span>
-              </div>
-              <div className="flex items-center">
-                <CalendarIcon className="w-5 h-5 mr-2" />
-                <span>
-                  {new Date(post.created_at).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </span>
-              </div>
-              <div className="flex items-center">
-                <ClockIcon className="w-5 h-5 mr-2" />
-                <span>{Math.ceil(post.content.length / 1000)} min read</span>
-              </div>
-              {post.views !== undefined && (
-                <div className="flex items-center">
-                  <EyeIcon className="w-5 h-5 mr-2" />
-                  <span>{post.views.toLocaleString()} views</span>
+                    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                        {/* Top Bar: Back & Category */}
+                        <div className="flex items-center justify-between gap-4 mb-8">
+                            <Link
+                                href="/blog"
+                                className="inline-flex items-center gap-2 text-xs font-mono font-medium text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white group transition-colors"
+                            >
+                                <ArrowLeftIcon className="w-3.5 h-3.5 transform group-hover:-translate-x-1 transition-transform" />
+                                <span>Back to Journal</span>
+                            </Link>
+
+                            {post.category && (
+                                <Link
+                                    href={`/blog/category/${post.category.slug}`}
+                                    className="px-3 py-1 rounded-full text-xs font-mono font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 transition-colors"
+                                >
+                                    #{post.category.name}
+                                </Link>
+                            )}
+                        </div>
+
+                        {/* Title */}
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.2] mb-6">
+                            {post.title}
+                        </h1>
+
+                        {/* Meta information */}
+                        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono text-slate-500 dark:text-zinc-400 pt-2 border-t border-slate-100 dark:border-white/[0.06]">
+                            <div className="flex items-center gap-2">
+                                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-[10px] font-bold">
+                                    {(post.user?.name || "U").charAt(0)}
+                                </div>
+                                <span className="font-sans font-medium text-slate-700 dark:text-zinc-300">
+                                    {post.user?.name || "Moh. Bahrul Ulum"}
+                                </span>
+                            </div>
+
+                            <div className="flex items-center gap-1.5">
+                                <CalendarIcon className="w-3.5 h-3.5" />
+                                <span>{formattedDate}</span>
+                            </div>
+
+                            <div className="flex items-center gap-1.5">
+                                <ClockIcon className="w-3.5 h-3.5" />
+                                <span>{readTime} min read</span>
+                            </div>
+
+                            {post.views !== undefined && (
+                                <div className="flex items-center gap-1.5">
+                                    <EyeIcon className="w-3.5 h-3.5" />
+                                    <span>{post.views.toLocaleString()} views</span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Main Content Area */}
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+                    {/* Featured Image */}
+                    {post.featured_image && (
+                        <div className="mb-12 rounded-2xl overflow-hidden border border-slate-200/80 dark:border-white/[0.08] shadow-xl bg-slate-100 dark:bg-zinc-900">
+                            <img
+                                src={`/storage/${post.featured_image}`}
+                                alt={post.title}
+                                className="w-full h-auto max-h-[500px] object-cover"
+                            />
+                        </div>
+                    )}
+
+                    {/* Article Body */}
+                    <article className="prose prose-slate dark:prose-invert max-w-none text-base sm:text-lg leading-relaxed mb-14">
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(post.content),
+                            }}
+                        />
+                    </article>
+
+                    {/* Tags Cloud */}
+                    {post.tags && post.tags.length > 0 && (
+                        <div className="pt-8 pb-10 border-t border-slate-200/80 dark:border-white/[0.08]">
+                            <h3 className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-500 mb-3 font-semibold">
+                                Related Topics
+                            </h3>
+                            <div className="flex flex-wrap gap-2">
+                                {post.tags.map((tag) => (
+                                    <Link
+                                        key={tag.id}
+                                        href={`/blog/tag/${tag.slug}`}
+                                        className="px-3 py-1 rounded-lg text-xs font-mono bg-slate-100 dark:bg-white/[0.05] text-slate-700 dark:text-zinc-300 border border-slate-200/60 dark:border-white/[0.06] hover:bg-slate-200 dark:hover:bg-white/[0.1] transition-colors"
+                                    >
+                                        #{tag.name}
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Related Articles */}
+                    {relatedPosts && relatedPosts.length > 0 && (
+                        <div className="pt-12 border-t border-slate-200/80 dark:border-white/[0.08]">
+                            <div className="flex items-center justify-between mb-8">
+                                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                                    Related Articles
+                                </h3>
+                                <Link
+                                    href="/blog"
+                                    className="text-xs font-mono font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                                >
+                                    All Articles →
+                                </Link>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {relatedPosts.map((relatedPost, index) => (
+                                    <BlogCard key={relatedPost.id} post={relatedPost} index={index} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
-              )}
             </div>
-          </div>
-        </section>
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          {/* Featured Image */}
-          {post.featured_image && (
-            <div className="mb-12 animate-fade-in-up">
-              <div className="rounded-2xl overflow-hidden shadow-xl dark:shadow-2xl border border-slate-200 dark:border-slate-800">
-                <img
-                  src={`/storage/${post.featured_image}`}
-                  alt={post.title}
-                  className="w-full h-auto hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Share & Actions */}
-          {/* <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-200 dark:border-slate-800 animate-fade-in-up">
-          <div className="flex items-center space-x-4">
-            <button className="flex items-center space-x-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-              <HeartIcon className="w-5 h-5 text-red-500" />
-              <span className="text-slate-700 dark:text-slate-300 font-medium">Like</span>
-            </button>
-            <button 
-              onClick={handleShare}
-              className="flex items-center space-x-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-            >
-              <ShareIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              <span className="text-slate-700 dark:text-slate-300 font-medium">Share</span>
-            </button>
-          </div>
-        </div> */}
-
-          {/* Content */}
-          <article className="prose prose-lg dark:prose-invert max-w-none mb-12 animate-fade-in-up">
-            <div
-              className="text-slate-800 dark:text-slate-300 leading-relaxed text-lg marker:text-slate-500"
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
-            />
-          </article>
-
-          {/* Tags */}
-          {post.tags && post.tags.length > 0 && (
-            <div className="mb-12 pb-12 border-b border-slate-200 dark:border-slate-800 animate-fade-in-up">
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Tags</h3>
-              <div className="flex flex-wrap gap-3">
-                {post.tags.map((tag) => (
-                    <Link
-                      key={tag.id}
-                      href={`/blog/tag/${tag.slug}`}
-                      className="px-4 py-2 bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-all font-medium border border-blue-200 dark:border-blue-800 transform hover:scale-105"
-                    >
-                    #{tag.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Related Posts */}
-          {relatedPosts && relatedPosts.length > 0 && (
-            <div className="animate-fade-in-up">
-              <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-8 flex items-center">
-                <span className="w-2 h-8 bg-blue-600 dark:bg-blue-500 rounded-full mr-4"></span>
-                Related Articles
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {relatedPosts.map((relatedPost, index) => (
-                  <BlogCard key={relatedPost.id} post={relatedPost} index={index} />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-      </div>
-    </PublicLayout>
-  );
+        </PublicLayout>
+    );
 }

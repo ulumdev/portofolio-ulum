@@ -11,6 +11,12 @@ import {
     WrenchScrewdriverIcon,
     CommandLineIcon,
     AcademicCapIcon,
+    BriefcaseIcon,
+    SparklesIcon,
+    UserIcon,
+    PhoneIcon,
+    EnvelopeIcon,
+    StarIcon,
 } from "@heroicons/react/24/outline";
 
 interface AboutProps {
@@ -28,11 +34,12 @@ export default function About({ settings, skills, experiences, educations }: Abo
     };
 
     // Group skills by category
-    const skillsByCategory = skills.reduce((acc: Record<string, Skill[]>, skill: Skill) => {
-        if (!acc[skill.category]) {
-            acc[skill.category] = [];
+    const skillsByCategory = (skills || []).reduce((acc: Record<string, Skill[]>, skill: Skill) => {
+        const cat = skill.category || "General";
+        if (!acc[cat]) {
+            acc[cat] = [];
         }
-        acc[skill.category].push(skill);
+        acc[cat].push(skill);
         return acc;
     }, {});
 
@@ -45,379 +52,484 @@ export default function About({ settings, skills, experiences, educations }: Abo
         }
     );
 
-    // Timeline helpers
     const employmentTypeColors: Record<string, string> = {
-        "full-time": "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 border border-blue-200 dark:border-blue-800",
-        "part-time": "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 border border-green-200 dark:border-green-800",
-        contract: "bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 border border-purple-200 dark:border-purple-800",
-        freelance: "bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-400 border border-orange-200 dark:border-orange-800",
-        internship: "bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-400 border border-pink-200 dark:border-pink-800",
+        "full-time": "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
+        "part-time": "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
+        contract: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
+        freelance: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
+        internship: "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20",
     };
 
-    // Category styling helpers
     const getCategoryStyle = (category: string) => {
         const lowerCat = category.toLowerCase();
-        if (lowerCat.includes('front')) {
+        if (lowerCat.includes("front")) {
             return {
-                bg: 'bg-blue-100 dark:bg-blue-900/30',
-                text: 'text-blue-600 dark:text-blue-400',
-                border: 'border-blue-200 dark:border-blue-800',
-                dot: 'bg-blue-500',
-                icon: <CodeBracketIcon className="w-5 h-5" />
+                bg: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
+                dot: "bg-blue-500",
+                icon: <CodeBracketIcon className="w-4 h-4" />,
             };
         }
-        if (lowerCat.includes('back') || lowerCat.includes('database')) {
+        if (lowerCat.includes("back") || lowerCat.includes("database")) {
             return {
-                bg: 'bg-emerald-100 dark:bg-emerald-900/30',
-                text: 'text-emerald-600 dark:text-emerald-400',
-                border: 'border-emerald-200 dark:border-emerald-800',
-                dot: 'bg-emerald-500',
-                icon: <ServerStackIcon className="w-5 h-5" />
+                bg: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
+                dot: "bg-emerald-500",
+                icon: <ServerStackIcon className="w-4 h-4" />,
             };
         }
-        if (lowerCat.includes('tool') || lowerCat.includes('devops')) {
+        if (lowerCat.includes("tool") || lowerCat.includes("devops")) {
             return {
-                bg: 'bg-orange-100 dark:bg-orange-900/30',
-                text: 'text-orange-600 dark:text-orange-400',
-                border: 'border-orange-200 dark:border-orange-800',
-                dot: 'bg-orange-500',
-                icon: <WrenchScrewdriverIcon className="w-5 h-5" />
+                bg: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
+                dot: "bg-amber-500",
+                icon: <WrenchScrewdriverIcon className="w-4 h-4" />,
             };
         }
         return {
-            bg: 'bg-indigo-100 dark:bg-indigo-900/30',
-            text: 'text-indigo-600 dark:text-indigo-400',
-            border: 'border-indigo-200 dark:border-indigo-800',
-            dot: 'bg-indigo-500',
-            icon: <CommandLineIcon className="w-5 h-5" />
+            bg: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20",
+            dot: "bg-indigo-500",
+            icon: <CommandLineIcon className="w-4 h-4" />,
         };
     };
 
     return (
         <PublicLayout title="About">
-            <div className="w-full">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 pt-20 space-y-16">
-
-                    {/* SECTION 1: Hero & Profile */}
-                    <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-                        <div className="lg:col-span-4 lg:col-start-1 animate-fade-in-up">
+            <div className="w-full pb-24">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12 sm:pt-10 sm:pb-16 space-y-20">
+                    {/* SECTION 1: Bento Profile & Story */}
+                    <section className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                        {/* Profile Photo Card */}
+                        <div className="lg:col-span-5">
                             <div className="relative group">
-                                {/* Animated background glow */}
-                                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                                
-                                <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-none border-4 border-white/50 dark:border-slate-800/50 backdrop-blur-sm">
+                                <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/30 to-indigo-600/30 rounded-3xl blur-xl opacity-50 group-hover:opacity-80 transition duration-500" />
+                                <div className="relative rounded-2xl overflow-hidden bg-slate-100 dark:bg-zinc-900 border border-slate-200/80 dark:border-white/[0.08] shadow-xl">
                                     {settings.profile_photo ? (
                                         <img
                                             src={`/storage/${settings.profile_photo}`}
                                             alt={settings.site_name || "Profile"}
-                                            className="w-full h-auto aspect-[3/4] object-cover hover:scale-105 transition-transform duration-700"
+                                            className="w-full h-auto aspect-[4/5] object-cover object-top hover:scale-105 transition-transform duration-700"
                                         />
                                     ) : (
-                                        <div className="w-full aspect-[3/4] bg-gradient-to-br from-slate-200 to-slate-400 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center">
-                                            <span className="text-slate-400 dark:text-slate-500 text-8xl font-bold">U</span>
+                                        <div className="w-full aspect-[4/5] bg-gradient-to-br from-slate-200 to-slate-300 dark:from-zinc-800 dark:to-zinc-900 flex flex-col items-center justify-center text-slate-400 dark:text-zinc-600">
+                                            <UserIcon className="w-20 h-20 mb-2" />
+                                            <span className="text-xs font-mono">Profile Photo</span>
                                         </div>
                                     )}
+
+                                    {/* Bottom overlay pill */}
+                                    <div className="absolute bottom-3 left-3 right-3 p-3 rounded-xl bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border border-slate-200/80 dark:border-white/[0.08] flex items-center justify-between text-xs">
+                                        <div className="flex items-center gap-2">
+                                            <span className="relative flex h-2 w-2">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                                            </span>
+                                            <span className="font-mono text-slate-700 dark:text-zinc-300 font-medium">
+                                                {settings.about_hire_status || settings.contact_freelance_status || "Available for hire"}
+                                            </span>
+                                        </div>
+                                        {settings.address && (
+                                            <span className="text-slate-500 dark:text-zinc-500 flex items-center gap-1 font-mono">
+                                                <MapPinIcon className="w-3.5 h-3.5" />
+                                                {settings.address}
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="lg:col-span-8 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-                            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1]">
+                        {/* Story & Biography */}
+                        <div className="lg:col-span-7 space-y-5">
+                            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium text-blue-600 dark:text-blue-400 bg-blue-500/10 border border-blue-500/20">
+                                <SparklesIcon className="w-3.5 h-3.5" />
+                                <span>Software Engineer &amp; Solution Architect</span>
+                            </div>
+
+                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
                                 {settings.about_hero_title || "I build digital experiences that matter."}
                             </h1>
 
-                            <p className="text-lg sm:text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10 max-w-3xl">
-                                {settings.site_description || "I'm a Fullstack Developer and UX Enthusiast. With years of experience, I specialize in building robust web applications that bridge the gap between technical complexity and intuitive design."}
-                            </p>
+                            <div className="prose prose-slate dark:prose-invert max-w-none text-sm sm:text-base text-slate-600 dark:text-zinc-400 leading-relaxed font-normal space-y-4">
+                                <p>
+                                    {settings.bio ||
+                                        settings.site_description ||
+                                        "I'm a Full Stack Engineer dedicated to designing and building reliable web systems. With deep expertise in Laravel and React, I turn business logic and technical specifications into clean, scalable, and maintainable software."}
+                                </p>
+                            </div>
 
-                            <div className="flex flex-wrap items-center gap-4">
-                                <div className="inline-flex items-center px-5 py-2.5 bg-white dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-full shadow-sm">
-                                    <MapPinIcon className="w-5 h-5 text-blue-500 mr-2.5" />
-                                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{settings.address || "Mojokerto, Indonesia"}</span>
+                            {/* Impact Numbers Mini Bar */}
+                            {(settings.years_experience || settings.projects_completed || settings.happy_clients) && (
+                                <div className="grid grid-cols-3 gap-3 pt-2">
+                                    {settings.years_experience && (
+                                        <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06]">
+                                            <div className="text-base sm:text-lg font-bold font-mono text-slate-900 dark:text-white">
+                                                {settings.years_experience}
+                                            </div>
+                                            <div className="text-[11px] font-mono text-slate-500 dark:text-zinc-500">
+                                                Years Experience
+                                            </div>
+                                        </div>
+                                    )}
+                                    {settings.projects_completed && (
+                                        <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06]">
+                                            <div className="text-base sm:text-lg font-bold font-mono text-slate-900 dark:text-white">
+                                                {settings.projects_completed}
+                                            </div>
+                                            <div className="text-[11px] font-mono text-slate-500 dark:text-zinc-500">
+                                                Projects Built
+                                            </div>
+                                        </div>
+                                    )}
+                                    {settings.happy_clients && (
+                                        <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06]">
+                                            <div className="text-base sm:text-lg font-bold font-mono text-slate-900 dark:text-white">
+                                                {settings.happy_clients}
+                                            </div>
+                                            <div className="text-[11px] font-mono text-slate-500 dark:text-zinc-500">
+                                                Happy Clients
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
-                                <div className="inline-flex items-center px-5 py-2.5 bg-white dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-full shadow-sm">
-                                    <span className="relative flex h-3 w-3 mr-2.5">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                                    </span>
-                                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{settings.about_hire_status || "Available for hire"}</span>
-                                </div>
-                                
-                                {/* Download CV Button */}
-                                <a
-                                    href={settings.cv_file ? `/storage/${settings.cv_file}` : "#"}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={(e) => {
-                                        if (!settings.cv_file) {
-                                            e.preventDefault();
-                                            alert("CV belum tersedia. Nanti bisa diupload via dashboard Admin.");
-                                        }
-                                    }}
-                                    className="inline-flex items-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white border border-transparent rounded-full shadow-sm hover:shadow-md transition-all duration-300 group"
-                                >
-                                    <DocumentArrowDownIcon className="w-5 h-5 mr-2.5 group-hover:-translate-y-0.5 transition-transform" />
-                                    <span className="text-sm font-semibold">Download CV</span>
-                                </a>
+                            )}
+
+                            {/* Action Row */}
+                            <div className="pt-2 flex flex-wrap items-center gap-3">
+                                {settings.cv_file && (
+                                    <a
+                                        href={`/storage/${settings.cv_file}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-slate-900 dark:bg-white text-white dark:text-zinc-950 hover:bg-slate-800 dark:hover:bg-zinc-100 transition-colors shadow-sm"
+                                    >
+                                        <DocumentArrowDownIcon className="w-4 h-4" />
+                                        <span>Download CV</span>
+                                    </a>
+                                )}
+
+                                {settings.email && (
+                                    <a
+                                        href={`mailto:${settings.email}`}
+                                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-white/20 transition-colors"
+                                    >
+                                        <EnvelopeIcon className="w-4 h-4" />
+                                        <span>Contact Me</span>
+                                    </a>
+                                )}
+
+                                {settings.phone && (
+                                    <a
+                                        href={`tel:${settings.phone}`}
+                                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-slate-100 dark:bg-white/[0.05] text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-white/[0.1] transition-colors"
+                                    >
+                                        <PhoneIcon className="w-4 h-4" />
+                                        <span>{settings.phone}</span>
+                                    </a>
+                                )}
                             </div>
                         </div>
                     </section>
 
-                    {/* SECTION 2: Experience Timeline */}
-                    {experiences.length > 0 && (
-                        <section className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-                            <div className="flex items-center mb-16 relative">
-                                <h2 className="text-3xl font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-900 px-6 z-10 mx-auto">
-                                    Experience
+                    {/* SECTION 2: Professional Experience Timeline (All CRUD Fields) */}
+                    {experiences && experiences.length > 0 && (
+                        <section className="pt-8 border-t border-slate-200/80 dark:border-white/[0.08]">
+                            <div className="mb-10">
+                                <span className="text-xs font-mono uppercase tracking-widest text-blue-600 dark:text-blue-400 font-semibold mb-1 block">
+                                    Career Journey
+                                </span>
+                                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
+                                    <BriefcaseIcon className="w-6 h-6 text-blue-500" />
+                                    <span>Work Experience</span>
                                 </h2>
-                                <div className="absolute left-0 right-0 top-1/2 h-px bg-slate-200 dark:bg-slate-800 -z-0"></div>
                             </div>
 
-                            <div className="max-w-4xl mx-auto relative pb-8">
-                                {/* Gradient fade-out at the bottom of the timeline line */}
-                                <div className="absolute left-4 md:left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-slate-200 via-slate-200 to-transparent dark:from-slate-700 dark:via-slate-700 dark:to-transparent z-0"></div>
-                                
-                                <div className="relative ml-4 md:ml-0 space-y-12">
-                                    {experiences.map((exp) => (
-                                        <div key={exp.id} className="relative pl-8 md:pl-12 group z-10">
-                                            {/* Timeline Node */}
-                                            <div className={`absolute -left-[17px] top-1.5 w-8 h-8 rounded-full flex items-center justify-center border-4 border-slate-50 dark:border-[#0f1115] transition-colors duration-300 ${exp.is_current ? 'bg-blue-500' : 'bg-slate-300 dark:bg-slate-600 group-hover:bg-blue-400'}`}>
-                                                {exp.is_current && (
-                                                    <span className="absolute inset-0 rounded-full border-2 border-blue-400 animate-ping opacity-75"></span>
+                            <div className="space-y-6">
+                                {experiences.map((exp) => (
+                                    <div
+                                        key={exp.id}
+                                        className="p-6 sm:p-7 rounded-2xl bg-white dark:bg-zinc-900/70 border border-slate-200/80 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-white/20 transition-all duration-200 shadow-sm"
+                                    >
+                                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
+                                            <div className="flex items-start gap-3.5">
+                                                {exp.company_logo ? (
+                                                    <img
+                                                        src={`/storage/${exp.company_logo}`}
+                                                        alt={exp.company}
+                                                        className="w-10 h-10 rounded-xl object-contain bg-slate-50 dark:bg-zinc-800 border border-slate-200/60 dark:border-white/[0.06] p-1 shrink-0"
+                                                    />
+                                                ) : (
+                                                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 flex items-center justify-center shrink-0">
+                                                        <BriefcaseIcon className="w-5 h-5" />
+                                                    </div>
                                                 )}
-                                                <div className={`w-2 h-2 rounded-full relative z-10 ${exp.is_current ? 'bg-white' : 'bg-slate-50 dark:bg-slate-900'}`}></div>
-                                            </div>
-
-                                            <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 dark:border-slate-700 transition-shadow hover:shadow-md">
-                                                <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
-                                                    <div className="flex items-start gap-4">
-                                                        {exp.company_logo && (
-                                                            <div className="shrink-0">
-                                                                <img 
-                                                                    src={`/storage/${exp.company_logo}`} 
-                                                                    alt={exp.company} 
-                                                                    className="w-12 h-12 rounded-lg object-contain bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 p-1"
-                                                                />
-                                                            </div>
-                                                        )}
-                                                        <div>
-                                                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
-                                                                {exp.position}
-                                                            </h3>
-                                                            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
-                                                                {exp.company_url ? (
-                                                                    <a href={exp.company_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-blue-600 dark:text-blue-400 font-bold hover:underline">
-                                                                        {exp.company}
-                                                                        <ArrowTopRightOnSquareIcon className="w-3.5 h-3.5 ml-1" />
-                                                                    </a>
-                                                                ) : (
-                                                                    <span className="text-blue-600 dark:text-blue-400 font-bold">{exp.company}</span>
-                                                                )}
-                                                                {exp.location && (
-                                                                    <>
-                                                                        <span className="text-slate-300 dark:text-slate-600">•</span>
-                                                                        <span className="text-slate-600 dark:text-slate-400 inline-flex items-center">
-                                                                            <MapPinIcon className="w-3.5 h-3.5 mr-1" />
-                                                                            {exp.location}
-                                                                        </span>
-                                                                    </>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="shrink-0 flex flex-col md:items-end gap-1">
-                                                        <span className="text-slate-600 dark:text-slate-300 font-medium whitespace-nowrap bg-slate-100 dark:bg-slate-700/50 px-3 py-1 rounded-full text-sm">
-                                                            {exp.date_range}
-                                                        </span>
-                                                        <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold px-1">
-                                                            {exp.duration}
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                <div className="prose prose-sm dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 mb-6 marker:text-blue-500">
-                                                    {exp.description && (
-                                                        <div
-                                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(exp.description) }}
-                                                        />
-                                                    )}
-                                                    {exp.responsibilities && exp.responsibilities.length > 0 && (
-                                                        <ul className="mt-4 space-y-1">
-                                                            {exp.responsibilities.map((resp, idx) => (
-                                                                <li key={idx}>{resp}</li>
-                                                            ))}
-                                                        </ul>
-                                                    )}
-                                                </div>
-
-                                                {/* Tags & Tech */}
-                                                <div className="flex flex-wrap items-center gap-2">
-                                                    <span className={`px-2.5 py-1 text-xs font-medium rounded-md ${employmentTypeColors[exp.employment_type] || 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'}`}>
-                                                        {exp.employment_type.replace('-', ' ').toUpperCase()}
-                                                    </span>
-                                                    
-                                                    {exp.technologies && exp.technologies.length > 0 && (
-                                                        <>
-                                                            <div className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1"></div>
-                                                            {exp.technologies.map((tech, idx) => (
-                                                                <span key={idx} className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium rounded-md border border-slate-200 dark:border-slate-700">
-                                                                    {tech}
-                                                                </span>
-                                                            ))}
-                                                        </>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </section>
-                    )}
-
-                    {/* SECTION 2.5: Education Timeline */}
-                    {educations && educations.length > 0 && (
-                        <section className="animate-fade-in-up" style={{ animationDelay: "0.25s" }}>
-                            <div className="flex items-center mb-16 relative">
-                                <h2 className="text-3xl font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-900 px-6 z-10 mx-auto">
-                                    Education
-                                </h2>
-                                <div className="absolute left-0 right-0 top-1/2 h-px bg-slate-200 dark:bg-slate-800 -z-0"></div>
-                            </div>
-
-                            <div className="max-w-4xl mx-auto relative pb-8">
-                                {/* Gradient fade-out at the bottom of the timeline line */}
-                                <div className="absolute left-4 md:left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-slate-200 via-slate-200 to-transparent dark:from-slate-700 dark:via-slate-700 dark:to-transparent z-0"></div>
-                                
-                                <div className="relative ml-4 md:ml-0 space-y-12">
-                                    {educations.map((edu) => (
-                                        <div key={edu.id} className="relative pl-8 md:pl-12 group z-10">
-                                            {/* Timeline Node */}
-                                            <div className={`absolute -left-[17px] top-1.5 w-8 h-8 rounded-full flex items-center justify-center border-4 border-slate-50 dark:border-[#0f1115] transition-colors duration-300 ${edu.is_current ? 'bg-indigo-500' : 'bg-slate-300 dark:bg-slate-600 group-hover:bg-indigo-400'}`}>
-                                                {edu.is_current && (
-                                                    <span className="absolute inset-0 rounded-full border-2 border-indigo-400 animate-ping opacity-75"></span>
-                                                )}
-                                                <div className={`w-2 h-2 rounded-full relative z-10 ${edu.is_current ? 'bg-white' : 'bg-slate-50 dark:bg-slate-900'}`}></div>
-                                            </div>
-
-                                            <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 dark:border-slate-700 transition-shadow hover:shadow-md">
-                                                <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
-                                                    <div className="flex items-start gap-4">
-                                                        {edu.institution_logo ? (
-                                                            <div className="shrink-0">
-                                                                <img 
-                                                                    src={`/storage/${edu.institution_logo}`} 
-                                                                    alt={edu.institution} 
-                                                                    className="w-12 h-12 rounded-lg object-contain bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 p-1"
-                                                                />
-                                                            </div>
-                                                        ) : (
-                                                            <div className="shrink-0 w-12 h-12 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 flex items-center justify-center text-indigo-500">
-                                                                <AcademicCapIcon className="w-6 h-6" />
-                                                            </div>
-                                                        )}
-                                                        <div>
-                                                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
-                                                                {edu.degree} {edu.field_of_study && <span className="text-slate-500 dark:text-slate-400 font-normal">in {edu.field_of_study}</span>}
-                                                            </h3>
-                                                            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
-                                                                <span className="text-indigo-600 dark:text-indigo-400 font-bold">{edu.institution}</span>
-                                                                
-                                                                {edu.location && (
-                                                                    <>
-                                                                        <span className="text-slate-300 dark:text-slate-600">•</span>
-                                                                        <span className="text-slate-600 dark:text-slate-400 inline-flex items-center">
-                                                                            <MapPinIcon className="w-3.5 h-3.5 mr-1" />
-                                                                            {edu.location}
-                                                                        </span>
-                                                                    </>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="shrink-0 flex flex-col md:items-end gap-1">
-                                                        <span className="text-slate-600 dark:text-slate-300 font-medium whitespace-nowrap bg-slate-100 dark:bg-slate-700/50 px-3 py-1 rounded-full text-sm">
-                                                            {edu.date_range}
-                                                        </span>
-                                                        {edu.grade && (
-                                                            <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold px-1">
-                                                                Grade: {edu.grade}
+                                                <div>
+                                                    <div className="flex items-center gap-2">
+                                                        <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                                                            {exp.position}
+                                                        </h3>
+                                                        {exp.is_featured && (
+                                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium text-amber-700 dark:text-amber-300 bg-amber-500/10 border border-amber-500/20">
+                                                                <StarIcon className="w-3 h-3 text-amber-500 fill-amber-500" />
+                                                                Featured
                                                             </span>
                                                         )}
                                                     </div>
-                                                </div>
-
-                                                <div className="prose prose-sm dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 mb-6 marker:text-indigo-500">
-                                                    {edu.description && (
-                                                        <div
-                                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(edu.description) }}
-                                                        />
-                                                    )}
-                                                    {edu.activities && (
-                                                        <div className="mt-4">
-                                                            <strong>Activities & Societies:</strong>
-                                                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(edu.activities) }} />
-                                                        </div>
-                                                    )}
+                                                    <div className="flex flex-wrap items-center gap-x-2 text-xs font-mono mt-0.5 text-slate-600 dark:text-zinc-400">
+                                                        {exp.company_url ? (
+                                                            <a
+                                                                href={exp.company_url}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="text-blue-600 dark:text-blue-400 font-semibold hover:underline inline-flex items-center gap-1"
+                                                            >
+                                                                <span>{exp.company}</span>
+                                                                <ArrowTopRightOnSquareIcon className="w-3 h-3" />
+                                                            </a>
+                                                        ) : (
+                                                            <span className="font-semibold text-slate-800 dark:text-zinc-200">
+                                                                {exp.company}
+                                                            </span>
+                                                        )}
+                                                        {exp.location && (
+                                                            <>
+                                                                <span>•</span>
+                                                                <span className="inline-flex items-center gap-1">
+                                                                    <MapPinIcon className="w-3 h-3 text-slate-400" />
+                                                                    {exp.location}
+                                                                </span>
+                                                            </>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                            <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+                                                <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/[0.06] text-slate-600 dark:text-zinc-400">
+                                                    {exp.date_range}
+                                                    {exp.duration && (
+                                                        <span className="ml-1.5 text-slate-400 dark:text-zinc-500">
+                                                            ({exp.duration})
+                                                        </span>
+                                                    )}
+                                                </span>
+                                                {exp.employment_type && (
+                                                    <span
+                                                        className={`text-[11px] font-mono font-medium px-2.5 py-1 rounded-full border ${
+                                                            employmentTypeColors[exp.employment_type] ||
+                                                            "bg-slate-100 text-slate-600 border-slate-200"
+                                                        }`}
+                                                    >
+                                                        {exp.employment_type.replace("-", " ").toUpperCase()}
+                                                    </span>
+                                                )}
+                                            </div>
                                         </div>
-                                    ))}
-                                </div>
+
+                                        {/* Description */}
+                                        {exp.description && (
+                                            <div
+                                                className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed font-normal mb-3"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: DOMPurify.sanitize(exp.description),
+                                                }}
+                                            />
+                                        )}
+
+                                        {/* Responsibilities list */}
+                                        {exp.responsibilities && exp.responsibilities.length > 0 && (
+                                            <div className="mt-2 space-y-1.5">
+                                                <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-500 font-semibold block">
+                                                    Key Responsibilities &amp; Impact:
+                                                </span>
+                                                <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
+                                                    {exp.responsibilities.map((r, i) => (
+                                                        <li key={i}>{r}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+
+                                        {/* Tech Tags */}
+                                        {exp.technologies && exp.technologies.length > 0 && (
+                                            <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-slate-100 dark:border-white/[0.06]">
+                                                {exp.technologies.map((t, i) => (
+                                                    <span
+                                                        key={i}
+                                                        className="px-2 py-0.5 text-[11px] font-mono rounded bg-slate-100 dark:bg-white/[0.05] text-slate-600 dark:text-zinc-400 border border-slate-200/60 dark:border-white/[0.06]"
+                                                    >
+                                                        {t}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
                         </section>
                     )}
 
-                    {/* SECTION 3: Technical Skills */}
-                    <section className="animate-fade-in-up pb-16" style={{ animationDelay: "0.3s" }}>
-                        <div className="flex items-center mb-12 relative">
-                            <h2 className="text-3xl font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-900 pr-6 z-10">
-                                Technical Skills
+                    {/* SECTION 3: Technical Skills Matrix (With Proficiency Badges) */}
+                    <section className="pt-8 border-t border-slate-200/80 dark:border-white/[0.08]">
+                        <div className="mb-10">
+                            <span className="text-xs font-mono uppercase tracking-widest text-blue-600 dark:text-blue-400 font-semibold mb-1 block">
+                                Capabilities &amp; Arsenal
+                            </span>
+                            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
+                                <CodeBracketIcon className="w-6 h-6 text-blue-500" />
+                                <span>Technical Skills</span>
                             </h2>
-                            <div className="absolute left-0 right-0 top-1/2 h-px bg-slate-200 dark:bg-slate-800 -z-0"></div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {sortedCategories.map(([category, catSkills]) => {
                                 const isExpanded = expandedCategories[category];
-                                const maxVisible = 5;
+                                const maxVisible = 6;
                                 const showExpandButton = catSkills.length > maxVisible;
                                 const visibleSkills = isExpanded ? catSkills : catSkills.slice(0, maxVisible);
                                 const style = getCategoryStyle(category);
 
                                 return (
-                                    <div key={category} className="bg-transparent">
-                                        <div className="flex items-center gap-3 mb-6">
-                                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${style.bg} ${style.text}`}>
-                                                {style.icon}
+                                    <div
+                                        key={category}
+                                        className="p-6 rounded-2xl bg-white dark:bg-zinc-900/70 border border-slate-200/80 dark:border-white/[0.08] shadow-sm flex flex-col justify-between"
+                                    >
+                                        <div>
+                                            <div className="flex items-center gap-2.5 mb-5">
+                                                <div
+                                                    className={`w-8 h-8 rounded-lg flex items-center justify-center border ${style.bg}`}
+                                                >
+                                                    {style.icon}
+                                                </div>
+                                                <h3 className="text-sm font-bold text-slate-900 dark:text-white font-mono uppercase tracking-wider">
+                                                    {category}
+                                                </h3>
                                             </div>
-                                            <h3 className="text-xl font-bold text-slate-900 dark:text-white">{category}</h3>
+
+                                            <div className="flex flex-wrap gap-2">
+                                                {visibleSkills.map((skill: Skill) => (
+                                                    <span
+                                                        key={skill.id}
+                                                        className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono bg-slate-100 dark:bg-white/[0.05] text-slate-700 dark:text-zinc-300 border border-slate-200/60 dark:border-white/[0.06] hover:border-slate-300 dark:hover:border-white/20 transition-colors"
+                                                    >
+                                                        <span className={`w-1.5 h-1.5 rounded-full ${style.dot}`} />
+                                                        <span className="font-medium">{skill.name}</span>
+                                                    </span>
+                                                ))}
+                                            </div>
                                         </div>
 
-                                        <div className="flex flex-wrap gap-3">
-                                            {visibleSkills.map((skill: Skill) => (
-                                                <div key={skill.id} className="inline-flex items-center px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm hover:shadow-md transition-all group">
-                                                    <span className={`w-2 h-2 rounded-full mr-2 ${style.dot}`}></span>
-                                                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{skill.name}</span>
-                                                </div>
-                                            ))}
-
-                                            {showExpandButton && (
+                                        {showExpandButton && (
+                                            <div className="pt-4 mt-4 border-t border-slate-100 dark:border-white/[0.06]">
                                                 <button
                                                     onClick={() => toggleCategory(category)}
-                                                    className="inline-flex items-center px-4 py-2 bg-slate-100 dark:bg-slate-800/50 border border-transparent dark:border-slate-700/50 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium text-slate-600 dark:text-slate-400 transition-colors cursor-pointer"
+                                                    className="text-xs font-mono text-blue-600 dark:text-blue-400 hover:underline"
                                                 >
-                                                    {isExpanded ? 'Show less' : `+${catSkills.length - maxVisible} more`}
+                                                    {isExpanded ? "Show less" : `+${catSkills.length - maxVisible} more`}
                                                 </button>
-                                            )}
-                                        </div>
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}
                         </div>
                     </section>
+
+                    {/* SECTION 4: Education (All Fields: Degree, GPA/Grade, Activities, Description) */}
+                    {educations && educations.length > 0 && (
+                        <section className="pt-8 border-t border-slate-200/80 dark:border-white/[0.08]">
+                            <div className="mb-10">
+                                <span className="text-xs font-mono uppercase tracking-widest text-blue-600 dark:text-blue-400 font-semibold mb-1 block">
+                                    Background
+                                </span>
+                                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
+                                    <AcademicCapIcon className="w-6 h-6 text-blue-500" />
+                                    <span>Education &amp; Academics</span>
+                                </h2>
+                            </div>
+
+                            <div className="space-y-6">
+                                {educations.map((edu) => (
+                                    <div
+                                        key={edu.id}
+                                        className="p-6 rounded-2xl bg-white dark:bg-zinc-900/70 border border-slate-200/80 dark:border-white/[0.08] shadow-sm space-y-4"
+                                    >
+                                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                                            <div className="flex items-start gap-3.5">
+                                                {edu.institution_logo ? (
+                                                    <img
+                                                        src={`/storage/${edu.institution_logo}`}
+                                                        alt={edu.institution}
+                                                        className="w-10 h-10 rounded-xl object-contain bg-slate-50 dark:bg-zinc-800 border border-slate-200/60 dark:border-white/[0.06] p-1 shrink-0"
+                                                    />
+                                                ) : (
+                                                    <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 flex items-center justify-center shrink-0">
+                                                        <AcademicCapIcon className="w-5 h-5" />
+                                                    </div>
+                                                )}
+                                                <div>
+                                                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                                                        {edu.degree}{" "}
+                                                        {edu.field_of_study && (
+                                                            <span className="font-normal text-slate-500 dark:text-zinc-400">
+                                                                in {edu.field_of_study}
+                                                            </span>
+                                                        )}
+                                                    </h3>
+                                                    <div className="text-xs font-mono text-slate-600 dark:text-zinc-400 mt-0.5 flex flex-wrap items-center gap-x-2">
+                                                        <span className="text-indigo-600 dark:text-indigo-400 font-semibold">
+                                                            {edu.institution}
+                                                        </span>
+                                                        {edu.location && (
+                                                            <>
+                                                                <span>•</span>
+                                                                <span className="inline-flex items-center gap-1">
+                                                                    <MapPinIcon className="w-3 h-3 text-slate-400" />
+                                                                    {edu.location}
+                                                                </span>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+                                                <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/[0.06] text-slate-600 dark:text-zinc-400">
+                                                    {edu.date_range}
+                                                </span>
+                                                {edu.grade && (
+                                                    <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                                                        Grade: {edu.grade}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {/* Description */}
+                                        {edu.description && (
+                                            <div
+                                                className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed font-normal pt-1"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: DOMPurify.sanitize(edu.description),
+                                                }}
+                                            />
+                                        )}
+
+                                        {/* Activities & Societies */}
+                                        {edu.activities && (
+                                            <div className="pt-2 text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
+                                                <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-500 font-semibold block mb-1">
+                                                    Activities &amp; Societies:
+                                                </span>
+                                                <div
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: DOMPurify.sanitize(edu.activities),
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </div>
         </PublicLayout>

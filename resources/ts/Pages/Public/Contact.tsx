@@ -1,21 +1,29 @@
+import { useState, FormEventHandler } from "react";
 import PublicLayout from "@/Layouts/PublicLayout";
-import { useForm } from "@inertiajs/react";
-import { FormEventHandler } from "react";
-import { EnvelopeIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { useForm, usePage } from "@inertiajs/react";
+import {
+    EnvelopeIcon,
+    MapPinIcon,
+    PhoneIcon,
+    CheckIcon,
+    SparklesIcon,
+    PaperAirplaneIcon,
+} from "@heroicons/react/24/outline";
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa";
 
 // UI Components
 import SectionHero from "@/Components/Public/UI/SectionHero";
-import StyledCard from "@/Components/Public/UI/StyledCard";
 import { FormInput, FormTextarea } from "@/Components/Public/UI/FormControls";
-import GradientButton from "@/Components/Public/UI/GradientButton";
-import { Settings } from "@/types";
+import { Settings, PageProps } from "@/types";
 
 interface ContactProps {
     settings: Settings;
 }
 
 export default function Contact({ settings }: ContactProps) {
+    const { flash } = usePage<PageProps>().props;
+    const [copiedEmail, setCopiedEmail] = useState(false);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
         email: "",
@@ -26,157 +34,195 @@ export default function Contact({ settings }: ContactProps) {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         post("/contact", {
+            preserveScroll: true,
             onSuccess: () => reset(),
         });
     };
 
+    const handleCopyEmail = () => {
+        if (!settings.email) return;
+        navigator.clipboard.writeText(settings.email);
+        setCopiedEmail(true);
+        setTimeout(() => setCopiedEmail(false), 2500);
+    };
+
     const socialLinks = [
-        { name: "GitHub", icon: FaGithub, url: settings.github_url || "#" },
-        { name: "LinkedIn", icon: FaLinkedin, url: settings.linkedin_url || "#" },
-        { name: "Twitter", icon: FaTwitter, url: settings.twitter_url || "#" },
-    ];
+        { name: "GitHub", icon: FaGithub, url: settings.github_url },
+        { name: "LinkedIn", icon: FaLinkedin, url: settings.linkedin_url },
+        { name: "Twitter", icon: FaTwitter, url: settings.twitter_url },
+        { name: "Instagram", icon: FaInstagram, url: settings.instagram_url },
+    ].filter((s) => s.url && s.url !== "#");
 
     return (
         <PublicLayout title="Contact">
-            <div className="w-full">
+            <div className="w-full pb-24">
                 {/* Header */}
                 <SectionHero
-                    title={settings.contact_hero_title || "Get In"}
-                    gradientWord={settings.contact_hero_gradient || "Touch"}
-                    subtitle={settings.contact_hero_subtitle || "Have a project in mind? Let's discuss how I can help bring your ideas to life with clean code and modern design."}
+                    badgeText="Open For Collaboration"
+                    badgeIcon={<SparklesIcon className="w-4 h-4" />}
+                    title={settings.contact_hero_title || "Let's Start a"}
+                    gradientWord={settings.contact_hero_gradient || "Conversation"}
+                    subtitle={
+                        settings.contact_hero_subtitle ||
+                        "Have a project inquiry, open engineering position, or just want to discuss software architecture? Send a message and I'll get back to you promptly."
+                    }
                 />
 
-                {/* Konten Utama */}
-                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-                    <div className="flex flex-col lg:flex-row gap-8">
-                        {/* Kolom Kiri: Sidebar Informasi Kontak */}
-                        <div className="w-full lg:w-1/3 flex flex-col gap-6">
-                            {/* Kartu Status Ketersediaan */}
-                            <StyledCard className="p-6">
-                                <div className="flex items-center mb-4 text-slate-900 dark:text-white font-semibold">
-                                    <span className="relative flex h-3 w-3 mr-3">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
-                                    </span>
-                                    {settings.contact_freelance_status || "AVAILABLE FOR FREELANCE"}
-                                </div>
-                                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                                    I'm currently available for freelance work and new opportunities.
-                                    Let's build something amazing together.
-                                </p>
-                            </StyledCard>
+                {/* Main Content */}
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Success Flash Banner */}
+                    {flash?.success && (
+                        <div className="mb-8 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-sm font-mono flex items-center gap-2">
+                            <CheckIcon className="w-5 h-5" />
+                            <span>{flash.success}</span>
+                        </div>
+                    )}
 
-                            {/* Info Kontak Dasar */}
-                            <StyledCard className="p-0">
-                                <ul className="divide-y divide-slate-200 dark:divide-slate-700/50">
-                                    <li className="p-6 flex items-start">
-                                        <div className="h-10 w-10 rounded bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400 flex items-center justify-center mr-4">
-                                            <EnvelopeIcon className="h-5 w-5" />
-                                        </div>
-                                        <div>
-                                            <span className="block text-xs text-slate-500 dark:text-slate-400 font-medium mb-1 uppercase tracking-wider">Email</span>
-                                            <a href={`mailto:${settings.email}`} className="text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
-                                                {settings.email || "your.email@example.com"}
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li className="p-6 flex items-start">
-                                        <div className="h-10 w-10 rounded bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400 flex items-center justify-center mr-4">
-                                            <MapPinIcon className="h-5 w-5" />
-                                        </div>
-                                        <div>
-                                            <span className="block text-xs text-slate-500 dark:text-slate-400 font-medium mb-1 uppercase tracking-wider">Location</span>
-                                            <span className="text-slate-900 dark:text-white font-medium">
-                                                {settings.address || "Your City, Country"}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        {/* Left Column: Direct Info & Availability */}
+                        <div className="lg:col-span-5 space-y-6">
+                            {/* Availability Card */}
+                            <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900/70 border border-slate-200/80 dark:border-white/[0.08] shadow-sm">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 mb-3">
+                                    <span className="relative flex h-2 w-2">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                                    </span>
+                                    <span>{settings.contact_freelance_status || "AVAILABLE FOR WORK"}</span>
+                                </div>
+                                <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed font-normal">
+                                    Available for full-time engineering roles, high-impact contract work, and technical consulting.
+                                </p>
+                            </div>
+
+                            {/* Contact Details Card */}
+                            <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900/70 border border-slate-200/80 dark:border-white/[0.08] shadow-sm space-y-4">
+                                <h3 className="text-xs font-mono uppercase tracking-wider text-slate-900 dark:text-white font-semibold">
+                                    Direct Channels
+                                </h3>
+
+                                <div className="space-y-3">
+                                    {/* Email with copy */}
+                                    <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06]">
+                                        <div className="flex items-center gap-2.5 overflow-hidden">
+                                            <EnvelopeIcon className="w-4 h-4 text-slate-400 shrink-0" />
+                                            <span className="text-xs font-mono text-slate-700 dark:text-zinc-300 truncate">
+                                                {settings.email || "ulumdev@gmail.com"}
                                             </span>
                                         </div>
-                                    </li>
-                                    <li className="p-6 flex items-start">
-                                        <div className="h-10 w-10 rounded bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400 flex items-center justify-center mr-4">
-                                            <PhoneIcon className="h-5 w-5" />
-                                        </div>
-                                        <div>
-                                            <span className="block text-xs text-slate-500 dark:text-slate-400 font-medium mb-1 uppercase tracking-wider">Phone</span>
-                                            <a href={`tel:${settings.phone}`} className="text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
-                                                {settings.phone || "+1 234 567 890"}
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </StyledCard>
+                                        <button
+                                            onClick={handleCopyEmail}
+                                            className="ml-2 text-xs font-mono text-blue-600 dark:text-blue-400 hover:underline shrink-0"
+                                        >
+                                            {copiedEmail ? "Copied!" : "Copy"}
+                                        </button>
+                                    </div>
 
-                            {/* Media Sosial */}
-                            <StyledCard className="p-6">
-                                <h3 className="text-slate-900 dark:text-white font-bold mb-4">Follow Me</h3>
-                                <div className="flex space-x-4">
-                                    {socialLinks.map((social) => {
-                                        const Icon = social.icon;
-                                        return (
-                                            <a
-                                                key={social.name}
-                                                href={social.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="w-12 h-12 bg-slate-100 dark:bg-slate-700/50 hover:bg-blue-600 dark:hover:bg-blue-600 rounded-lg flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-white transition-all duration-300"
-                                            >
-                                                <Icon className="w-5 h-5" />
+                                    {settings.address && (
+                                        <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06] text-xs font-mono text-slate-700 dark:text-zinc-300">
+                                            <MapPinIcon className="w-4 h-4 text-slate-400 shrink-0" />
+                                            <span>{settings.address}</span>
+                                        </div>
+                                    )}
+
+                                    {settings.phone && (
+                                        <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06] text-xs font-mono text-slate-700 dark:text-zinc-300">
+                                            <PhoneIcon className="w-4 h-4 text-slate-400 shrink-0" />
+                                            <a href={`tel:${settings.phone}`} className="hover:underline">
+                                                {settings.phone}
                                             </a>
-                                        );
-                                    })}
+                                        </div>
+                                    )}
                                 </div>
-                            </StyledCard>
+                            </div>
+
+                            {/* Social Profiles */}
+                            {socialLinks.length > 0 && (
+                                <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900/70 border border-slate-200/80 dark:border-white/[0.08] shadow-sm">
+                                    <h3 className="text-xs font-mono uppercase tracking-wider text-slate-900 dark:text-white font-semibold mb-3">
+                                        Professional Networks
+                                    </h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {socialLinks.map((s) => {
+                                            const Icon = s.icon;
+                                            return (
+                                                <a
+                                                    key={s.name}
+                                                    href={s.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-mono bg-slate-50 dark:bg-white/[0.04] text-slate-700 dark:text-zinc-300 border border-slate-200/60 dark:border-white/[0.06] hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-zinc-950 transition-all duration-200"
+                                                >
+                                                    <Icon className="w-3.5 h-3.5" />
+                                                    <span>{s.name}</span>
+                                                </a>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
-                        {/* Kolom Kanan: Area Formulir dan Fitur */}
-                        <div className="w-full lg:w-2/3 flex flex-col gap-6">
-                            {/* Formulir */}
-                            <StyledCard className="p-8">
-                                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Send Me a Message</h2>
-                                <p className="text-slate-600 dark:text-slate-400 mb-8">Fill out the form below and I'll get back to you within 24 hours.</p>
+                        {/* Right Column: Interactive Form */}
+                        <div className="lg:col-span-7">
+                            <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-zinc-900/70 border border-slate-200/80 dark:border-white/[0.08] shadow-sm">
+                                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+                                    Send a Direct Message
+                                </h2>
+                                <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 mb-6 font-normal">
+                                    Fill out the form below. Messages are delivered straight to my personal inbox.
+                                </p>
 
                                 <form onSubmit={submit}>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
                                         <FormInput
                                             label="Your Name"
                                             value={data.name}
                                             onChange={(e) => setData("name", e.target.value)}
                                             error={errors.name}
-                                            placeholder="John Doe"
+                                            placeholder="Moh. Bahrul"
                                             required
                                         />
                                         <FormInput
-                                            label="Your Email"
+                                            label="Email Address"
                                             type="email"
                                             value={data.email}
                                             onChange={(e) => setData("email", e.target.value)}
                                             error={errors.email}
-                                            placeholder="john@example.com"
+                                            placeholder="you@company.com"
                                             required
                                         />
                                     </div>
+
                                     <FormInput
                                         label="Subject"
                                         value={data.subject}
                                         onChange={(e) => setData("subject", e.target.value)}
                                         error={errors.subject}
-                                        placeholder="Project Inquiry / Job Opportunity"
+                                        placeholder="Full Stack Opportunity / Project Collaboration"
                                         required
                                     />
+
                                     <FormTextarea
                                         label="Message"
                                         value={data.message}
                                         onChange={(e) => setData("message", e.target.value)}
                                         error={errors.message}
-                                        placeholder="Tell me more about your project goals, timeline, and budget..."
+                                        placeholder="Tell me about your project, timeline, tech stack, or opportunity..."
                                         rows={5}
                                         required
                                     />
-                                    <GradientButton type="submit" disabled={processing} className="mt-4">
-                                        {processing ? "Sending..." : "Send Message"}
-                                    </GradientButton>
-                                </form>
-                            </StyledCard>
 
+                                    <button
+                                        type="submit"
+                                        disabled={processing}
+                                        className="w-full mt-2 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold bg-slate-900 dark:bg-white text-white dark:text-zinc-950 hover:bg-slate-800 dark:hover:bg-zinc-100 transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                                    >
+                                        <PaperAirplaneIcon className="w-4 h-4" />
+                                        <span>{processing ? "Sending Message..." : "Submit Inquiry"}</span>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

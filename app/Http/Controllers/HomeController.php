@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
 use App\Models\Project;
+use App\Models\Skill;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,7 +15,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Get featured projects (latest 6 published)
+        // Get featured projects (latest 3 published)
         $projects = Project::published()
             ->with('skills')
             ->ordered()
@@ -28,11 +29,13 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        // return view('home', compact('projects', 'posts'));
+        // Get skills for tech ticker/showcase
+        $skills = Skill::ordered()->get();
 
         return Inertia::render('Public/Home', [
             'featuredProjects' => $projects,
             'latestPosts' => $posts,
+            'skills' => $skills,
         ]);
     }
 }

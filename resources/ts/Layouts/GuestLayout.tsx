@@ -9,7 +9,10 @@ interface GuestLayoutProps {
 export default function GuestLayout({ title, children }: GuestLayoutProps) {
   return (
     <>
-      <Head title={title} />
+      <Head title={`${title} — Moh. Bahrul 'Ulum`}>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="alternate icon" href="/favicon.ico" />
+      </Head>
       <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div>
           <Link href="/">

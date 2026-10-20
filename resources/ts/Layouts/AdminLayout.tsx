@@ -12,7 +12,10 @@ interface AdminLayoutProps {
 export default function AdminLayout({ title, children }: AdminLayoutProps) {
   return (
     <>
-      <Head title={title} />
+      <Head title={`${title} — Admin Dashboard`}>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="alternate icon" href="/favicon.ico" />
+      </Head>
       <div className="flex h-screen bg-gray-100 overflow-hidden">
         <Sidebar />
         <div className="flex-1 flex flex-col overflow-hidden">
