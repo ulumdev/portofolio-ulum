@@ -22,8 +22,6 @@ export default function Navbar() {
     return url.startsWith(href);
   };
 
-  const hireStatus = settings?.about_hire_status || settings?.contact_freelance_status || 'Available for work';
-
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 pt-3 pb-3 pointer-events-none">
       <Disclosure
@@ -34,33 +32,27 @@ export default function Navbar() {
           <>
             <div className="px-4 sm:px-6">
               <div className="flex justify-between items-center h-14">
-                {/* Brand / Logo & Avatar */}
-                <div className="flex items-center space-x-3">
+                {/* Brand / Logo */}
+                <div className="flex items-center">
                   <Link href="/" className="flex items-center space-x-2.5 group">
-                    {settings?.profile_photo ? (
-                      <img
-                        src={`/storage/${settings.profile_photo}`}
-                        alt={settings?.site_name || 'Avatar'}
-                        className="w-8 h-8 rounded-full object-cover border border-slate-200 dark:border-white/10 group-hover:scale-105 transition-transform duration-200 shadow-sm"
-                      />
-                    ) : (
-                      <span className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform duration-200">
-                        {(settings?.site_name || 'U').charAt(0)}
-                      </span>
-                    )}
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-sm shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
+                      <svg
+                        className="w-4 h-4 text-white"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polyline points="16 18 22 12 16 6" />
+                        <polyline points="8 6 2 12 8 18" />
+                      </svg>
+                    </div>
                     <span className="font-bold tracking-tight text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200 text-sm sm:text-base">
-                      {settings?.site_name || 'Moh. Bahrul Ulum'}
+                      {settings?.site_name || "Moh. Bahrul 'Ulum"}
                     </span>
                   </Link>
-
-                  {/* Status Indicator */}
-                  <div className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                    </span>
-                    <span>{hireStatus}</span>
-                  </div>
                 </div>
 
                 {/* Desktop Nav Items */}

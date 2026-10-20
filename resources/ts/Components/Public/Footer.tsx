@@ -43,19 +43,22 @@ export default function Footer() {
           {/* Brand & bio */}
           <div className="md:col-span-6 space-y-4">
             <Link href="/" className="inline-flex items-center space-x-2.5 group">
-              {settings?.profile_photo ? (
-                <img
-                  src={`/storage/${settings.profile_photo}`}
-                  alt={settings?.site_name || 'Avatar'}
-                  className="w-8 h-8 rounded-full object-cover border border-slate-200 dark:border-white/10 group-hover:scale-105 transition-transform duration-200"
-                />
-              ) : (
-                <span className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform duration-200">
-                  {(settings?.site_name || 'U').charAt(0)}
-                </span>
-              )}
-              <span className="font-bold text-lg tracking-tight text-slate-900 dark:text-white">
-                {settings?.site_name || 'Moh. Bahrul Ulum'}
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-sm shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
+                <svg
+                  className="w-4 h-4 text-white"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+              </div>
+              <span className="font-bold text-lg tracking-tight text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                {settings?.site_name || "Moh. Bahrul 'Ulum"}
               </span>
             </Link>
 
