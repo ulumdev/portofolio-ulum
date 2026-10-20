@@ -40,15 +40,21 @@ interface HomeProps {
     featuredProjects: Project[];
     latestPosts: BlogPost[];
     skills?: Skill[];
+    stats?: {
+        years_experience: string;
+        projects_count: number;
+        skills_count: number;
+        posts_count: number;
+        experiences_count: number;
+    };
 }
 
-export default function Home({ featuredProjects, latestPosts, skills = [] }: HomeProps) {
+export default function Home({ featuredProjects, latestPosts, skills = [], stats }: HomeProps) {
     const { settings } = usePage<PageProps>().props;
     const [copiedEmail, setCopiedEmail] = useState(false);
     const [activeTab, setActiveTab] = useState<"code" | "terminal">("code");
 
     const email = settings.email || "ulumdev@gmail.com";
-    const hireStatus = settings.about_hire_status || settings.contact_freelance_status || "Available for full-time & freelance projects";
 
     const handleCopyEmail = () => {
         navigator.clipboard.writeText(email);
@@ -72,9 +78,10 @@ export default function Home({ featuredProjects, latestPosts, skills = [] }: Hom
         { name: "Linux", icon: SiLinux, color: "hover:text-[#FCC624]" },
     ];
 
-    // Merge skills from DB if available
-    const displayTechList = skills.length > 0
-        ? skills.map(s => {
+    // Select curated skills for marquee (up to 24 items) to maintain smooth, readable animation
+    const curatedSkills = skills.length > 24 ? skills.slice(0, 24) : skills;
+    const displayTechList = curatedSkills.length > 0
+        ? curatedSkills.map(s => {
             const matched = defaultTechList.find(d => d.name.toLowerCase() === s.name.toLowerCase());
             return {
                 name: s.name,
@@ -97,15 +104,6 @@ export default function Home({ featuredProjects, latestPosts, skills = [] }: Hom
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                             {/* Left Column: Bio & Value Proposition */}
                             <div className="lg:col-span-7 space-y-6">
-                                {/* Live Availability Badge from Settings */}
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 shadow-sm animate-fade-in">
-                                    <span className="relative flex h-2 w-2">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                                    </span>
-                                    <span>{hireStatus}</span>
-                                </div>
-
                                 {/* Main Headline from Settings */}
                                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] animate-fade-in-up">
                                     {settings.home_hero_title || "Crafting scalable backend systems &"}{" "}
@@ -280,7 +278,7 @@ export default function Home({ featuredProjects, latestPosts, skills = [] }: Hom
                                                     $ php artisan about:engineer
                                                 </p>
                                                 <p className="text-emerald-400 font-semibold">
-                                                    ✓ Status: {hireStatus}
+                                                    ✓ Status: Operational &amp; Ready
                                                 </p>
                                                 <div className="pt-1 text-slate-400 space-y-1">
                                                     <p>• Architecture: Clean &amp; Domain-Driven</p>
@@ -301,13 +299,13 @@ export default function Home({ featuredProjects, latestPosts, skills = [] }: Hom
                     </div>
                 </section>
 
-                {/* 2. STATS & IMPACT METRICS BAR (Configured via Admin Settings) */}
+                {/* 2. STATS & IMPACT METRICS BAR (Synchronized with Database CRUD) */}
                 <section className="border-y border-slate-200/80 dark:border-white/[0.08] bg-slate-50/70 dark:bg-zinc-950/60 py-8">
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                             <div>
                                 <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-mono">
-                                    {settings.years_experience || "3+"}
+                                    {stats?.years_experience || settings.years_experience || "3+"}
                                 </div>
                                 <div className="text-xs text-slate-500 dark:text-zinc-500 mt-1 uppercase tracking-wider font-mono">
                                     Years Experience
@@ -315,7 +313,7 @@ export default function Home({ featuredProjects, latestPosts, skills = [] }: Hom
                             </div>
                             <div>
                                 <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-mono">
-                                    {settings.projects_completed || "15+"}
+                                    {stats?.projects_count ?? 7}
                                 </div>
                                 <div className="text-xs text-slate-500 dark:text-zinc-500 mt-1 uppercase tracking-wider font-mono">
                                     Projects Completed
@@ -323,25 +321,25 @@ export default function Home({ featuredProjects, latestPosts, skills = [] }: Hom
                             </div>
                             <div>
                                 <div className="text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-blue-400 font-mono">
-                                    {settings.happy_clients || "100%"}
+                                    {stats?.skills_count ? `${stats.skills_count}+` : "60+"}
                                 </div>
                                 <div className="text-xs text-slate-500 dark:text-zinc-500 mt-1 uppercase tracking-wider font-mono">
-                                    {settings.happy_clients ? "Happy Clients" : "Quality Standard"}
+                                    Tech Skills
                                 </div>
                             </div>
                             <div>
                                 <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">
-                                    24/7
+                                    {stats?.posts_count ?? 26}
                                 </div>
                                 <div className="text-xs text-slate-500 dark:text-zinc-500 mt-1 uppercase tracking-wider font-mono">
-                                    Passion For Code
+                                    Articles Written
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* 3. TECH STACK SEAMLESS MARQUEE (Dynamic from Admin Skills + Fallbacks) */}
+                {/* 3. TECH STACK SEAMLESS MARQUEE (Dynamic from Admin Skills + Fallbacks, Calm & Smooth) */}
                 <section className="py-10 bg-white dark:bg-zinc-950 overflow-hidden border-b border-slate-200/80 dark:border-white/[0.08]">
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 text-center">
                         <span className="text-xs font-mono uppercase tracking-widest text-slate-400 dark:text-zinc-500">
@@ -350,7 +348,7 @@ export default function Home({ featuredProjects, latestPosts, skills = [] }: Hom
                     </div>
 
                     <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_15%,white_85%,transparent)]">
-                        <div className="flex w-max space-x-6 sm:space-x-8 animate-marquee hover:[animation-play-state:paused]">
+                        <div className="flex w-max space-x-6 sm:space-x-8 animate-marquee-slow hover:[animation-play-state:paused]">
                             {[...displayTechList, ...displayTechList].map((tech, i) => {
                                 const Icon = tech.icon;
                                 return (

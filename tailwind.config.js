@@ -49,8 +49,9 @@ export default {
                 "scale-in": "scaleIn 0.25s ease-out",
                 float: "float 4s ease-in-out infinite",
                 "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-                "marquee": "marquee 30s linear infinite",
-                "marquee-reverse": "marqueeReverse 30s linear infinite",
+                "marquee": "marquee 80s linear infinite",
+                "marquee-slow": "marquee 110s linear infinite",
+                "marquee-reverse": "marqueeReverse 80s linear infinite",
             },
             keyframes: {
                 fadeIn: {

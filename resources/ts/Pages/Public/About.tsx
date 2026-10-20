@@ -24,9 +24,15 @@ interface AboutProps {
     skills: Skill[];
     experiences: Experience[];
     educations: Education[];
+    stats?: {
+        years_experience: string;
+        projects_count: number;
+        skills_count: number;
+        experiences_count: number;
+    };
 }
 
-export default function About({ settings, skills, experiences, educations }: AboutProps) {
+export default function About({ settings, skills, experiences, educations, stats }: AboutProps) {
     const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
 
     const toggleCategory = (category: string) => {
@@ -155,41 +161,41 @@ export default function About({ settings, skills, experiences, educations }: Abo
                                 </p>
                             </div>
 
-                            {/* Impact Numbers Mini Bar */}
-                            {(settings.years_experience || settings.projects_completed || settings.happy_clients) && (
-                                <div className="grid grid-cols-3 gap-3 pt-2">
-                                    {settings.years_experience && (
-                                        <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06]">
-                                            <div className="text-base sm:text-lg font-bold font-mono text-slate-900 dark:text-white">
-                                                {settings.years_experience}
-                                            </div>
-                                            <div className="text-[11px] font-mono text-slate-500 dark:text-zinc-500">
-                                                Years Experience
-                                            </div>
-                                        </div>
-                                    )}
-                                    {settings.projects_completed && (
-                                        <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06]">
-                                            <div className="text-base sm:text-lg font-bold font-mono text-slate-900 dark:text-white">
-                                                {settings.projects_completed}
-                                            </div>
-                                            <div className="text-[11px] font-mono text-slate-500 dark:text-zinc-500">
-                                                Projects Built
-                                            </div>
-                                        </div>
-                                    )}
-                                    {settings.happy_clients && (
-                                        <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06]">
-                                            <div className="text-base sm:text-lg font-bold font-mono text-slate-900 dark:text-white">
-                                                {settings.happy_clients}
-                                            </div>
-                                            <div className="text-[11px] font-mono text-slate-500 dark:text-zinc-500">
-                                                Happy Clients
-                                            </div>
-                                        </div>
-                                    )}
+                            {/* Impact Numbers Mini Bar (Synchronized with Database CRUD) */}
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                                <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06]">
+                                    <div className="text-base sm:text-lg font-bold font-mono text-slate-900 dark:text-white">
+                                        {stats?.years_experience || settings.years_experience || "3+"}
+                                    </div>
+                                    <div className="text-[11px] font-mono text-slate-500 dark:text-zinc-500">
+                                        Years Experience
+                                    </div>
                                 </div>
-                            )}
+                                <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06]">
+                                    <div className="text-base sm:text-lg font-bold font-mono text-slate-900 dark:text-white">
+                                        {stats?.projects_count ?? (settings.projects_completed || "7")}
+                                    </div>
+                                    <div className="text-[11px] font-mono text-slate-500 dark:text-zinc-500">
+                                        Projects Built
+                                    </div>
+                                </div>
+                                <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06]">
+                                    <div className="text-base sm:text-lg font-bold font-mono text-blue-600 dark:text-blue-400">
+                                        {stats?.skills_count ? `${stats.skills_count}+` : `${skills.length}+`}
+                                    </div>
+                                    <div className="text-[11px] font-mono text-slate-500 dark:text-zinc-500">
+                                        Tech Skills
+                                    </div>
+                                </div>
+                                <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/[0.06]">
+                                    <div className="text-base sm:text-lg font-bold font-mono text-emerald-600 dark:text-emerald-400">
+                                        {stats?.experiences_count ?? experiences.length}
+                                    </div>
+                                    <div className="text-[11px] font-mono text-slate-500 dark:text-zinc-500">
+                                        Career Milestones
+                                    </div>
+                                </div>
+                            </div>
 
                             {/* Action Row */}
                             <div className="pt-2 flex flex-wrap items-center gap-3">
